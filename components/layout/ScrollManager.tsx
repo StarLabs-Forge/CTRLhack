@@ -15,20 +15,36 @@ export function ScrollManager() {
       return;
     }
 
-    let frames = 0;
     let raf = 0;
+    let interrupted = false;
+    const onInteraction = () => { interrupted = true; };
+    const interactionEvents = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+    interactionEvents.forEach(event => window.addEventListener(event, onInteraction, { passive: true }));
     const findTarget = () => {
       const el = document.querySelector(hash);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
+        observer.disconnect();
+        raf = requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          // Las fuentes pueden cambiar el alto de las secciones anteriores.
+          // Reajustamos el ancla mientras el usuario siga esperando el salto.
+          void document.fonts.ready.then(() => {
+            if (!interrupted) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
       }
-      // ~1s a 60fps antes de rendirse, por si el chunk tarda en cargar.
-      if (frames++ < 60) raf = requestAnimationFrame(findTarget);
     };
-    raf = requestAnimationFrame(findTarget);
+    // Las vistas lazy pueden tardar más de un segundo en montar el destino.
+    const observer = new MutationObserver(findTarget);
+    observer.observe(document.body, { childList: true, subtree: true });
+    findTarget();
 
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      interrupted = true;
+      interactionEvents.forEach(event => window.removeEventListener(event, onInteraction));
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
   }, [pathname, hash]);
 
   return null;

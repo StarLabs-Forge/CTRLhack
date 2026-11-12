@@ -4,14 +4,15 @@
    de ProjectCard.css: mismo lenguaje visual que /portafolio, solo cambia
    la puesta en escena.
    ============================================ */
-.deck { width: 100%; }
+.deck { width: 100%; overflow-x: clip; }
 
 .deck-shell {
   position: relative;
-  height: 440px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 440px;
+  padding: 16px 0;
+  /* Las seis tarjetas comparten celda y reservan el alto del contenido mayor. */
+  display: grid;
+  justify-items: center;
   perspective: 1400px;
   touch-action: pan-y;
   cursor: grab;
@@ -31,9 +32,11 @@
 }
 
 .deck-card {
-  position: absolute;
-  width: 304px;
-  height: 408px;
+  position: relative;
+  grid-area: 1 / 1;
+  width: min(304px, 100%);
+  min-height: 408px;
+  min-width: 0;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background: linear-gradient(160deg, rgba(23, 31, 61, 0.72), rgba(11, 16, 36, 0.86));
@@ -50,7 +53,7 @@
 
 .deck-card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .deck-card-body .pcard-head h3 { font-size: 1.05rem; }
-.deck-card-body .pcard-pitch { font-size: 12.5px; min-height: 0; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+.deck-card-body .pcard-pitch { font-size: 12.5px; min-height: 0; }
 
 .deck-cta {
   align-self: flex-start;
@@ -97,8 +100,8 @@
 .deck-tick.active { background: var(--tick-color, var(--cyan)); }
 
 @media (max-width: 560px) {
-  .deck-shell { height: 396px; }
-  .deck-card { width: 240px; height: 360px; }
+  .deck-shell { min-height: 396px; padding: 18px 0; }
+  .deck-card { width: min(240px, 100%); min-height: 360px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
