@@ -45,7 +45,7 @@
   border-radius: 999px;
   border: 1px solid var(--line);
   color: var(--text-300);
-  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 .svc-example:hover { border-color: var(--accent-strong); color: var(--text-100); }
 

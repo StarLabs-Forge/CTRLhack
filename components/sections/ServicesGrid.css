@@ -13,7 +13,7 @@
 .service-card-slot {
   opacity: 0;
   transform: translateY(22px) scale(0.98);
-  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+  transition: opacity var(--dur-moderate) var(--ease-out), transform var(--dur-moderate) var(--ease-out);
 }
 .services-grid.in .service-card-slot { opacity: 1; transform: none; }
 
@@ -42,7 +42,7 @@
     linear-gradient(135deg, var(--line), var(--line)) border-box;
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 0.3s var(--ease-out), background 0.5s var(--ease-in-out), box-shadow 0.4s var(--ease-out);
+  transition: transform var(--dur-base) var(--ease-out), background var(--dur-moderate) var(--ease-in-out), box-shadow var(--dur-base) var(--ease-out);
 }
 .service-card:hover {
   transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-6px) translateZ(8px);
@@ -60,7 +60,7 @@
   border-radius: inherit;
   background: radial-gradient(240px circle at var(--mx) var(--my), rgba(0, 200, 255, 0.14), transparent 60%);
   opacity: 0;
-  transition: opacity 0.35s var(--ease-out);
+  transition: opacity var(--dur-base) var(--ease-out);
   pointer-events: none;
   z-index: 0;
 }
@@ -71,7 +71,7 @@
   z-index: 1;
   display: block;
   aspect-ratio: 4 / 3;
-  transition: transform 0.4s var(--ease-out), filter 0.4s var(--ease-out);
+  transition: transform var(--dur-base) var(--ease-out), filter var(--dur-base) var(--ease-out);
 }
 .service-image img {
   width: 100%;
@@ -110,10 +110,10 @@
   align-items: center;
   justify-content: center;
   color: var(--text-300);
-  transition: border-color 0.25s var(--ease-out), color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out),
-    transform 0.2s var(--ease-out);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
-.service-cta .arrow { display: inline-block; transition: transform 0.25s var(--ease-out); }
+.service-cta .arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
 .service-card:hover .service-cta {
   border-color: #1677ff;
   color: var(--text-100);

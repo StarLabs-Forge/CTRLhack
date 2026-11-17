@@ -52,7 +52,7 @@ footer {
   height: 32px;
   border-radius: 8px;
   color: var(--text-500);
-  transition: color 0.18s ease, background 0.18s ease;
+  transition: color var(--dur-fast) ease, background var(--dur-fast) ease;
 }
 .foot-social a:hover {
   color: var(--accent);

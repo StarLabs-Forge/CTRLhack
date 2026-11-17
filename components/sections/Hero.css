@@ -34,7 +34,6 @@
   -webkit-mask-image: radial-gradient(ellipse 75% 55% at 20% 0%, black 30%, transparent 85%);
   mask-image: radial-gradient(ellipse 75% 55% at 20% 0%, black 30%, transparent 85%);
   pointer-events: none;
-  transition: background-position 0.2s linear;
 }
 /* transición Hero → Sobre: capa que crece con el scroll hasta fundir el
    fondo del Hero con el fondo secundario de la sección siguiente. */
@@ -56,7 +55,6 @@
   align-items: center;
 }
 .hero .wrap > div:first-child {
-  transition: transform 0.2s linear;
   transform: scale(calc(1 - var(--hero-progress) * 0.035));
   transform-origin: top left;
 }

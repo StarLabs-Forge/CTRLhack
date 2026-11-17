@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   z-index: 1;
 }
 .case-modal-close:hover { border-color: var(--accent); transform: scale(1.06); }

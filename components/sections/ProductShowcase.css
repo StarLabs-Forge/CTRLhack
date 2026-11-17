@@ -11,7 +11,6 @@
   position: relative;
   padding: 18px 10px 34px;
   perspective: 1400px;
-  transition: transform 0.2s linear;
   transform: translateY(calc(var(--hero-progress, 0) * 10px)) scale(calc(1 - var(--hero-progress, 0) * 0.03));
 }
 .showcase-glow {
@@ -20,7 +19,6 @@
   background: radial-gradient(ellipse 60% 55% at 62% 30%, rgba(40, 123, 255, 0.16), transparent 70%);
   pointer-events: none;
   z-index: 0;
-  transition: opacity 0.2s linear;
   opacity: calc(1 - var(--hero-progress, 0) * 0.75);
 }
 .laptop {
@@ -30,7 +28,7 @@
   margin: 0 auto;
   transform-style: preserve-3d;
   transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.3s var(--ease);
+  transition: transform var(--dur-base) var(--ease);
 }
 .laptop-screen {
   background: var(--bg-900);
@@ -106,7 +104,7 @@
   margin: -46px 0 0 auto;
   transform-style: preserve-3d;
   transform: rotateX(var(--tilt-x-phone)) rotateY(var(--tilt-y-phone));
-  transition: transform 0.35s var(--ease);
+  transition: transform var(--dur-base) var(--ease);
   margin-right: 6%;
 }
 .phone-screen {

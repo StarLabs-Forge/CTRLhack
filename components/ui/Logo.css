@@ -6,7 +6,7 @@
    la animación de entrada (logoIn) sigue viviendo en Navbar.css sobre .mark.
    ============================================ */
 .sl-logo { display: block; }
-.sl-logo .sl-ribbon { transition: filter 0.4s var(--ease); }
+.sl-logo .sl-ribbon { transition: filter var(--dur-base) var(--ease); }
 
 a:hover .sl-logo .sl-ribbon,
 a:focus-visible .sl-logo .sl-ribbon {

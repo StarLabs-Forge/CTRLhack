@@ -8,7 +8,7 @@
   background: rgba(5, 8, 22, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line-soft);
-  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
 .nav.scrolled {
   background: rgba(5, 8, 22, 0.96);
@@ -57,7 +57,7 @@
 .navlinks a:not(.btn) {
   position: relative;
   color: var(--text-300);
-  transition: color 0.2s var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out);
 }
 .navlinks a:not(.btn)::after {
   content: "";
@@ -67,7 +67,7 @@
   bottom: -4px;
   height: 1px;
   background: var(--accent);
-  transition: right 0.25s var(--ease-out);
+  transition: right var(--dur-fast) var(--ease-out);
 }
 .navlinks a:not(.btn):hover::after,
 .navlinks a[aria-current="page"]:not(.btn)::after { right: 0; }
@@ -114,7 +114,7 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
-    transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), visibility var(--dur-fast);
   }
   .navlinks a:not(.btn) { padding: 10px 0; width: 100%; }
   .navlinks .btn { margin-top: 8px; justify-content: center; }

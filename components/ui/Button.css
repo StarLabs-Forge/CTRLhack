@@ -10,7 +10,7 @@
   border: 1px solid transparent;
   color: var(--bg-950);
   background: var(--brand-gradient);
-  transition: filter 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  transition: filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -29,7 +29,7 @@
   border-radius: var(--radius);
   border: 1px solid var(--line);
   color: var(--text-300);
-  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -39,6 +39,6 @@
 
 .btn .arrow, .btn-ghost .arrow {
   display: inline-block;
-  transition: transform 0.2s var(--ease);
+  transition: transform var(--dur-fast) var(--ease);
 }
 .btn:hover .arrow, .btn-ghost:hover .arrow { transform: translateX(3px); }

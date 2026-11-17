@@ -46,7 +46,7 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: transform 0.32s var(--ease-spring), opacity 0.22s var(--ease), filter 0.22s var(--ease), border-color 0.3s var(--ease);
+  transition: transform var(--dur-base) var(--ease-spring), opacity var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease), border-color var(--dur-base) var(--ease);
   will-change: transform, opacity, filter;
 }
 .deck-card.is-active { cursor: default; border-color: rgba(32, 217, 255, 0.35); box-shadow: 0 30px 60px -22px rgba(0, 0, 0, 0.6); }
@@ -62,7 +62,7 @@
   padding: 8px 12px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: opacity var(--dur-base) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 .deck-card.is-active .deck-cta { opacity: 1; pointer-events: auto; }
 
@@ -80,7 +80,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.25s var(--ease), color 0.25s var(--ease), transform 0.15s var(--ease);
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-instant) var(--ease);
 }
 .deck-arrow:hover { border-color: var(--accent-strong); color: var(--text-100); }
 .deck-arrow:active { transform: scale(0.92); }
@@ -95,7 +95,7 @@
   padding: 0;
   background: var(--line);
   cursor: pointer;
-  transition: background 0.3s var(--ease);
+  transition: background var(--dur-base) var(--ease);
 }
 .deck-tick.active { background: var(--tick-color, var(--cyan)); }
 

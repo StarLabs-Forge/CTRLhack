@@ -50,6 +50,18 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  /* Duraciones de motion. Escala única: elegir por intención, no por número.
+     instant = feedback de foco/input · fast = hover y color · base = movimiento
+     de componente · moderate = entradas y reveals · slow = máscaras de título ·
+     xslow = barras/timelines. Para propiedades ligadas al scroll (parallax) NO
+     usar transition: el scroll ya es el suavizado. */
+  --dur-instant: 0.15s;
+  --dur-fast: 0.2s;
+  --dur-base: 0.3s;
+  --dur-moderate: 0.5s;
+  --dur-slow: 0.9s;
+  --dur-xslow: 1.1s;
+
   --color-bg-base: var(--bg-950);
   --color-bg-surface: var(--bg-900);
   --color-bg-surface-2: var(--bg-800);

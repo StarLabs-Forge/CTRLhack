@@ -20,7 +20,7 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px 14px;
-  transition: border-color 0.15s var(--ease);
+  transition: border-color var(--dur-instant) var(--ease);
 }
 .contact-form input:focus,
 .contact-form select:focus { border-color: var(--accent-strong); }
