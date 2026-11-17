@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "../components/ui/TransitionLink";
 import { Meta } from "../components/seo/Meta";
 import { Hero } from "../components/sections/Hero";
 import { ProductShowcase } from "../components/sections/ProductShowcase";

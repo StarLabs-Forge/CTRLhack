@@ -221,3 +221,26 @@ section.tight { padding: 88px 0; }
   section.tight { padding: 64px 0; }
   .section-index { display: none; }
 }
+
+/* ============================================
+   TRANSICIÓN ENTRE PÁGINAS (View Transitions API)
+   Crossfade corto: el contenido sale y entra, el nav no se mueve. Solo se
+   dispara desde <TransitionLink>; sin soporte del navegador, o con
+   reduced-motion, la navegación es instantánea como antes.
+   ============================================ */
+@supports (view-transition-name: none) {
+  .nav { view-transition-name: site-nav; }
+
+  ::view-transition-group(root) { animation-duration: var(--dur-base); }
+  ::view-transition-old(root) { animation: page-out var(--dur-fast) var(--ease-in-out) both; }
+  ::view-transition-new(root) { animation: page-in var(--dur-moderate) var(--ease-out) var(--dur-instant) both; }
+
+  @keyframes page-out { to { opacity: 0; transform: translateY(-6px); } }
+  @keyframes page-in { from { opacity: 0; transform: translateY(10px); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
+  }
+}

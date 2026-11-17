@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { TransitionLink as Link } from "../ui/TransitionLink";
 import { Logo } from "../ui/Logo";
 import "./Navbar.css";
 

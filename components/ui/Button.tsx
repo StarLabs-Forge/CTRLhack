@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "./TransitionLink";
 import "./Button.css";
 
 // Equivalente a .btn / .btn-ghost en /styles.css. Mismos tokens, sin valores nuevos.

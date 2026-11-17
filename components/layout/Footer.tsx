@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "../ui/TransitionLink";
 import { services } from "../../data/services";
 import { socials } from "../../data/socials";
 import "./Footer.css";

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "../ui/TransitionLink";
 import { ProjectThumb } from "./ProjectThumb";
 import { Tag } from "../ui/Tag";
 import { portfolioProjects } from "../../data/portfolioProjects";
