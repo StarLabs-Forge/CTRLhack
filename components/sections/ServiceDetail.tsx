@@ -26,7 +26,7 @@ export function ServiceDetail({ detail }: ServiceDetailProps) {
 
           <div className="svc-features">
             {detail.features.map((feature, index) => (
-              <Reveal key={feature.title} delay={100 + index * 70}>
+              <Reveal key={feature.title} index={index}>
                 <div className="svc-feature">
                   <h3>{feature.title}</h3>
                   <p>{feature.description}</p>

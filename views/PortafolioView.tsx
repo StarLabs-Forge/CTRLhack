@@ -50,7 +50,7 @@ export default function PortafolioView() {
           <div className="wrap">
             <div className="pgrid">
               {ownProducts.map((project, index) => (
-                <Reveal key={project.slug} delay={index * 60}>
+                <Reveal key={project.slug} index={index}>
                   <ProjectCard project={project} onOpenDetail={setOpenSlug} />
                 </Reveal>
               ))}
@@ -70,7 +70,7 @@ export default function PortafolioView() {
               </Reveal>
               <div className="pgrid">
                 {clientWork.map((project, index) => (
-                  <Reveal key={project.slug} delay={index * 60}>
+                  <Reveal key={project.slug} index={index}>
                     <ProjectCard project={project} onOpenDetail={setOpenSlug} />
                   </Reveal>
                 ))}

@@ -65,7 +65,7 @@ export default function ProductosView() {
 
             <div className="pgrid">
               {ownProducts.map((project, index) => (
-                <Reveal key={project.slug} delay={index * 60}>
+                <Reveal key={project.slug} index={index}>
                   <ProjectCard project={project} onOpenDetail={setOpenSlug} />
                 </Reveal>
               ))}

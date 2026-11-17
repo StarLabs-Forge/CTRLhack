@@ -160,8 +160,13 @@ section.tight { padding: 88px 0; }
   opacity: 0;
   transform: translateY(18px) scale(0.985);
   transition: opacity var(--dur-moderate) var(--ease), transform var(--dur-moderate) var(--ease);
+  /* stagger por posición (prop `index` de Reveal), con tope */
+  transition-delay: min(calc(var(--reveal-i, 0) * var(--stagger)), var(--stagger-max));
 }
 .reveal.in { opacity: 1; transform: none; }
+.reveal--fade { transform: none; }
+.reveal--scale { transform: scale(0.94); }
+.reveal--fade.in, .reveal--scale.in { transform: none; }
 
 /* ============================================
    COMPOSITION / DEPTH — utilitarios de layering reutilizados
