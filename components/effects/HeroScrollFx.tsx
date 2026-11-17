@@ -7,6 +7,8 @@ import { useEffect } from "react";
 export function HeroScrollFx() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // El CSS (animation-timeline) ya hace este efecto sin JS.
+    if (CSS.supports("animation-timeline: view()")) return;
     const hero = document.querySelector(".hero");
     if (!(hero instanceof HTMLElement)) return;
 

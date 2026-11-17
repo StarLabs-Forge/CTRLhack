@@ -9,6 +9,8 @@ import { useEffect } from "react";
 export function SectionParallax() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // El CSS (animation-timeline) ya hace este efecto sin JS.
+    if (CSS.supports("animation-timeline: view()")) return;
     const sections = Array.from(document.querySelectorAll<HTMLElement>(".section-deco"));
     if (sections.length === 0) return;
 

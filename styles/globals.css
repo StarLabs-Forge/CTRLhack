@@ -244,3 +244,18 @@ section.tight { padding: 88px 0; }
     ::view-transition-new(*) { animation: none !important; }
   }
 }
+
+/* Número de fondo de sección: parallax con timeline de vista de .section-deco
+   (cover 0–100% = mientras la sección cruza el viewport). Sin JS; en
+   navegadores sin soporte, SectionParallax escribe --section-progress. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-deco { view-timeline: --section block; }
+    .section-index {
+      animation: section-index-drift linear both;
+      animation-timeline: --section;
+      animation-range: cover 0% cover 100%;
+    }
+    @keyframes section-index-drift { to { translate: 0 -48px; } }
+  }
+}

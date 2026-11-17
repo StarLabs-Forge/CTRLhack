@@ -196,3 +196,45 @@
 @media (max-width: 520px) {
   .hero { padding: 72px 0 56px; }
 }
+
+/* ============================================
+   HERO → SOBRE con scroll-driven animations (sin JS)
+   Mismo efecto que HeroScrollFx, pero lo evalúa el compositor: el progreso
+   es la timeline de vista del hero mientras sale por arriba (exit-crossing 0–100%: arranca al primer pixel de scroll aunque el hero sea más alto que el viewport).
+   - Usa `scale`/`translate` (propiedades individuales) para no pisar el
+     `transform` de fadeUp ni el tilt 3D del showcase.
+   - Sin soporte, HeroScrollFx sigue escribiendo --hero-progress (ver el
+     chequeo de CSS.supports en ese componente); con reduced-motion no corre.
+   ============================================ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero--home { view-timeline: --hero block; }
+
+    .hero--home::before,
+    .hero--home::after,
+    .hero--home .wrap > div:first-child,
+    .hero--home .showcase-glow {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --hero;
+      animation-range: exit-crossing 0% exit-crossing 100%;
+    }
+    .hero--home::before { animation-name: hero-grid-drift; }
+    .hero--home::after { animation-name: hero-veil; }
+    .hero--home .wrap > div:first-child { animation-name: hero-copy-recede; }
+    .hero--home .showcase-glow { animation-name: hero-glow-fade; }
+
+    /* el showcase ya anima fadeUp al montar: se le suma la animación de scroll */
+    .hero--home .showcase {
+      animation: fadeUp 0.9s var(--ease-out) 0.2s both, hero-showcase-recede linear both;
+      animation-timeline: auto, --hero;
+      animation-range: normal, exit-crossing 0% exit-crossing 100%;
+    }
+
+    @keyframes hero-grid-drift { to { background-position: -22px -14px; } }
+    @keyframes hero-veil { from { opacity: 0; } to { opacity: 0.9; } }
+    @keyframes hero-copy-recede { to { scale: 0.965; } }
+    @keyframes hero-glow-fade { to { opacity: 0.25; } }
+    @keyframes hero-showcase-recede { to { translate: 0 10px; scale: 0.97; } }
+  }
+}
