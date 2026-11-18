@@ -126,3 +126,7 @@
     transform: translateY(0);
   }
 }
+
+/* CTA "Contacto": al estar en su sección (aria-current="location") se
+   ilumina, ya que el subrayado de los demás enlaces no aplica a un botón. */
+.nav .btn[aria-current] { filter: brightness(1.3); box-shadow: 0 0 18px -6px rgba(32, 217, 255, 0.5); }

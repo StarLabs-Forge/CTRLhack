@@ -27,7 +27,7 @@ export default function ServicioSistemasView() {
           title={detail.ctaTitle}
           description={detail.ctaDescription}
           ctaLabel={detail.ctaLabel}
-          ctaHref="/contacto"
+          ctaHref="/#contacto"
         />
       </Reveal>
     </>

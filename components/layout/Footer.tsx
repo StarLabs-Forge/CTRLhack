@@ -19,7 +19,7 @@ export function Footer() {
             <Link to="/#proceso">Proceso</Link>
             <Link to="/servicios">Servicios</Link>
             <Link to="/portafolio">Portafolio</Link>
-            <Link to="/contacto">Contacto</Link>
+            <Link to="/#contacto">Contacto</Link>
           </div>
           <div className="foot-col">
             <h5>Categorías</h5>

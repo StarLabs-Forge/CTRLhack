@@ -7,7 +7,7 @@ import { Identity } from "../components/sections/Identity";
 import { ServicesGrid } from "../components/sections/ServicesGrid";
 import { ProjectDeck } from "../components/portfolio/ProjectDeck";
 import { Testimonials } from "../components/testimonials/Testimonials";
-import { CTABand } from "../components/sections/CTABand";
+import { ContactSection } from "../components/sections/ContactSection";
 import { Eyebrow } from "../components/ui/Eyebrow";
 import { Reveal } from "../components/ui/Reveal";
 import { HeroScrollFx } from "../components/effects/HeroScrollFx";
@@ -79,7 +79,7 @@ export default function HomeView() {
         variant="home"
         cta={{
           label: "Cuéntanos tu idea",
-          href: "/contacto",
+          href: "/#contacto",
           ghostLabel: "Ver nuestro trabajo",
           ghostHref: "/portafolio",
         }}
@@ -135,7 +135,7 @@ export default function HomeView() {
             <p>
               ¿No sabes cuál necesitas? <br /> Cuéntanos qué quieres conseguir. Nosotros encontramos cómo hacerlo.
             </p>
-            <Link to="/contacto" className="btn-ghost">
+            <Link to="/#contacto" className="btn-ghost">
               Hablemos <span className="arrow">→</span>
             </Link>
           </Reveal>
@@ -171,14 +171,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      <Reveal>
-        <CTABand
-          title="Cuéntanos tu idea."
-          description="No necesitas tenerlo todo claro. Empecemos por lo que tienes."
-          ctaLabel="Empecemos"
-          ctaHref="/contacto"
-        />
-      </Reveal>
+      <ContactSection />
     </>
   );
 }

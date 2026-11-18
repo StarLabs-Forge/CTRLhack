@@ -77,7 +77,7 @@ export function CaseStudy({ caseStudy, indexLabel }: CaseStudyProps) {
       <hr className="divider" style={{ margin: "32px 0 24px" }} />
       <p style={{ color: "var(--text-500)", fontSize: 13, maxWidth: "60ch" }}>{caseStudy.closingNote}</p>
       <div style={{ marginTop: 18 }}>
-        <Button href="/contacto" variant="ghost">
+        <Button href="/#contacto" variant="ghost">
           Hablar sobre un proyecto como este
         </Button>
       </div>

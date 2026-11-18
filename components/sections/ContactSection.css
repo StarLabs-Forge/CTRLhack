@@ -1,0 +1,117 @@
+/* ============================================
+   CONTACTO — sección 06 del Home. Titular + canales + redes a la izquierda,
+   formulario como tarjeta a la derecha. Relleno y zoom por alto de pantalla
+   vienen de .section-snap / .section-dense (globals.css), así que cabe de un
+   vistazo igual que el resto de secciones.
+   ============================================ */
+/* resplandor de marca detrás del formulario */
+.contact-section::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto 40%;
+  height: 80%;
+  background: radial-gradient(ellipse 55% 55% at 55% 40%, rgba(118, 87, 255, 0.14), transparent 70%);
+  pointer-events: none;
+}
+.contact-grid {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  grid-template-areas:
+    "head  card"
+    "aside card";
+  column-gap: clamp(32px, 6vw, 96px);
+  row-gap: clamp(16px, 3.4dvh, 40px);
+  align-items: center;
+}
+.contact-head { grid-area: head; align-self: end; }
+.contact-card { grid-area: card; }
+.contact-aside { grid-area: aside; align-self: start; display: grid; gap: clamp(14px, 3dvh, 28px); }
+
+.contact-head h2 {
+  font-size: clamp(2rem, min(4.2vw, 7dvh), 3.2rem);
+  letter-spacing: -0.02em;
+  margin: clamp(8px, 1.8dvh, 16px) 0 clamp(8px, 1.8dvh, 16px);
+}
+
+/* tarjeta del formulario */
+.contact-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgba(23, 31, 61, 0.6), rgba(11, 16, 36, 0.85));
+  padding: clamp(20px, 4dvh, 40px) clamp(20px, 3vw, 40px);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+.contact-card .contact-form { max-width: none; gap: clamp(12px, 2.4dvh, 20px); }
+
+/* canales directos + redes */
+.contact-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-500);
+  margin-bottom: 8px;
+}
+.contact-channels { display: flex; flex-direction: column; gap: 4px; }
+/* acento cálido: contacto es uno de los usos permitidos (Brand v1.1, 1ter) */
+.contact-email { font-family: var(--mono); font-size: 16px; color: var(--warm-accent); width: fit-content; transition: color var(--dur-fast) var(--ease-out); }
+.contact-email:hover { color: var(--text-100); }
+.contact-location { color: var(--text-500); font-size: 13.5px; }
+
+.contact-socials ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.contact-socials a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: clamp(8px, 1.4dvh, 12px) 14px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  background: var(--bg-900);
+  color: var(--text-300);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.contact-socials a:hover,
+.contact-socials a:focus-visible {
+  border-color: var(--accent-strong);
+  color: var(--text-100);
+  background: var(--bg-800);
+  transform: translateY(-2px);
+}
+.contact-socials a:active { transform: translateY(0) scale(0.98); }
+.contact-socials svg { width: 20px; height: 20px; flex-shrink: 0; fill: currentColor; color: var(--accent); }
+.contact-social-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.contact-social-text strong { font-size: 13.5px; font-weight: 500; }
+.contact-social-text span { font-family: var(--mono); font-size: 11.5px; color: var(--text-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* una columna: titular → formulario → canales y redes. Las animaciones de
+   entrada ya no dependen de la columna, solo del orden (Reveal index). */
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "head" "card" "aside";
+    row-gap: 28px;
+  }
+  .contact-head, .contact-aside { align-self: stretch; }
+}
+/* tablet (una columna, pantalla alta): relleno vertical del formulario y de
+   los huecos escala con el alto para que la sección siga cabiendo completa. */
+@media (min-width: 601px) and (max-width: 860px) {
+  .contact-grid { row-gap: clamp(10px, 2dvh, 28px); }
+  .contact-card { padding: clamp(12px, 2.4dvh, 28px) 24px; }
+  .contact-card .contact-form { gap: clamp(8px, 1.6dvh, 16px); }
+  .contact-aside { gap: clamp(10px, 2dvh, 20px); }
+}
+@media (max-width: 420px) {
+  .contact-socials ul { grid-template-columns: minmax(0, 1fr); }
+}

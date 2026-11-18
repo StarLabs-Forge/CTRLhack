@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { ScrollManager } from "./components/layout/ScrollManager";
@@ -16,7 +16,6 @@ const ServicioAppsView = lazy(() => import("./views/ServicioAppsView"));
 const ServicioSistemasView = lazy(() => import("./views/ServicioSistemasView"));
 const ProductosView = lazy(() => import("./views/ProductosView"));
 const PortafolioView = lazy(() => import("./views/PortafolioView"));
-const ContactoView = lazy(() => import("./views/ContactoView"));
 const NotFoundView = lazy(() => import("./views/NotFoundView"));
 
 export function App() {
@@ -34,7 +33,8 @@ export function App() {
           <Route path="/servicios/sistemas" element={<ServicioSistemasView />} />
           <Route path="/productos" element={<ProductosView />} />
           <Route path="/portafolio" element={<PortafolioView />} />
-          <Route path="/contacto" element={<ContactoView />} />
+          {/* Contacto ahora es la sección 06 del Home; /contacto queda como redirect para links viejos */}
+          <Route path="/contacto" element={<Navigate to="/#contacto" replace />} />
           <Route path="*" element={<NotFoundView />} />
         </Routes>
       </Suspense>

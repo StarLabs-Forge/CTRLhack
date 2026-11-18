@@ -26,14 +26,14 @@ export default function NotFoundView() {
           </p>
           <div className="notfound-actions">
             <Button href="/">Volver al inicio</Button>
-            <Button href="/contacto" variant="ghost" showArrow={false}>
+            <Button href="/#contacto" variant="ghost" showArrow={false}>
               Cuéntanos tu idea
             </Button>
           </div>
           <nav className="notfound-links" aria-label="Enlaces útiles">
             <Link to="/servicios">Servicios</Link>
             <Link to="/portafolio">Portafolio</Link>
-            <Link to="/contacto">Contacto</Link>
+            <Link to="/#contacto">Contacto</Link>
           </nav>
         </div>
       </div>

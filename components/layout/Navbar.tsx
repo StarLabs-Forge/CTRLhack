@@ -8,15 +8,15 @@ import "./Navbar.css";
 // Misma lógica, expresada como estado de React en vez de manipulación directa del DOM.
 
 // Secciones de la Home que tienen entrada en el menú, en orden de aparición.
-// "testimonios" y lo que sigue no tienen enlace: ahí no se marca nada.
-const HOME_SECTIONS = ["identidad", "proceso", "servicios", "proyectos"] as const;
+// "testimonios" no tiene enlace: ahí no se marca nada.
+const HOME_SECTIONS = ["identidad", "proceso", "servicios", "proyectos", "contacto"] as const;
 type HomeSection = (typeof HOME_SECTIONS)[number];
 type Spy = "inicio" | HomeSection | null;
 
 // Qué parte de la Home está en pantalla. La "línea de lectura" está a ~40% del
 // alto del viewport (bajo el nav): la sección que la cruza es la actual. Por
 // encima de la primera sección es el hero ("inicio"); más allá de la última
-// con enlace (testimonios, CTA, footer) no hay ninguna activa.
+// con enlace (testimonios, footer) no hay ninguna activa.
 function readHomeSection(): Spy {
   const probe = 64 + window.innerHeight * 0.4;
   const first = document.getElementById(HOME_SECTIONS[0]);
@@ -93,9 +93,9 @@ export function Navbar() {
             Portafolio
           </Link>
           <Link
-            to="/contacto"
+            to="/#contacto"
             className="btn"
-            aria-current={pathname === "/contacto" ? "page" : undefined}
+            aria-current={sectionCurrent("contacto")}
             onClick={() => setOpen(false)}
           >
             Contacto

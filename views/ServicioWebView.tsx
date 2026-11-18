@@ -27,7 +27,7 @@ export default function ServicioWebView() {
           title={detail.ctaTitle}
           description={detail.ctaDescription}
           ctaLabel={detail.ctaLabel}
-          ctaHref="/contacto"
+          ctaHref="/#contacto"
         />
       </Reveal>
     </>

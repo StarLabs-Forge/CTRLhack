@@ -69,7 +69,7 @@ export function ClientCase({ clientCase, indexLabel }: ClientCaseProps) {
         <Button href={clientCase.liveUrl} variant="solid">
           Ver el sitio en vivo
         </Button>
-        <Button href="/contacto" variant="ghost">
+        <Button href="/#contacto" variant="ghost">
           Quiero algo así para mi negocio
         </Button>
       </div>

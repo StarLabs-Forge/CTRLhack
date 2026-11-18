@@ -37,7 +37,7 @@ export default function ServiciosView() {
           title="Cuéntanos tu idea."
           description="No necesitas tenerlo todo claro. Empecemos por lo que tienes."
           ctaLabel="Hablemos"
-          ctaHref="/contacto"
+          ctaHref="/#contacto"
         />
       </Reveal>
     </>
