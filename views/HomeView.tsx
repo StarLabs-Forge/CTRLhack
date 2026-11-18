@@ -119,7 +119,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      <section id="servicios" className="section-deco gridlines section-snap">
+      <section id="servicios" className="section-deco gridlines section-snap section-dense">
         <div className="section-index">03</div>
         <div className="wrap">
           <Reveal className="section-head">
@@ -142,7 +142,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      <section id="proyectos" className="tight section-snap">
+      <section id="proyectos" className="tight section-snap section-dense">
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">04 / PORTAFOLIO</span>

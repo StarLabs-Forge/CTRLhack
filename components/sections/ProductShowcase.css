@@ -156,3 +156,18 @@
   .app-body { padding: 14px; }
   .app-stats { gap: 8px; }
 }
+
+/* fit-to-viewport (desktop): el mockup escala con el alto de la pantalla. */
+@media (min-width: 861px) {
+  /* el mockup tiene alto fijo en contenido (no depende del ancho), así que se
+     escala con zoom por tramos de alto de pantalla. */
+  .hero--home .showcase { zoom: 1; }
+}
+/* tablet (hero en una columna): el mockup se apila bajo el texto, así que se
+   reduce para que titular + CTAs + mockup quepan en la pantalla alta. */
+@media (min-width: 601px) and (max-width: 860px) { .hero--home .showcase { zoom: 0.8; } }
+@media (min-width: 861px) and (max-height: 820px) { .hero--home .showcase { zoom: 0.9; } }
+@media (min-width: 861px) and (max-height: 740px) { .hero--home .showcase { zoom: 0.84; } }
+@media (min-width: 861px) and (max-height: 680px) { .hero--home .showcase { zoom: 0.76; } }
+@media (min-width: 861px) and (max-height: 600px) { .hero--home .showcase { zoom: 0.66; } }
+@media (min-width: 601px) and (max-width: 740px) { .hero--home .showcase { zoom: 0.7; } }

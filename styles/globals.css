@@ -214,6 +214,47 @@ section.tight { padding: 88px 0; }
 }
 
 /* ============================================
+   FIT-TO-VIEWPORT (desktop) — cada sección del recorrido de Home se lee
+   completa dentro de una pantalla, sin scroll interno. En vez de fijar
+   píxeles, el espacio vertical (relleno de sección, hueco bajo el título,
+   hero, tarjetas) escala con el alto real del viewport (dvh): en un
+   monitor alto respira, en un laptop bajo se compacta. Desde 601px (laptop
+   y tablet): en teléfono las secciones se apilan y NO caben en una
+   pantalla; ahí crecen y se hace scroll, como antes.
+   ============================================ */
+@media (min-width: 601px) {
+  :root {
+    --fit-pad: clamp(20px, 5.5dvh, 72px);
+    --fit-gap: clamp(14px, 3.6dvh, 44px);
+  }
+  section.section-snap { padding-block: var(--fit-pad); }
+  /* más ancho = el título y el párrafo ocupan menos líneas */
+  .section-snap .section-head { max-width: 820px; margin-bottom: var(--fit-gap); }
+  .section-snap .section-head h2 { margin-top: clamp(8px, 1.6dvh, 14px); }
+  .section-snap .section-head p { margin-top: clamp(4px, 1dvh, 10px) !important; }
+}
+
+/* Secciones densas (Servicios, Portafolio): en pantallas bajas el contenido
+   se escala por tramos de alto (zoom) hasta que cabe completo. Solo desktop;
+   en mobile se apila y se hace scroll. */
+/* Páginas internas (hero compacto + sección de contenido): mismo criterio,
+   el espacio vertical sigue al alto de la pantalla para que título y
+   contenido se vean juntos. */
+@media (min-width: 861px) {
+  .page-hero-block > .hero--page { padding-top: clamp(16px, 3.4dvh, 64px); padding-bottom: clamp(8px, 1.8dvh, 40px) !important; /* !important: Hero recibe paddingBottom inline */ }
+  .page-hero-block > .hero--page h1 { margin-top: clamp(6px, 1.4dvh, 20px); margin-bottom: clamp(6px, 1.4dvh, 22px); }
+  .page-hero-block > section { padding-block: clamp(14px, 3.4dvh, 64px); }
+  .page-hero-block .section-head { margin-bottom: var(--fit-gap); }
+}
+@media (min-width: 861px) and (max-height: 700px) { .page-hero-block > section > .wrap { zoom: 0.94; } }
+@media (min-width: 861px) and (max-height: 660px) { .page-hero-block > section > .wrap { zoom: 0.88; } }
+@media (min-width: 861px) and (max-height: 620px) { .page-hero-block > section > .wrap { zoom: 0.82; } }
+@media (min-width: 861px) and (max-height: 700px) { .section-dense > .wrap { zoom: 0.94; } }
+@media (min-width: 861px) and (max-height: 660px) { .section-dense > .wrap { zoom: 0.88; } }
+@media (min-width: 861px) and (max-height: 620px) { .section-dense > .wrap { zoom: 0.82; } }
+@media (min-width: 861px) and (max-height: 580px) { .section-dense > .wrap { zoom: 0.76; } }
+
+/* ============================================
    RESPONSIVE — solo lo genérico (secciones/utilidades de arriba).
    Los breakpoints de cada componente viven en su propio archivo .css.
    ============================================ */

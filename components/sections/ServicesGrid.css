@@ -170,3 +170,21 @@
   }
   .service-card-spotlight { display: none; }
 }
+
+/* fit-to-viewport (desktop): imagen, relleno y pie escalan con el alto de la
+   pantalla para que las 4 tarjetas + "¿No sabes cuál necesitas?" quepan juntas. */
+/* tablet: 2×2 con tarjeta horizontal (imagen a la izquierda) — cabe en la
+   pantalla alta sin imágenes gigantes. */
+@media (min-width: 601px) and (max-width: 860px) {
+  .service-card { flex-direction: row; align-items: center; gap: 16px; padding: 14px; }
+  .service-image { aspect-ratio: auto; flex: 0 0 38%; height: clamp(88px, 12dvh, 150px); }
+  .service-card-body { flex: 1; min-width: 0; }
+  .services-grid { gap: 14px; }
+  .services-followup { margin-top: var(--fit-gap); padding-top: clamp(10px, 2dvh, 24px); }
+}
+@media (min-width: 861px) {
+  .service-image { aspect-ratio: auto; height: clamp(76px, 15dvh, 180px); }
+  .service-card { padding: clamp(10px, 2dvh, 18px) 18px clamp(12px, 2.2dvh, 20px); gap: clamp(6px, 1.2dvh, 10px); }
+  .services-grid { gap: clamp(14px, 3dvh, 28px) 24px; }
+  .services-followup { margin-top: var(--fit-gap); padding-top: clamp(10px, 2.4dvh, 36px); }
+}

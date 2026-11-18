@@ -4,7 +4,7 @@
 .about-lead {
   border-left: 2px solid var(--accent-dim);
   padding-left: 22px;
-  margin-bottom: 52px;
+  margin-bottom: clamp(16px, 4.4dvh, 52px);
   max-width: 66ch;
 }
 .about-lead p {
@@ -64,4 +64,11 @@
 @media (max-width: 860px) {
   .steps { grid-template-columns: 1fr; }
   .step:not(:last-child)::after { content: none; }
+}
+
+/* tablet estrecha: los 3 pasos se apilan, así que el relleno de cada uno
+   escala con el alto para que la sección siga cabiendo en la pantalla. */
+@media (min-width: 601px) and (max-width: 860px) {
+  .step { padding: clamp(14px, 2.6dvh, 38px) 28px clamp(12px, 2.2dvh, 30px); }
+  .step .num { font-size: clamp(2rem, 4dvh, 3.1rem); }
 }

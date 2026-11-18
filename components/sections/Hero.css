@@ -187,6 +187,17 @@
   100% { opacity: 0; }
 }
 
+/* fit-to-viewport: el hero de Home escala su espacio vertical con el alto
+   de la pantalla para que titular, CTAs, tagline y showcase quepan juntos. */
+@media (min-width: 601px) {
+  .hero--home { padding: clamp(24px, 6dvh, 128px) 0 clamp(36px, 7dvh, 96px); }
+  .hero--home h1 { font-size: clamp(2.2rem, min(5.2vw, 8dvh), 4rem); margin: clamp(10px, 2.2dvh, 20px) 0 clamp(10px, 2.4dvh, 22px); }
+  .hero--home .hero-cta { margin-top: clamp(16px, 3.4dvh, 30px); }
+  .hero--home .sys-status { margin-top: clamp(12px, 2.8dvh, 26px); }
+  .hero--home .hero-tagline { margin-top: clamp(16px, 4dvh, 44px); }
+  .hero--home .wrap { row-gap: clamp(8px, 2dvh, 56px); }
+}
+
 @media (max-width: 860px) {
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-scrollhint { display: none; }

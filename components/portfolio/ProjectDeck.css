@@ -107,3 +107,11 @@
 @media (prefers-reduced-motion: reduce) {
   .deck-card, .deck-tick, .deck-arrow, .deck-cta { transition-duration: 0.001ms !important; }
 }
+
+/* fit-to-viewport (desktop): el carrusel escala con el alto de la pantalla
+   para que título + descripción + tarjetas + controles quepan juntos. */
+@media (min-width: 861px) {
+  .deck-shell { min-height: clamp(250px, 43dvh, 440px); padding: clamp(2px, 1dvh, 16px) 0; }
+  .deck-card { min-height: clamp(250px, 41dvh, 408px); }
+  .deck-controls { margin-top: clamp(12px, 2.8dvh, 28px); }
+}
