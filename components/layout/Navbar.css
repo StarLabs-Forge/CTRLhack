@@ -69,10 +69,12 @@
   background: var(--accent);
   transition: right var(--dur-fast) var(--ease-out);
 }
+/* aria-current="page" (ruta activa) y "location" (sección activa de la Home)
+   comparten estilo: color de acento + línea completa. */
 .navlinks a:not(.btn):hover::after,
-.navlinks a[aria-current="page"]:not(.btn)::after { right: 0; }
-.navlinks a:hover, .navlinks a[aria-current="page"] { color: var(--text-100); }
-.navlinks a[aria-current="page"] { color: var(--accent); }
+.navlinks a[aria-current]:not(.btn)::after { right: 0; }
+.navlinks a:hover { color: var(--text-100); }
+.navlinks a[aria-current]:not(.btn) { color: var(--accent); }
 
 /* nav CTA: subtle gradient outline instead of a filled pill, so it reads
    as an invite rather than competing with the hero's primary CTA. */

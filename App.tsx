@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { ScrollManager } from "./components/layout/ScrollManager";
+import { ViewTransitionGate } from "./components/ui/TransitionLink";
 import { Loading } from "./views/Loading";
 
 // Cada vista se carga bajo demanda: el bundle inicial trae solo la Home, y
@@ -22,6 +23,7 @@ export function App() {
   return (
     <>
       <ScrollManager />
+      <ViewTransitionGate />
       <Navbar />
       <Suspense fallback={<Loading />}>
         <Routes>
