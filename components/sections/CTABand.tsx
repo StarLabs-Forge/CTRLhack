@@ -15,7 +15,7 @@ export function CTABand({ title, description, ctaLabel, ctaHref }: CTABandProps)
       <div className="wrap">
         <h2>{title}</h2>
         <p>{description}</p>
-        <Button href={ctaHref}>{ctaLabel}</Button>
+        <Button href={ctaHref} magnetic>{ctaLabel}</Button>
       </div>
     </div>
   );

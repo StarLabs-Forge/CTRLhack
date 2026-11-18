@@ -65,7 +65,7 @@ export function Hero({
 
           {cta && (
             <div className="hero-cta">
-              <Button href={cta.href}>{cta.label}</Button>
+              <Button href={cta.href} magnetic>{cta.label}</Button>
               {cta.ghostLabel && cta.ghostHref && (
                 <Button href={cta.ghostHref} variant="ghost" showArrow={false}>
                   {cta.ghostLabel}

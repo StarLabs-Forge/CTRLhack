@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { TransitionLink as Link } from "./TransitionLink";
+import { useMagnetic } from "./useMagnetic";
 import "./Button.css";
 
 // Equivalente a .btn / .btn-ghost en /styles.css. Mismos tokens, sin valores nuevos.
@@ -8,6 +9,9 @@ interface ButtonProps {
   children: ReactNode;
   variant?: "solid" | "ghost";
   showArrow?: boolean;
+  // Atracción magnética hacia el cursor. Reservado para el CTA principal de
+  // una sección: si todo es magnético, nada lo es.
+  magnetic?: boolean;
 }
 
 // Un href externo (otra app de Vexora, un mailto, un subdominio) no puede
@@ -18,7 +22,8 @@ function isExternal(href: string) {
   return /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href);
 }
 
-export function Button({ href, children, variant = "solid", showArrow = true }: ButtonProps) {
+export function Button({ href, children, variant = "solid", showArrow = true, magnetic = false }: ButtonProps) {
+  const ref = useMagnetic<HTMLAnchorElement>(magnetic);
   const className = variant === "solid" ? "btn" : "btn-ghost";
   const content = (
     <>
@@ -29,14 +34,14 @@ export function Button({ href, children, variant = "solid", showArrow = true }: 
 
   if (isExternal(href)) {
     return (
-      <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+      <a ref={ref} href={href} className={className} target="_blank" rel="noopener noreferrer">
         {content}
       </a>
     );
   }
 
   return (
-    <Link to={href} className={className}>
+    <Link ref={ref} to={href} className={className}>
       {content}
     </Link>
   );

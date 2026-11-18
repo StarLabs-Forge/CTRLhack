@@ -37,6 +37,14 @@
 .btn-ghost:hover { border-color: var(--accent-strong); color: var(--text-100); transform: translateY(-1px); }
 .btn-ghost:active { transform: translateY(0) scale(0.97); }
 
+/* Magnetic (useMagnetic): `translate` es independiente de `transform`, así el
+   hover (translateY/scale) y la atracción se componen sin pisarse. */
+.is-magnetic {
+  translate: var(--mx, 0px) var(--my, 0px);
+  transition: filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+    translate var(--dur-fast) var(--ease-out);
+}
+
 .btn .arrow, .btn-ghost .arrow {
   display: inline-block;
   transition: transform var(--dur-fast) var(--ease);
