@@ -53,7 +53,7 @@
 }
 .service-card:active { transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px) scale(0.99); }
 
-/* luz radial que sigue al cursor — paleta STARLABS exclusivamente */
+/* luz radial que sigue al cursor — paleta CTRLHACK exclusivamente */
 .service-card-spotlight {
   position: absolute;
   inset: 0;

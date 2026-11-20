@@ -1,4 +1,4 @@
-# Estructura del proyecto — Vexora.dev
+# Estructura del proyecto — Ctrlhack.dev
 
 > **Estado:** este documento define la estructura **objetivo**. El repositorio
 > hoy está organizado por tipo (`components/sections/`, `components/cases/`,
@@ -34,7 +34,7 @@ sección lo necesite. Es mucho más fácil subir algo que bajarlo.
 ## Árbol
 
 ```
-nextjs-vexora/
+nextjs-starlabs/
 │
 ├── index.html                    # El único HTML. Fuentes, favicon, <div id="root">.
 ├── main.tsx                      # Monta React y el <BrowserRouter>.
@@ -78,7 +78,7 @@ nextjs-vexora/
 │   └── brand/
 │
 ├── ESTRUCTURA.md                 # este archivo
-└── Vexora — Brand & Design System v1.1.md
+└── Ctrlhack — Brand & Design System v1.1.md
 ```
 
 ### Sobre el nombre `views/`
@@ -162,8 +162,8 @@ export default function HomeView() {
   return (
     <>
       <Meta
-        title="Vexora — ¿Tienes una idea? Hagámosla realidad"
-        description="Vexora crea contigo páginas web, aplicaciones y sistemas..."
+        title="Ctrlhack — ¿Tienes una idea? Hagámosla realidad"
+        description="Ctrlhack crea contigo páginas web, aplicaciones y sistemas..."
       />
       {/* secciones */}
     </>
@@ -210,7 +210,7 @@ poner". Antes de subir algo, comprueba que **de verdad** lo usan dos secciones.
 |---|---|
 | `Button`, `Tag`, `Status` — piezas sin contenido propio | `ProcessStep` — solo existe dentro de Proceso |
 | `tokens.css`, `globals.css` | `Hero.css` |
-| El logo de Vexora | La foto de un caso concreto |
+| El logo de Ctrlhack | La foto de un caso concreto |
 | `socials.ts` (Footer + Contacto) | Los pasos del proceso |
 
 **Regla del contenido:** un componente de `components/ui/` no debe contener

@@ -9,7 +9,7 @@ export function Footer() {
       <div className="wrap">
         <div className="foot-grid">
           <div className="foot-col">
-            <h5>VEXORA</h5>
+            <h5>CTRLHACK</h5>
             <p style={{ maxWidth: "30ch" }}>Ingeniería de producto y arquitectura digital para negocios en crecimiento.</p>
           </div>
           <div className="foot-col">
@@ -31,7 +31,7 @@ export function Footer() {
           </div>
         </div>
         <div className="foot-bottom">
-          <span>© 2026 VEXORA</span>
+          <span>© 2026 CTRLHACK</span>
           <ul className="foot-social">
             {socials.map((social) => (
               <li key={social.id}>

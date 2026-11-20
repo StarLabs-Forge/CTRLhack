@@ -14,8 +14,8 @@ import "./styles/PortafolioView.css";
 // alguien que no sabe de tecnología y solo quiere saber si le sirve o le
 // interesa sumarse. El detalle técnico completo (antes suelto en la página)
 // ahora vive solo dentro de <CaseModal>, detrás de "Ver más".
-// Separa "Productos propios" (kind:"product", ideas de VEXORA) de "Trabajos
-// para clientes" (kind:"client", encargos de Vexora Web) en dos secciones:
+// Separa "Productos propios" (kind:"product", ideas de CTRLHACK) de "Trabajos
+// para clientes" (kind:"client", encargos de Ctrlhack Web) en dos secciones:
 // mismo <ProjectCard>, pero nunca en la misma grilla.
 export default function PortafolioView() {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
@@ -34,8 +34,8 @@ export default function PortafolioView() {
   return (
     <>
       <Meta
-        title="Portafolio — VEXORA"
-        description="Proyectos reales construidos por VEXORA: productos propios y trabajos para clientes. Caso destacado: CHECK, control de acceso para vida nocturna en La Paz."
+        title="Portafolio — CTRLHACK"
+        description="Proyectos reales construidos por CTRLHACK: productos propios y trabajos para clientes. Caso destacado: CHECK, control de acceso para vida nocturna en La Paz."
       />
       <div className="page-hero-block">
         <Hero
@@ -65,7 +65,7 @@ export default function PortafolioView() {
                 <Eyebrow>Trabajos para clientes</Eyebrow>
                 <h2>También construimos para otros</h2>
                 <p style={{ color: "var(--text-500)", marginTop: 10 }}>
-                  Encargos reales de Vexora Web — sitios y landings que diseñamos y desarrollamos para terceros.
+                  Encargos reales de Ctrlhack Web — sitios y landings que diseñamos y desarrollamos para terceros.
                 </p>
               </Reveal>
               <div className="pgrid">

@@ -12,7 +12,7 @@ import "../components/sections/ServiceDetail.css";
 import "./styles/PortafolioView.css";
 
 // A diferencia de /servicios/*, esta página no habla de trabajo para
-// clientes: es el lado de Vexora que investiga problemas propios y los
+// clientes: es el lado de Ctrlhack que investiga problemas propios y los
 // convierte en productos propios. Reutiliza la misma lista y la misma
 // <ProjectCard> que /portafolio — agregar un producto nuevo es agregar una
 // entrada en data/portfolioProjects.ts, no rediseñar esta página.
@@ -22,7 +22,7 @@ export default function ProductosView() {
   // Solo kind:"product" — esta página es explícitamente "no es trabajo para
   // clientes" (ver comentario de arriba), así que no puede reusar la lista
   // completa de portfolioProjects sin filtrar, o mostraría encargos de
-  // clientes (p. ej. Aura Tumbler) como si fueran ideas propias de VEXORA.
+  // clientes (p. ej. Aura Tumbler) como si fueran ideas propias de CTRLHACK.
   const ownProducts = portfolioProjects.filter((p) => p.kind === "product");
 
   const openProject = ownProducts.find((p) => p.slug === openSlug);
@@ -35,12 +35,12 @@ export default function ProductosView() {
   return (
     <>
       <Meta
-        title="Productos propios — VEXORA"
-        description="Los productos y proyectos que nacen dentro de VEXORA, no por encargo de un cliente."
+        title="Productos propios — CTRLHACK"
+        description="Los productos y proyectos que nacen dentro de CTRLHACK, no por encargo de un cliente."
       />
       <div className="page-hero-block">
         <Hero
-          eyebrow="VEXORA"
+          eyebrow="CTRLHACK"
           title="Productos que nacen de nuestras propias ideas."
           lead="Nuestras ideas, hechas realidad."
           variant="page"
@@ -51,9 +51,9 @@ export default function ProductosView() {
           <div className="wrap">
             <Reveal className="svc-lead">
               <p>
-                VEXORA no solo construye para otros: también investigamos problemas, planteamos ideas propias,
+                CTRLHACK no solo construye para otros: también investigamos problemas, planteamos ideas propias,
                 diseñamos soluciones y desarrollamos nuestros propios productos tecnológicos. Estos son los proyectos
-                que nacen dentro de VEXORA — no por encargo de un cliente, sino porque vimos un problema que
+                que nacen dentro de CTRLHACK — no por encargo de un cliente, sino porque vimos un problema que
                 queríamos resolver.
               </p>
             </Reveal>

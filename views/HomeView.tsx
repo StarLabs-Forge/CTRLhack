@@ -60,8 +60,8 @@ export default function HomeView() {
   return (
     <>
       <Meta
-        title="VEXORA — ¿Tienes una idea? Hagámosla realidad"
-        description="VEXORA crea contigo páginas web, aplicaciones y sistemas que convierten tus ideas en algo real y que funciona."
+        title="CTRLHACK — ¿Tienes una idea? Hagámosla realidad"
+        description="CTRLHACK crea contigo páginas web, aplicaciones y sistemas que convierten tus ideas en algo real y que funciona."
       />
       <Hero
         title={
@@ -96,7 +96,7 @@ export default function HomeView() {
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">01 / SOBRE</span>
-            <Eyebrow>Sobre VEXORA</Eyebrow>
+            <Eyebrow>Sobre CTRLHACK</Eyebrow>
             <h2>Las buenas ideas merecen convertirse en algo real</h2>
           </Reveal>
           <Reveal delay={100}>
@@ -149,7 +149,7 @@ export default function HomeView() {
             <Eyebrow>Portafolio</Eyebrow>
             <h2>Ya construimos uno. Y seguimos sumando.</h2>
             <p style={{ color: "var(--text-500)", marginTop: 10 }}>
-              Un vistazo rápido a lo que VEXORA tiene en producción, en camino, y a lo que construimos para otros.
+              Un vistazo rápido a lo que CTRLHACK tiene en producción, en camino, y a lo que construimos para otros.
             </p>
           </Reveal>
           <Reveal delay={100}>

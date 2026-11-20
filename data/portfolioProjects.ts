@@ -1,4 +1,4 @@
-// Lista liviana para el grid de /portafolio (una card por proyecto Vexora,
+// Lista liviana para el grid de /portafolio (una card por proyecto Ctrlhack,
 // en lenguaje simple orientado a quien va a USAR el producto, no a quien lo
 // construyó). El detalle técnico completo vive en data/caseStudies.ts y solo
 // se muestra si el proyecto tiene caseStudySlug — ahí lo abre <CaseModal>.
@@ -13,8 +13,8 @@ export interface PortfolioProject {
   statusLabel: string;
   status: "live" | "soon";
   accent: ProjectAccent;
-  // "product": idea propia de VEXORA, nace sin encargo de nadie.
-  // "client": trabajo hecho para un tercero (Vexora Web / servicios).
+  // "product": idea propia de CTRLHACK, nace sin encargo de nadie.
+  // "client": trabajo hecho para un tercero (Ctrlhack Web / servicios).
   // Separa qué entra en /productos (solo "product") de la sección
   // "Trabajos para clientes" de /portafolio.
   kind: "product" | "client";

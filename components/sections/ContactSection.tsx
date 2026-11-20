@@ -27,8 +27,8 @@ export function ContactSection() {
         <Reveal className="contact-aside" index={2}>
           <div className="contact-channels">
             <span className="contact-label">¿Prefieres hablar directamente?</span>
-            <a href="mailto:hola@vexora.io" className="contact-email">
-              hola@vexora.io
+            <a href="mailto:hola@ctrlhack.io" className="contact-email">
+              hola@ctrlhack.io
             </a>
             <span className="contact-location">La Paz, Bolivia</span>
           </div>

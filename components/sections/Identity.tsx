@@ -1,6 +1,6 @@
 import "./Identity.css";
 
-// Sobre Vexora (Home). Filosofía e identidad — quiénes somos y cómo
+// Sobre Ctrlhack (Home). Filosofía e identidad — quiénes somos y cómo
 // pensamos — no proceso: el paso a paso de cómo trabajamos ya vive en
 // <Process /> (sección "Proceso"), no se repite acá.
 const STAGES = [
@@ -29,7 +29,7 @@ export function Identity() {
     <>
       <div className="about-lead">
         <p>
-          En Vexora creemos que la tecnología tiene sentido cuando resuelve algo, abre una posibilidad o permite
+          En Ctrlhack creemos que la tecnología tiene sentido cuando resuelve algo, abre una posibilidad o permite
           construir algo que antes no existía.
         </p>
       </div>

@@ -1,6 +1,6 @@
 # Reglas de Deployment en Vercel
 
-Guía de requisitos y mejores prácticas para desplegar Vexora en Vercel.
+Guía de requisitos y mejores prácticas para desplegar Ctrlhack en Vercel.
 
 ## ✅ Requisitos Antes del Deploy
 
@@ -139,7 +139,7 @@ dist/                  # Generado en el build
    - Despliega a producción si el build es exitoso
 
 5. **Verifica Deployment**
-   - Accede a `https://vexora.vercel.app` (o tu dominio custom)
+   - Accede a `https://ctrlhack.vercel.app` (o tu dominio custom)
    - Revisa el dashboard de Vercel para logs
 
 ## 📊 Checklist Pre-Deploy

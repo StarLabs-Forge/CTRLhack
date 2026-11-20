@@ -10,7 +10,7 @@ const detail = serviceDetails.apps;
 export default function ServicioAppsView() {
   return (
     <>
-      <Meta title={`${detail.title} — Vexora`} description={detail.lead} />
+      <Meta title={`${detail.title} — Ctrlhack`} description={detail.lead} />
       <div className="page-hero-block">
         <Hero
           eyebrow={detail.eyebrow}

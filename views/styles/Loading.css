@@ -46,7 +46,7 @@
 /* El isotipo se "dibuja": trazo con el gradiente de marca (pathLength=1 en el
    <path>, así el dash se expresa de 0 a 1) y luego el relleno entra. */
 .loading-svg .sl-ribbon {
-  stroke: url(#vexora-gradient);
+  stroke: url(#ctrlhack-gradient);
   stroke-width: 1.4;
   stroke-linejoin: round;
   stroke-dasharray: 1;
