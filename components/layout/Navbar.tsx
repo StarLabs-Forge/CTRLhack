@@ -80,7 +80,7 @@ export function Navbar() {
             Proceso
           </Link>
           <Link
-            to="/servicios"
+            to="/#servicios"
             aria-current={pathname === "/servicios" ? "page" : sectionCurrent("servicios")}
             onClick={() => setOpen(false)}
           >
