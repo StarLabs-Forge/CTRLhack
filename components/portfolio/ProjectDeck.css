@@ -46,9 +46,23 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: transform var(--dur-base) var(--ease-spring), opacity var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease), border-color var(--dur-base) var(--ease);
+  transition: transform var(--dur-moderate) var(--ease), opacity var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease), border-color var(--dur-base) var(--ease);
   will-change: transform, opacity, filter;
 }
+/* Mientras se arrastra, las tarjetas siguen al puntero sin retraso; al soltar vuelve el easing. */
+.deck-shell.is-dragging { cursor: grabbing; }
+.deck-shell.is-dragging .deck-card { transition: opacity var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease), border-color var(--dur-base) var(--ease); }
+/* Brillo que sigue al cursor (posición --gx/--gy escrita por ProjectDeck.tsx). */
+.deck-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgb(var(--glow-rgb) / 0.16), transparent 55%);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease);
+}
+.deck-card.is-active:hover::after { opacity: 1; }
 .deck-card.is-active { cursor: default; border-color: var(--glow-line); box-shadow: inset 0 1px 0 rgb(var(--glow-rgb) / 0.3); }
 
 .deck-card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
@@ -106,7 +120,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .deck-card, .deck-tick, .deck-arrow, .deck-cta { transition-duration: 0.001ms !important; }
+  .deck-card, .deck-card::after, .deck-tick, .deck-arrow, .deck-cta { transition-duration: 0.001ms !important; }
 }
 
 /* fit-to-viewport (desktop): el carrusel escala con el alto de la pantalla
