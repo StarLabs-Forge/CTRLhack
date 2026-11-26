@@ -12,7 +12,7 @@
   justify-content: center;
   padding: 48px 20px;
   overflow-y: auto;
-  animation: case-modal-fade 0.18s var(--ease);
+  animation: case-modal-overlay var(--dur-base) var(--ease);
 }
 
 .case-modal {
@@ -20,6 +20,7 @@
   width: 100%;
   max-width: 860px;
   margin: auto;
+  animation: case-modal-pop var(--dur-moderate) var(--ease-spring) both;
 }
 
 .case-modal-close {
@@ -36,13 +37,19 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  transition: border-color var(--dur-fast) var(--ease), transform var(--dur-base) var(--ease-spring);
   z-index: 1;
 }
-.case-modal-close:hover { border-color: var(--accent); transform: scale(1.06); }
+.case-modal-close:hover { border-color: var(--accent); transform: rotate(90deg) scale(1.08); }
+.case-modal-close:active { transform: rotate(90deg) scale(0.92); }
 
 .case-modal-scroll { max-height: 82vh; overflow-y: auto; border-radius: var(--radius-lg); }
 
+@keyframes case-modal-overlay { from { opacity: 0; } to { opacity: 1; } }
+@keyframes case-modal-pop {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
 @keyframes case-modal-fade {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }

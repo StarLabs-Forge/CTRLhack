@@ -216,7 +216,7 @@ export function ProjectDeck() {
                       rel="noopener noreferrer"
                       tabIndex={isActive ? 0 : -1}
                     >
-                      Ir a la app
+                      Ir a la app<span className="go-arrow" aria-hidden="true">↗</span>
                     </a>
                   ) : (
                     <button

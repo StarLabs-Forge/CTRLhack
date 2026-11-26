@@ -99,6 +99,8 @@
 }
 .deck-arrow:hover { border-color: var(--accent-strong); color: var(--text-100); }
 .deck-arrow:active { transform: scale(0.92); }
+.deck-arrow:hover svg { transform: scale(1.15); }
+.deck-arrow svg { transition: transform var(--dur-fast) var(--ease-spring); }
 .deck-arrow svg { width: 13px; height: 13px; }
 
 .deck-ticks { display: flex; gap: 7px; }
@@ -110,9 +112,10 @@
   padding: 0;
   background: var(--line);
   cursor: pointer;
-  transition: background var(--dur-base) var(--ease);
+  transition: background var(--dur-base) var(--ease), width var(--dur-moderate) var(--ease);
 }
-.deck-tick.active { background: var(--tick-color, var(--glow)); }
+.deck-tick:hover { background: var(--text-600); }
+.deck-tick.active { background: var(--tick-color, var(--glow)); width: 34px; }
 
 @media (max-width: 560px) {
   .deck-shell { min-height: 396px; padding: 18px 0; }

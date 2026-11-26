@@ -55,7 +55,7 @@ export function ProjectCard({ project, onOpenDetail }: ProjectCardProps) {
 
           {project.appUrl ? (
             <a className="btn-ghost" href={project.appUrl} target="_blank" rel="noopener noreferrer">
-              Ir a la app
+              Ir a la app<span className="go-arrow" aria-hidden="true">↗</span>
             </a>
           ) : (
             <button
