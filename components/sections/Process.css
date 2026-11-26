@@ -134,3 +134,27 @@
   .timeline-step { flex-direction: row; text-align: left; padding: 0; }
   .timeline-step p { max-width: none; }
 }
+
+/* ---------- línea atada al scroll (mejora progresiva) ----------
+   Donde hay scroll-driven animations, la línea se llena AL RITMO del scroll
+   (avanza si bajas, retrocede si subes) en vez de dispararse una vez. Sin
+   soporte o con reduced-motion se mantiene el llenado por clase .in de arriba. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline-fill {
+      transition: none;
+      animation: timeline-scrub-x linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 55%;
+    }
+    @keyframes timeline-scrub-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes timeline-scrub-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  }
+}
+@media (max-width: 860px) {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .timeline-fill { animation-name: timeline-scrub-y; animation-range: entry 10% cover 70%; }
+    }
+  }
+}
