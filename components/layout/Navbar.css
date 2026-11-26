@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: var(--nav-h);
 }
 .logo {
   font-family: var(--mono);
@@ -31,7 +31,7 @@
 }
 /* isotipo oficial 2:1 — se dimensiona solo por alto, el ancho sale de la proporción */
 .logo .mark {
-  height: 44px;
+  height: 60px;
   width: auto;
   flex-shrink: 0;
 }
@@ -113,7 +113,7 @@
   .navlinks {
     display: flex;
     position: absolute;
-    top: 64px;
+    top: var(--nav-h);
     left: 0;
     right: 0;
     background: var(--bg-900);

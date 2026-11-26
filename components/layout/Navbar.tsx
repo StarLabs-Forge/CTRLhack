@@ -18,7 +18,7 @@ type Spy = "inicio" | HomeSection | null;
 // encima de la primera sección es el hero ("inicio"); más allá de la última
 // con enlace (testimonios, footer) no hay ninguna activa.
 function readHomeSection(): Spy {
-  const probe = 64 + window.innerHeight * 0.4;
+  const probe = 80 + window.innerHeight * 0.4;
   const first = document.getElementById(HOME_SECTIONS[0]);
   if (!first || first.getBoundingClientRect().top > probe) return "inicio";
   for (const id of HOME_SECTIONS) {

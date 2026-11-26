@@ -4,7 +4,7 @@
 .notfound {
   position: relative;
   overflow: hidden;
-  min-height: calc(100dvh - 64px - 160px);
+  min-height: calc(100dvh - var(--nav-h) - 160px);
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--line-soft);
