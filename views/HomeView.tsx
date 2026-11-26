@@ -99,7 +99,7 @@ export default function HomeView() {
             <Eyebrow>Sobre CTRLHACK</Eyebrow>
             <h2>Las buenas ideas merecen convertirse en algo real</h2>
           </Reveal>
-          <Reveal delay={100} variant="assemble">
+          <Reveal delay={200} variant="assemble">
             <Identity />
           </Reveal>
         </div>
@@ -152,7 +152,7 @@ export default function HomeView() {
               Un vistazo rápido a lo que CTRLHACK tiene en producción, en camino, y a lo que construimos para otros.
             </p>
           </Reveal>
-          <Reveal delay={100}>
+          <Reveal delay={200} variant="scale">
             <ProjectDeck />
           </Reveal>
         </div>
@@ -165,7 +165,7 @@ export default function HomeView() {
             <Eyebrow>Lo que dicen quienes trabajaron con nosotros</Eyebrow>
             <h2>Construimos, y quien nos contrató lo cuenta.</h2>
           </Reveal>
-          <Reveal delay={100} variant="assemble">
+          <Reveal delay={200} variant="assemble">
             <Testimonials />
           </Reveal>
         </div>
