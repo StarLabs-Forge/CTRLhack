@@ -91,7 +91,7 @@ export default function HomeView() {
       <HeroScrollFx />
       <SectionParallax />
 
-      <section id="identidad" className="section-deco gridlines section-snap">
+      <section id="identidad" className="section-deco gridlines section-snap section-compact">
         <div className="section-index">01</div>
         <div className="wrap">
           <Reveal className="section-head">
@@ -105,7 +105,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      <section id="proceso" className="section-deco section-snap">
+      <section id="proceso" className="section-deco section-snap section-compact">
         <div className="section-index">02</div>
         <div className="wrap">
           <Reveal className="section-head">
@@ -158,7 +158,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      <section id="testimonios" className="tight section-snap">
+      <section id="testimonios" className="tight section-snap section-compact">
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">05 / TESTIMONIOS</span>
