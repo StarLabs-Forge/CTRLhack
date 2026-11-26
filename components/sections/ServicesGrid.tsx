@@ -87,12 +87,11 @@ export function ServicesGrid() {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setActive(true);
-          observer.disconnect();
-        }
+        // Se repite al volver a entrar; se rearma solo al salir por completo.
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.2) setActive(true);
+        else if (entry.intersectionRatio === 0) setActive(false);
       },
-      { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
+      { threshold: [0, 0.2], rootMargin: "0px 0px -60px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();

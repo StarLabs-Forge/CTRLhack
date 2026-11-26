@@ -32,12 +32,13 @@ export function Reveal({ children, className, delay = 0, index, variant = "up" }
     setArmed(true);
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
+        // Se repite: entra al cruzar el umbral y se "rearma" solo cuando el
+        // bloque sale POR COMPLETO de pantalla (ratio 0), así no parpadea
+        // en el borde y la animación vuelve a verse al subir/bajar de nuevo.
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) setVisible(true);
+        else if (entry.intersectionRatio === 0) setVisible(false);
       },
-      { threshold: 0.15, rootMargin: "0px 0px -80px 0px" }
+      { threshold: [0, 0.15], rootMargin: "0px 0px -80px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
