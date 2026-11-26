@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { useLocation } from "react-router-dom";
 import { TransitionLink as Link } from "../ui/TransitionLink";
 import { Logo } from "../ui/Logo";
@@ -29,7 +29,7 @@ function readHomeSection(): Spy {
 }
 
 export function Navbar() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [spy, setSpy] = useState<Spy>("inicio");
@@ -57,12 +57,30 @@ export function Navbar() {
 
   // "page" = estás en esa ruta; "location" = estás en esa sección de la Home.
   const onHome = pathname === "/";
+  // React Router no navega si el destino es la URL actual: tras llegar a
+  // "/#identidad" y seguir con la rueda hacia otra sección, el hash sigue
+  // siendo #identidad y volver a pulsar "Sobre" no hacía nada. En ese caso
+  // (misma ruta y mismo hash, o "Inicio" sin hash) scrolleamos a mano.
+  const goSection = (id: HomeSection) => (e: MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+    if (onHome && hash === `#${id}`) {
+      e.preventDefault();
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+  const goTop = (e: MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+    if (onHome && !hash) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   const sectionCurrent = (id: HomeSection) => (onHome && spy === id ? "location" : undefined);
 
   return (
     <nav className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="wrap">
-        <Link to="/" className="logo">
+        <Link to="/" className="logo" onClick={goTop}>
           <Logo className="mark" assemble />
           <span className="wordmark" aria-label="CtrlHack">
             <span className="wm-ctrl">Ctrl</span>
@@ -70,36 +88,36 @@ export function Navbar() {
           </span>
         </Link>
         <div className={`navlinks${open ? " open" : ""}`}>
-          <Link to="/" aria-current={onHome && spy === "inicio" ? "page" : undefined} onClick={() => setOpen(false)}>
+          <Link to="/" aria-current={onHome && spy === "inicio" ? "page" : undefined} onClick={goTop}>
             Inicio
           </Link>
           {/* Anchors a secciones de la Home — funcionan desde cualquier página:
               React Router navega a "/" y <ScrollManager> salta al hash. No pasan
               por aria-current porque no son rutas, son secciones dentro de "/". */}
-          <Link to="/#identidad" aria-current={sectionCurrent("identidad")} onClick={() => setOpen(false)}>
+          <Link to="/#identidad" aria-current={sectionCurrent("identidad")} onClick={goSection("identidad")}>
             Sobre
           </Link>
-          <Link to="/#proceso" aria-current={sectionCurrent("proceso")} onClick={() => setOpen(false)}>
+          <Link to="/#proceso" aria-current={sectionCurrent("proceso")} onClick={goSection("proceso")}>
             Proceso
           </Link>
           <Link
             to="/#servicios"
             aria-current={pathname === "/servicios" ? "page" : sectionCurrent("servicios")}
-            onClick={() => setOpen(false)}
+            onClick={goSection("servicios")}
           >
             Servicios
           </Link>
           {/* Portafolio ya no es una ruta propia: es la sección "04 / PORTAFOLIO"
               del Home (ver <ProjectDeck>). /portafolio sigue existiendo como
               redirect de compatibilidad (ver App.tsx) para links viejos. */}
-          <Link to="/#proyectos" aria-current={sectionCurrent("proyectos")} onClick={() => setOpen(false)}>
+          <Link to="/#proyectos" aria-current={sectionCurrent("proyectos")} onClick={goSection("proyectos")}>
             Portafolio
           </Link>
           <Link
             to="/#contacto"
             className="btn"
             aria-current={sectionCurrent("contacto")}
-            onClick={() => setOpen(false)}
+            onClick={goSection("contacto")}
           >
             Contacto
           </Link>

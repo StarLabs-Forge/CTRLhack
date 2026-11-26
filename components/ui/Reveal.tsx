@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { entryOutOfView } from "./entryOutOfView";
 
 // Fade-up genérico al entrar en viewport. Sin JS (o con prefers-reduced-motion)
 // el contenido nunca lleva la clase "reveal" y queda completamente visible —
@@ -31,12 +32,14 @@ export function Reveal({ children, className, delay = 0, index, variant = "up" }
     if (!el) return;
     setArmed(true);
     const observer = new IntersectionObserver(
-      ([entry]) => {
+      (entries) => {
+        // varias notificaciones pueden llegar juntas: vale la última (la más reciente)
+        const entry = entries[entries.length - 1];
         // Se repite: entra al cruzar el umbral y se "rearma" solo cuando el
         // bloque sale POR COMPLETO de pantalla (ratio 0), así no parpadea
         // en el borde y la animación vuelve a verse al subir/bajar de nuevo.
         if (entry.isIntersecting && entry.intersectionRatio >= 0.15) setVisible(true);
-        else if (entry.intersectionRatio === 0) setVisible(false);
+        else if (entryOutOfView(entry)) setVisible(false);
       },
       { threshold: [0, 0.15], rootMargin: "0px 0px -80px 0px" }
     );

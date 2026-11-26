@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { entryOutOfView } from "../ui/entryOutOfView";
 import "./Process.css";
 
 // Las 5 etapas del proceso (Home). Contenido fijo, no reutilizado en otra
@@ -25,10 +26,12 @@ export function Process() {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
+      (entries) => {
+        // varias notificaciones pueden llegar juntas: vale la última (la más reciente)
+        const entry = entries[entries.length - 1];
         // Se repite al volver a entrar; se rearma solo al salir por completo.
         if (entry.isIntersecting && entry.intersectionRatio >= 0.35) setActive(true);
-        else if (entry.intersectionRatio === 0) setActive(false);
+        else if (entryOutOfView(entry)) setActive(false);
       },
       { threshold: [0, 0.35] }
     );
