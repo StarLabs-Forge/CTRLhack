@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
-import { TransitionLink as Link } from "../ui/TransitionLink";
 import { ProjectThumb } from "./ProjectThumb";
 import { Tag } from "../ui/Tag";
+import { CaseModal } from "./CaseModal";
 import { portfolioProjects } from "../../data/portfolioProjects";
+import { caseStudies } from "../../data/caseStudies";
+import { clientCases } from "../../data/clientCases";
 import "./ProjectCard.css";
 import "./ProjectDeck.css";
 
@@ -26,6 +28,14 @@ const DRAG_THRESHOLD = 40;
 export function ProjectDeck() {
   const count = portfolioProjects.length;
   const [active, setActive] = useState(0);
+  const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const openProject = portfolioProjects.find((p) => p.slug === openSlug);
+  const openCaseStudy = openProject?.caseStudySlug
+    ? caseStudies.find((c) => c.slug === openProject.caseStudySlug)
+    : undefined;
+  const openClientCase = openProject?.clientCaseSlug
+    ? clientCases.find((c) => c.slug === openProject.clientCaseSlug)
+    : undefined;
   const shellRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ dragging: false, startX: 0, delta: 0 });
 
@@ -91,6 +101,7 @@ export function ProjectDeck() {
           const isActive = offset === 0;
           const isSoon = project.status === "soon";
           const isClient = project.kind === "client";
+          const canOpenDetail = !isSoon && Boolean(project.caseStudySlug || project.clientCaseSlug);
 
           const style: CSSProperties =
             abs > 2
@@ -139,9 +150,38 @@ export function ProjectDeck() {
                 <p className="pcard-pitch">
                   {isSoon ? "Estamos construyendo esto — todavía no hay nada para mostrar." : project.pitch}
                 </p>
-                <Link to="/portafolio" className="btn-ghost deck-cta" tabIndex={isActive ? 0 : -1}>
-                  Ver portafolio completo <span className="arrow">→</span>
-                </Link>
+                <div className="pcard-actions deck-cta">
+                  <button
+                    type="button"
+                    className="btn"
+                    tabIndex={isActive ? 0 : -1}
+                    disabled={!canOpenDetail}
+                    onClick={() => canOpenDetail && setOpenSlug(project.slug)}
+                  >
+                    Ver más
+                  </button>
+                  {project.appUrl ? (
+                    <a
+                      className="btn-ghost"
+                      href={project.appUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={isActive ? 0 : -1}
+                    >
+                      Ir a la app
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn-ghost"
+                      disabled
+                      tabIndex={-1}
+                      title={isSoon ? "Todavía no está disponible" : "Publicamos el enlace apenas esté disponible"}
+                    >
+                      Ir a la app
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           );
@@ -174,6 +214,10 @@ export function ProjectDeck() {
           </svg>
         </button>
       </div>
+
+      {(openCaseStudy || openClientCase) && (
+        <CaseModal caseStudy={openCaseStudy} clientCase={openClientCase} onClose={() => setOpenSlug(null)} />
+      )}
     </div>
   );
 }
