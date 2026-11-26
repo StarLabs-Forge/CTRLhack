@@ -27,15 +27,24 @@
   letter-spacing: 0.02em;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 /* isotipo oficial 2:1 — se dimensiona solo por alto, el ancho sale de la proporción */
 .logo .mark {
-  height: 32px;
+  height: 44px;
   width: auto;
   flex-shrink: 0;
 }
 .logo .wordmark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+/* "Ctrl" en blanco cálido, "Hack" en cobre metálico (como el logotipo oficial) */
+.logo .wm-ctrl { color: var(--text-100); }
+.logo .wm-hack {
   background: var(--brand-gradient);
   -webkit-background-clip: text;
   background-clip: text;

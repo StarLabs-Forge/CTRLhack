@@ -64,7 +64,10 @@ export function Navbar() {
       <div className="wrap">
         <Link to="/" className="logo">
           <Logo className="mark" assemble />
-          <span className="wordmark">CTRLHACK</span>
+          <span className="wordmark" aria-label="CtrlHack">
+            <span className="wm-ctrl">Ctrl</span>
+            <span className="wm-hack">Hack</span>
+          </span>
         </Link>
         <div className={`navlinks${open ? " open" : ""}`}>
           <Link to="/" aria-current={onHome && spy === "inicio" ? "page" : undefined} onClick={() => setOpen(false)}>

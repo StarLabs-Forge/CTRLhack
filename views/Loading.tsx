@@ -11,7 +11,8 @@ export function Loading() {
         <Logo className="loading-svg" assemble />
       </span>
       <span className="loading-word">
-        <span className="grad">CTRLHACK</span>
+        <span className="wm-ctrl">Ctrl</span>
+        <span className="grad">Hack</span>
         <span className="dim">.dev</span>
       </span>
       <span className="loading-bar" aria-hidden="true" />
