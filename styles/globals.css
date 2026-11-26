@@ -261,17 +261,6 @@ section.tight { padding: 88px 0; }
   .section-snap .section-head p { margin-top: clamp(4px, 1dvh, 10px) !important; }
 }
 
-/* .section-compact — secciones cuyo contenido es bajo (Sobre / Proceso /
-   Testimonios): forzarles el alto de pantalla dejaba ~250px vacíos arriba y
-   abajo. Aquí la sección mide lo que su contenido + un respiro proporcional
-   al viewport; el ritmo lo da el scroll, no el relleno. */
-@media (min-width: 601px) {
-  section.section-snap.section-compact {
-    min-height: 0;
-    padding-block: clamp(56px, 11dvh, 112px);
-  }
-}
-
 /* Secciones densas (Servicios, Portafolio): en pantallas bajas el contenido
    se escala por tramos de alto (zoom) hasta que cabe completo. Solo desktop;
    en mobile se apila y se hace scroll. */
