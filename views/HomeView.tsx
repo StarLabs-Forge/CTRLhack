@@ -10,6 +10,8 @@ import { Testimonials } from "../components/testimonials/Testimonials";
 import { ContactSection } from "../components/sections/ContactSection";
 import { Eyebrow } from "../components/ui/Eyebrow";
 import { Reveal } from "../components/ui/Reveal";
+import { KineticTitle } from "../components/ui/KineticTitle";
+import { SectionArt } from "../components/effects/SectionArt";
 import { HeroScrollFx } from "../components/effects/HeroScrollFx";
 import { SectionParallax } from "../components/effects/SectionParallax";
 
@@ -92,12 +94,13 @@ export default function HomeView() {
       <SectionParallax />
 
       <section id="identidad" className="section-deco gridlines section-snap">
+        <SectionArt variant="sobre" />
         <div className="section-index">01</div>
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">01 / SOBRE</span>
             <Eyebrow>Sobre CTRLHACK</Eyebrow>
-            <h2>Las buenas ideas merecen convertirse en algo real</h2>
+            <h2 className="kinetic"><KineticTitle lines={["Las buenas ideas merecen convertirse en algo real"]} /></h2>
           </Reveal>
           <Reveal delay={200} variant="assemble">
             <Identity />
@@ -106,26 +109,26 @@ export default function HomeView() {
       </section>
 
       <section id="proceso" className="section-deco section-snap">
+        <SectionArt variant="proceso" />
         <div className="section-index">02</div>
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">02 / PROCESO</span>
             <Eyebrow>Cómo trabajamos</Eyebrow>
-            <h2>
-              De la idea al resultado. <br /> Sin perderse por el camino.
-            </h2>
+            <h2 className="kinetic"><KineticTitle lines={["De la idea al resultado.", "Sin perderse por el camino."]} /></h2>
           </Reveal>
           <Process />
         </div>
       </section>
 
       <section id="servicios" className="section-deco gridlines section-snap section-dense">
+        <SectionArt variant="servicios" />
         <div className="section-index">03</div>
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">03 / SERVICIOS</span>
             <Eyebrow>Qué construimos</Eyebrow>
-            <h2>¿Qué podemos construir contigo?</h2>
+            <h2 className="kinetic"><KineticTitle lines={["¿Qué podemos construir contigo?"]} /></h2>
             <p style={{ color: "var(--text-500)", marginTop: 10 }}>
               Desde una idea hasta una solución lista para usar.
             </p>
@@ -142,12 +145,13 @@ export default function HomeView() {
         </div>
       </section>
 
-      <section id="proyectos" className="tight section-snap section-dense">
+      <section id="proyectos" className="tight section-deco section-snap section-dense">
+        <SectionArt variant="portafolio" />
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">04 / PORTAFOLIO</span>
             <Eyebrow>Portafolio</Eyebrow>
-            <h2>Ya construimos uno. Y seguimos sumando.</h2>
+            <h2 className="kinetic"><KineticTitle lines={["Ya construimos uno. Y seguimos sumando."]} /></h2>
             <p style={{ color: "var(--text-500)", marginTop: 10 }}>
               Un vistazo rápido a lo que CTRLHACK tiene en producción, en camino, y a lo que construimos para otros.
             </p>
@@ -158,12 +162,13 @@ export default function HomeView() {
         </div>
       </section>
 
-      <section id="testimonios" className="tight section-snap">
+      <section id="testimonios" className="tight section-deco section-snap">
+        <SectionArt variant="testimonios" />
         <div className="wrap">
           <Reveal className="section-head">
             <span className="idx">05 / TESTIMONIOS</span>
             <Eyebrow>Lo que dicen quienes trabajaron con nosotros</Eyebrow>
-            <h2>Construimos, y quien nos contrató lo cuenta.</h2>
+            <h2 className="kinetic"><KineticTitle lines={["Construimos, y quien nos contrató lo cuenta."]} /></h2>
           </Reveal>
           <Reveal delay={200} variant="assemble">
             <Testimonials />

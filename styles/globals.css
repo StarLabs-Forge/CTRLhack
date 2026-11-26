@@ -148,6 +148,18 @@ section.tight { padding: 88px 0; }
   transition: clip-path var(--dur-slow) var(--ease-in-out) 0.1s;
 }
 .section-head.reveal.in h2 { clip-path: inset(0 0 -0.2em 0); }
+/* titular cinético (KineticTitle): reemplaza el wipe por palabras que suben de
+   una máscara con giro, escalonadas. Sin Reveal armado el texto es normal. */
+.section-head.reveal h2.kinetic { clip-path: none; transition: none; }
+.kt-line { display: block; }
+.kt-word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.16em; margin-bottom: -0.16em; }
+.kt-inner { display: inline-block; }
+.reveal .kt-inner {
+  transform: translateY(115%) rotate(7deg);
+  transform-origin: 0 100%;
+  transition: transform var(--dur-slow) var(--ease) calc(var(--kt-i, 0) * 70ms + 140ms);
+}
+.reveal.in .kt-inner { transform: none; }
 /* coreografía del encabezado: índice → eyebrow → (título con wipe) → párrafo,
    cada pieza entra 70ms después de la anterior en vez de todo junto. Solo con
    Reveal armado, así que sin JS / reduced-motion todo queda visible. */
@@ -367,3 +379,24 @@ section.tight { padding: 88px 0; }
 .service-card:hover,
 .pcard:not(.pcard-soon):hover,
 .deck-card.is-active { --edge: var(--accent-strong); }
+
+/* Barra de progreso de página: un filete cobre en el borde superior que avanza
+   con el scroll (scroll-driven, sin JS). */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 2px;
+      z-index: 300;
+      background: var(--brand-gradient);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: page-progress linear both;
+      animation-timeline: scroll(root);
+      pointer-events: none;
+    }
+    @keyframes page-progress { to { transform: scaleX(1); } }
+  }
+}
