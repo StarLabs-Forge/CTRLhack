@@ -15,7 +15,7 @@ export default function NotFoundView() {
       <div className="wrap">
         <div className="notfound-body">
           <span className="notfound-mark">
-            <Logo className="notfound-svg" />
+            <Logo className="notfound-svg" assemble />
           </span>
           <Eyebrow>Error 404</Eyebrow>
           <h1>

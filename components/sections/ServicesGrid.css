@@ -48,8 +48,8 @@
   transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-6px) translateZ(8px);
   background:
     linear-gradient(var(--bg-900), var(--bg-900)) padding-box,
-    linear-gradient(135deg, #00c8ff, #1677ff, #7c3dff, #b43cff) border-box;
-  box-shadow: 0 28px 54px -30px rgba(0, 200, 255, 0.4);
+    var(--metal-edge) border-box;
+  box-shadow: inset 0 1px 0 rgb(var(--glow-rgb) / 0.28);
 }
 .service-card:active { transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px) scale(0.99); }
 
@@ -58,7 +58,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(0, 200, 255, 0.14), transparent 60%);
+  background: radial-gradient(240px circle at var(--mx) var(--my), rgb(var(--glow-rgb) / 0.12), transparent 60%);
   opacity: 0;
   transition: opacity var(--dur-base) var(--ease-out);
   pointer-events: none;
@@ -77,13 +77,12 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* los assets 1–4 traen fondo negro sólido — screen lo funde con el fondo
-     oscuro de la tarjeta sin tocar el archivo ni sus colores originales. */
-  mix-blend-mode: screen;
+  /* assets/cobre/*.png (duotono cobre de los originales azules, que siguen en assets/)
+     traen transparencia: el negro es alfa 0, así que no hace falta blend-mode. */
 }
 .service-card:hover .service-image {
   transform: scale(1.035) translateZ(10px);
-  filter: brightness(1.08) drop-shadow(0 0 22px rgba(32, 217, 255, 0.3));
+  filter: brightness(1.08) drop-shadow(0 0 22px rgb(var(--glow-rgb) / 0.28));
 }
 
 .service-card-body {
@@ -115,9 +114,9 @@
 }
 .service-cta .arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
 .service-card:hover .service-cta {
-  border-color: #1677ff;
+  border-color: var(--accent-strong);
   color: var(--text-100);
-  box-shadow: 0 0 18px rgba(22, 119, 255, 0.4);
+  box-shadow: 0 0 18px rgb(var(--glow-rgb) / 0.3);
   transform: scale(1.06);
 }
 .service-card:hover .service-cta .arrow { transform: translateX(2px); }

@@ -10,7 +10,7 @@
   position: absolute;
   inset: -20% -10% auto 40%;
   height: 80%;
-  background: radial-gradient(ellipse 55% 55% at 55% 40%, rgba(118, 87, 255, 0.14), transparent 70%);
+  background: radial-gradient(ellipse 55% 55% at 55% 40%, rgb(var(--copper-rgb) / 0.12), transparent 70%);
   pointer-events: none;
 }
 .contact-grid {
@@ -39,9 +39,9 @@
 .contact-card {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: linear-gradient(160deg, rgba(23, 31, 61, 0.6), rgba(11, 16, 36, 0.85));
+  background: var(--brush), linear-gradient(160deg, rgb(var(--graphite-rgb) / 0.55), rgb(var(--obsidian-rgb) / 0.9));
   padding: clamp(20px, 4dvh, 40px) clamp(20px, 3vw, 40px);
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 0 rgb(var(--glow-rgb) / 0.18);
 }
 .contact-card .contact-form { max-width: none; gap: clamp(12px, 2.4dvh, 20px); }
 
@@ -56,7 +56,7 @@
   margin-bottom: 8px;
 }
 .contact-channels { display: flex; flex-direction: column; gap: 4px; }
-/* acento cálido: contacto es uno de los usos permitidos (Brand v1.1, 1ter) */
+/* acento cálido (marfil): contacto es uno de los usos permitidos (Brand v1.2) */
 .contact-email { font-family: var(--mono); font-size: 16px; color: var(--warm-accent); width: fit-content; transition: color var(--dur-fast) var(--ease-out); }
 .contact-email:hover { color: var(--text-100); }
 .contact-location { color: var(--text-500); font-size: 13.5px; }

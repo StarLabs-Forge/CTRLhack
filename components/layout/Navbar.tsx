@@ -63,7 +63,7 @@ export function Navbar() {
     <nav className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="wrap">
         <Link to="/" className="logo">
-          <Logo className="mark" />
+          <Logo className="mark" assemble />
           <span className="wordmark">CTRLHACK</span>
         </Link>
         <div className={`navlinks${open ? " open" : ""}`}>

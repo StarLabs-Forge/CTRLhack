@@ -8,7 +8,7 @@ export function Loading() {
   return (
     <div className="loading-screen" role="status" aria-live="polite">
       <span className="loading-mark">
-        <Logo className="loading-svg" />
+        <Logo className="loading-svg" assemble />
       </span>
       <span className="loading-word">
         <span className="grad">CTRLHACK</span>

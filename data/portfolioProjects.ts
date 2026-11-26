@@ -2,7 +2,8 @@
 // en lenguaje simple orientado a quien va a USAR el producto, no a quien lo
 // construyó). El detalle técnico completo vive en data/caseStudies.ts y solo
 // se muestra si el proyecto tiene caseStudySlug — ahí lo abre <CaseModal>.
-export type ProjectAccent = "cyan" | "blue" | "violet" | "purple" | "warm";
+// Nombres = tokens de paleta (--glow, --copper, --bronze, --white, --ivory) en styles/tokens.css.
+export type ProjectAccent = "glow" | "copper" | "bronze" | "white" | "ivory";
 
 export interface PortfolioProject {
   slug: string;
@@ -37,7 +38,7 @@ export const portfolioProjects: PortfolioProject[] = [
     pitch: "Entra a tus eventos favoritos sin filas ni papeleo — reserva tu mesa y valida tu acceso desde el celular.",
     statusLabel: "En piloto",
     status: "live",
-    accent: "cyan",
+    accent: "glow",
     kind: "product",
     caseStudySlug: "check",
     appUrl: "https://check-seven-alpha.vercel.app/",
@@ -48,7 +49,7 @@ export const portfolioProjects: PortfolioProject[] = [
     pitch: "Descubre qué está pasando esta noche en La Paz, antes de que se llene.",
     statusLabel: "Muy pronto",
     status: "soon",
-    accent: "violet",
+    accent: "bronze",
     kind: "product",
   },
   {
@@ -57,7 +58,7 @@ export const portfolioProjects: PortfolioProject[] = [
     pitch: "Lee y escribe historias por capítulos, junto a una comunidad de autores en español.",
     statusLabel: "Acceso anticipado",
     status: "live",
-    accent: "blue",
+    accent: "copper",
     kind: "product",
     caseStudySlug: "kolla",
     appUrl: "https://kolla-beryl.vercel.app/",
@@ -68,7 +69,7 @@ export const portfolioProjects: PortfolioProject[] = [
     pitch: "Publica y vende tu libro independiente, sin pasar por una editorial.",
     statusLabel: "Muy pronto",
     status: "soon",
-    accent: "purple",
+    accent: "white",
     kind: "product",
   },
   {
@@ -77,7 +78,7 @@ export const portfolioProjects: PortfolioProject[] = [
     pitch: "Un club digital privado, con verificación real, para conectar con las personas correctas.",
     statusLabel: "Muy pronto",
     status: "soon",
-    accent: "cyan",
+    accent: "glow",
     kind: "product",
   },
   {
@@ -86,7 +87,7 @@ export const portfolioProjects: PortfolioProject[] = [
     pitch: "Landing de venta para un termo inteligente — personalizador de color, oferta por tiempo limitado y checkout directo.",
     statusLabel: "Cliente",
     status: "live",
-    accent: "warm",
+    accent: "ivory",
     kind: "client",
     clientCaseSlug: "aura-tumbler",
     appUrl: "https://venta-producto.vercel.app/",

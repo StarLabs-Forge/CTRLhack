@@ -28,9 +28,14 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   background-image:
-    radial-gradient(circle at 15% 0%, rgba(32, 217, 255, 0.07), transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(118, 87, 255, 0.09), transparent 50%);
+    radial-gradient(circle at 15% 0%, rgb(var(--copper-rgb) / 0.09), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgb(var(--bronze-rgb) / 0.16), transparent 50%);
 }
+
+:root { color-scheme: dark; }
+::selection { background: rgb(var(--glow-rgb) / 0.3); color: var(--text-100); }
+/* scrollbar mate, a juego con las superficies */
+html { scrollbar-color: var(--line) var(--bg-950); }
 
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -65,12 +70,13 @@ h1, h2, h3, h4 {
   color: var(--accent);
 }
 .eyebrow::before {
+  /* marcador en chevron: eco del isotipo */
   content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  width: 9px;
+  height: 9px;
   background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
+  clip-path: polygon(0 0, 55% 0, 100% 50%, 55% 100%, 0 100%, 45% 50%);
+  filter: drop-shadow(0 0 4px var(--glow-line));
 }
 
 p.lead {
@@ -167,6 +173,15 @@ section.tight { padding: 88px 0; }
 .reveal--fade { transform: none; }
 .reveal--scale { transform: scale(0.94); }
 .reveal--fade.in, .reveal--scale.in { transform: none; }
+/* assemble: barrido diagonal (inclinado, como los cortes del isotipo). El recorte vive
+   SOLO en la animación (fill backwards): al terminar vuelve a clip-path:none y no recorta
+   sombras ni hovers del contenido. */
+.reveal--assemble { transform: translateY(18px); }
+.reveal--assemble.in { animation: reveal-assemble var(--dur-slow) var(--ease-in-out) backwards; }
+@keyframes reveal-assemble {
+  from { clip-path: polygon(0 0, 0 0, -40% 100%, -40% 100%); }
+  to { clip-path: polygon(0 0, 140% 0, 100% 100%, -40% 100%); }
+}
 
 /* ============================================
    COMPOSITION / DEPTH — utilitarios de layering reutilizados
@@ -201,8 +216,8 @@ section.tight { padding: 88px 0; }
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(199, 206, 222, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(199, 206, 222, 0.05) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
   pointer-events: none;
   z-index: 0;
@@ -305,3 +320,38 @@ section.tight { padding: 88px 0; }
     @keyframes section-index-drift { to { translate: 0 -48px; } }
   }
 }
+
+/* ============================================
+   SUPERFICIES ANGULARES — corte diagonal en la esquina superior derecha de las
+   tarjetas principales (eco de los cortes del isotipo). El clip-path recorta
+   también el borde, así que el filete diagonal se redibuja con ::after.
+   Consecuencia: las sombras exteriores no se ven en estas tarjetas; el realce
+   al hover va por dentro (box-shadow inset / borde metálico).
+   ============================================ */
+.service-card,
+.pcard,
+.deck-card,
+.contact-card {
+  --cut: 14px;
+  --edge: var(--line);
+  position: relative;
+  border-radius: 2px;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+}
+.service-card::after,
+.pcard::after,
+.deck-card::after,
+.contact-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--cut);
+  height: var(--cut);
+  background: linear-gradient(45deg, transparent calc(50% - 1px), var(--edge) calc(50% - 1px) 50%, transparent 50%);
+  pointer-events: none;
+  z-index: 3;
+}
+.service-card:hover,
+.pcard:not(.pcard-soon):hover,
+.deck-card.is-active { --edge: var(--accent-strong); }

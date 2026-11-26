@@ -1,3 +1,5 @@
+> **⚠ OBSOLETO — reemplazado por [`Ctrlhack — Brand & Design System v1.2.md`](./Ctrlhack%20—%20Brand%20&%20Design%20System%20v1.2.md).** La paleta cyan/blue/violet/purple, el isotipo "V en cinta" y las reglas de las secciones 1bis–3 ya no aplican. Se conserva como histórico.
+
 # Ctrlhack — Brand & Design System v1.1
 
 > **Changelog v1.0 → v1.1:** v1.0 definía la paleta y las reglas de forma/motion en abstracto, pero el isotipo real seguía siendo un PNG generado por IA (glow permanente, bisel 3D, sin versión plana) que violaba la sección 7 de este mismo documento. Esta versión cierra esa brecha: define el isotipo final, sus reglas de uso concretas, y marca qué queda deprecado. Esta es ahora la **única fuente de verdad de marca** — ver nota de estado al final.

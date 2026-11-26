@@ -11,7 +11,7 @@
   transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 .pcard:hover { border-color: var(--line); transform: translateY(-2px); }
-.pcard:not(.pcard-soon):hover { border-color: rgba(32, 217, 255, 0.35); }
+.pcard:not(.pcard-soon):hover { border-color: var(--glow-line); }
 
 .pcard-thumb-wrap { position: relative; }
 
@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: rgba(5, 8, 22, 0.72);
+  background: rgb(var(--obsidian-rgb) / 0.72);
   color: var(--text-300);
   font-family: var(--mono);
   font-size: 11px;

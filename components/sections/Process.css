@@ -23,7 +23,7 @@
   left: 40px;
   right: 40px;
   height: 1px;
-  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet));
+  background: linear-gradient(90deg, var(--bronze), var(--copper), var(--glow));
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--dur-xslow) var(--ease-in-out);
@@ -52,8 +52,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 10px var(--cyan);
+  background: var(--glow);
+  box-shadow: 0 0 10px var(--glow-line);
   transform: translate(-50%, -50%);
   opacity: 0;
 }
@@ -123,7 +123,7 @@
      arriba abajo (scaleY) y el pulso viaja por `top`, no por `left`. */
   .timeline-fill {
     top: 0; bottom: 0; left: 19px; right: auto; width: 1px; height: auto;
-    background: linear-gradient(180deg, var(--cyan), var(--blue), var(--violet));
+    background: linear-gradient(180deg, var(--bronze), var(--copper), var(--glow));
     transform: scaleY(0);
     transform-origin: center top;
   }

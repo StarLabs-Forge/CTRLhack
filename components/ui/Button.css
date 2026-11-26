@@ -2,39 +2,58 @@
    BUTTON — .btn (solid) / .btn-ghost
    ============================================ */
 .btn {
+  position: relative;
   font-family: var(--mono);
   font-size: 13px;
+  font-weight: 500;
   letter-spacing: 0.03em;
-  padding: 10px 18px;
-  border-radius: var(--radius);
+  white-space: nowrap;
+  padding: 10px 20px;
+  border-radius: 0;
   border: 1px solid transparent;
   color: var(--bg-950);
   background: var(--brand-gradient);
-  transition: filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  /* barrido de luz tipo metal cepillado: el gradiente es el doble de ancho y se desplaza */
+  background-size: 220% 100%;
+  background-position: 0 0;
+  /* esquinas biseladas en diagonal (arriba-izq / abajo-der), como los cortes del isotipo */
+  clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+  transition: background-position var(--dur-slow) var(--ease), filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 .btn:hover {
-  filter: brightness(1.12);
-  transform: translateY(-1px) scale(1.015);
-  box-shadow: 0 12px 26px -14px rgba(32, 217, 255, 0.45);
+  background-position: 100% 0;
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
-.btn:active { transform: translateY(0) scale(0.97); filter: brightness(1.05); box-shadow: none; }
+.btn:active { transform: translateY(0) scale(0.98); filter: brightness(1.02); }
 
 .btn-ghost {
+  position: relative;
   font-family: var(--mono);
   font-size: 13px;
-  padding: 10px 18px;
-  border-radius: var(--radius);
+  white-space: nowrap;
+  padding: 10px 20px;
+  border-radius: 0;
   border: 1px solid var(--line);
   color: var(--text-300);
+  clip-path: polygon(var(--cut-sm) 0, 100% 0, 100% calc(100% - var(--cut-sm)), calc(100% - var(--cut-sm)) 100%, 0 100%, 0 var(--cut-sm));
+  /* el clip-path recorta el borde en las esquinas cortadas: el filete diagonal se redibuja con
+     dos capas de gradiente (arriba-izq y abajo-der), así el borde se ve continuo. */
+  --edge: var(--line);
+  --d: calc(var(--cut-sm) * 0.7071);
+  background:
+    linear-gradient(135deg, transparent var(--d), var(--edge) var(--d) calc(var(--d) + 1px), transparent calc(var(--d) + 1px)) 0 0 / var(--cut-sm) var(--cut-sm) no-repeat,
+    linear-gradient(135deg, transparent var(--d), var(--edge) var(--d) calc(var(--d) + 1px), transparent calc(var(--d) + 1px)) 100% 100% / var(--cut-sm) var(--cut-sm) no-repeat;
+  background-origin: border-box;
   transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-.btn-ghost:hover { border-color: var(--accent-strong); color: var(--text-100); transform: translateY(-1px); }
+.btn-ghost:hover { --edge: var(--accent-strong); border-color: var(--accent-strong); color: var(--text-100); transform: translateY(-1px); }
 .btn-ghost:active { transform: translateY(0) scale(0.97); }
 
 /* Magnetic (useMagnetic): `translate` es independiente de `transform`, así el

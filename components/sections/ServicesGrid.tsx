@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { TransitionLink as Link } from "../ui/TransitionLink";
 import { services } from "../../data/services";
-import imgWeb from "../../assets/1.png";
-import imgApps from "../../assets/2.png";
-import imgSistemas from "../../assets/3.png";
-import imgProductos from "../../assets/4.png";
+import imgWeb from "../../assets/cobre/1.png";
+import imgApps from "../../assets/cobre/2.png";
+import imgSistemas from "../../assets/cobre/3.png";
+import imgProductos from "../../assets/cobre/4.png";
 import "./ServicesGrid.css";
 
 // Assets 1–4 ya generados/recortados — asignación fija, no reordenar.

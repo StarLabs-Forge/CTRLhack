@@ -6,7 +6,8 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 //
 // variant: "up" (default, fade + sube) · "fade" (solo opacidad, para texto
 // largo o bloques que no deben "viajar") · "scale" (crece desde 0.94, para
-// medios y tarjetas destacadas).
+// medios y tarjetas destacadas) · "assemble" (barrido diagonal, como un corte
+// del isotipo: para bloques de contenido que "se arman" al entrar).
 // index: posición dentro de un grupo de hermanos. El retraso es index × --stagger
 // con tope en --stagger-max (tokens.css), así la fila 4 de un grid no espera
 // medio segundo extra. `delay` (ms) sigue existiendo para casos puntuales y
@@ -16,7 +17,7 @@ interface RevealProps {
   className?: string;
   delay?: number;
   index?: number;
-  variant?: "up" | "fade" | "scale";
+  variant?: "up" | "fade" | "scale" | "assemble";
 }
 
 export function Reveal({ children, className, delay = 0, index, variant = "up" }: RevealProps) {

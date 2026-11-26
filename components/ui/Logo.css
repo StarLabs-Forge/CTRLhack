@@ -1,18 +1,55 @@
 /* ============================================
-   LOGO — isotipo Ctrlhack
-   Reglas de motion propias (doc "Brand & Design System v1.0", sección 10):
-   glow dinámico solo en elementos importantes, hover sutil, nada permanente
-   que compita con el contenido. En reposo el ícono no anima ni brilla —
-   la animación de entrada (logoIn) sigue viviendo en Navbar.css sobre .mark.
+   LOGO — isotipo oficial CTRLHACK (03 · Cobre fiel)
+   Reglas de motion (Brand v1.2, sección Motion):
+   - En reposo: sin animación ambiental.
+   - Ensamblaje (.sl-logo--assemble): una sola vez al montar. Los chevrones
+     entran desde los lados, la tecla cae en el centro y la luz se enciende al final.
+   - Hover/focus del enlace que lo contiene: los chevrones se abren unos
+     pocos puntos y la tecla se asienta. Usa las propiedades independientes
+     `translate`/`scale`, que se componen con la animación de `transform`
+     sin pisarla.
+   - prefers-reduced-motion: sin movimiento, el isotipo se ve completo.
+   Las unidades de translate dentro del SVG son unidades del viewBox (1774 × 887).
    ============================================ */
-.sl-logo { display: block; }
-.sl-logo .sl-ribbon { transition: filter var(--dur-base) var(--ease); }
+.sl-logo { display: block; overflow: visible; max-width: 100%; }
+.sl-logo .sl-chevron,
+.sl-logo .sl-key,
+.sl-logo .sl-ambient { transform-box: fill-box; transform-origin: center; }
 
-a:hover .sl-logo .sl-ribbon,
-a:focus-visible .sl-logo .sl-ribbon {
-  filter: drop-shadow(0 0 6px rgba(40, 123, 255, 0.6));
+.sl-logo .sl-chevron,
+.sl-logo .sl-key {
+  transition: translate var(--dur-base) var(--ease-out), scale var(--dur-base) var(--ease-out);
 }
+.sl-logo .sl-ambient { transition: opacity var(--dur-base) var(--ease-out); }
+
+a:hover .sl-logo .sl-chevron--left,
+a:focus-visible .sl-logo .sl-chevron--left { translate: -34px 0; }
+a:hover .sl-logo .sl-chevron--right,
+a:focus-visible .sl-logo .sl-chevron--right { translate: 34px 0; }
+a:hover .sl-logo .sl-key,
+a:focus-visible .sl-logo .sl-key { scale: 1.035; }
+
+/* ---------- ensamblaje ---------- */
+@keyframes sl-left-in {
+  from { opacity: 0; transform: translateX(-260px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sl-right-in {
+  from { opacity: 0; transform: translateX(260px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sl-key-in {
+  from { opacity: 0; transform: translateY(-90px) scale(0.94); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sl-light-in { from { opacity: 0; } to { opacity: 1; } }
+
+.sl-logo--assemble .sl-chevron--left { animation: sl-left-in 0.85s var(--ease-out) both; }
+.sl-logo--assemble .sl-chevron--right { animation: sl-right-in 0.85s var(--ease-out) 0.08s both; }
+.sl-logo--assemble .sl-key { animation: sl-key-in 0.8s var(--ease-spring) 0.4s both; }
+.sl-logo--assemble .sl-ambient { animation: sl-light-in 0.7s var(--ease-out) 1s both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sl-logo .sl-ribbon { transition: none; filter: none !important; }
+  .sl-logo *, .sl-logo--assemble * { animation: none !important; transition: none !important; translate: none !important; scale: none !important; }
 }

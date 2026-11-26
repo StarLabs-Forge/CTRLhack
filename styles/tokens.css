@@ -1,38 +1,79 @@
 /* ============================================
-   CTRLHACK — Design tokens (Next.js)
-   Alineado con "Ctrlhack — Brand & Design System v1.0.md" (dark mode,
-   sección 2). Reemplaza la paleta bronze/warm anterior por la paleta
-   oficial de marca (cyan → blue → violet → purple).
+   CTRLHACK — Design tokens
+   Fuente de verdad visual: "Ctrlhack — Brand & Design System v1.2.md".
+   Dirección: ciberpunk industrial, premium. Superficies mate oscuras,
+   metal cepillado en cobre, luz moderada (nunca neón ambiental).
+
+   Capas:
+     1. Paleta corporativa (valores crudos, 8 colores oficiales)
+     2. Neutros derivados (superficies, líneas, texto) — ver contrastes abajo
+     3. Semánticos (accent, gradientes, glow)  <- lo que usan los componentes
+   Para cambiar la marca se edita SOLO este archivo.
    ============================================ */
 :root {
-  --bg-950: #050816;
-  --bg-900: #0b1024;
-  --bg-800: #111831;
-  --bg-750: #171f3d;
-  --line: #263158;
-  --line-soft: #182140;
+  /* ---------- 1. Paleta corporativa ---------- */
+  --copper: #b87333;     /* Cobre oscuro   */
+  --ivory: #ffdab9;      /* Marfil cálido  */
+  --brown: #1e0d04;      /* Marrón profundo */
+  --obsidian: #0b0908;   /* Negro obsidiana */
+  --graphite: #2a2a2a;   /* Grafito         */
+  --white: #f5f0eb;      /* Blanco cálido   */
+  --glow: #ff9d45;       /* Cobre luminoso  */
+  --bronze: #78421f;     /* Bronce oscuro   */
 
-  --text-100: #f5f7ff;
-  --text-300: #b8c1da;
-  --text-500: #707b9d;
-  --text-600: #545e7d;
+  /* Canales RGB para transparencias: rgb(var(--glow-rgb) / .35) */
+  --copper-rgb: 184 115 51;
+  --ivory-rgb: 255 218 185;
+  --brown-rgb: 30 13 4;
+  --obsidian-rgb: 11 9 8;
+  --graphite-rgb: 42 42 42;
+  --white-rgb: 245 240 235;
+  --glow-rgb: 255 157 69;
+  --bronze-rgb: 120 66 31;
 
-  --cyan: #20d9ff;
-  --blue: #287bff;
-  --violet: #7657ff;
-  --purple: #a855f7;
+  /* ---------- 2. Neutros derivados (obsidiana -> grafito, tinte cálido) ---------- */
+  --bg-950: var(--obsidian);
+  --bg-900: #120e0b;
+  --bg-800: #1a1511;
+  --bg-750: var(--graphite);
+  --line: #3a2f27;
+  --line-soft: #1f1914;
 
-  --accent: var(--cyan);
-  --accent-strong: var(--blue);
-  --accent-dim: #1b4f78;
+  /* Texto sobre --bg-950 (ratio WCAG): 100 = 17.5:1 · 300 = 11.7:1 · 500 = 6.9:1 · 600 = 5.4:1 (≥ 4.9:1 también sobre bg-800) */
+  --text-100: var(--white);
+  --text-300: #cfc5bc;
+  --text-500: #a1968d;
+  --text-600: #8f847a;
 
-  --brand-gradient: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet), var(--purple));
+  /* ---------- 3. Semánticos ---------- */
+  --accent: var(--glow);          /* texto/estado activo (ratio 9.6:1 sobre obsidiana) */
+  --accent-strong: var(--copper); /* bordes y énfasis (5.3:1) */
+  --accent-dim: var(--bronze);    /* filetes decorativos */
 
-  /* Acento cálido — ver Brand & Design System v1.1, sección "1ter. Personalidad de marca".
-     Uso EXCLUSIVO: testimonios, contacto, nombres reales de casos de portafolio.
-     Nunca en nav, CTAs primarios ni UI de estado. */
-  --warm-accent: #E3A567;
-  --warm-accent-strong: #C17F3E;
+  /* Gradiente de marca para texto y relleno de botón: cobre -> luz -> marfil.
+     Sin tonos oscuros: el texto con gradiente debe mantener contraste >= 4.5:1. */
+  --brand-gradient: linear-gradient(90deg, var(--copper), var(--glow) 55%, var(--ivory));
+  /* Metal cepillado: filetes, bordes y reflejos (decorativo, no para texto). */
+  --metal-edge: linear-gradient(135deg, var(--bronze), var(--copper) 30%, var(--ivory) 52%, var(--copper) 74%, var(--bronze));
+  --brush: repeating-linear-gradient(115deg, rgb(var(--white-rgb) / 0.035) 0 1px, transparent 1px 4px);
+
+  /* Luz: moderada y reservada a hover/focus o a un único foco por pantalla. */
+  --glow-soft: rgb(var(--glow-rgb) / 0.16);
+  --glow-line: rgb(var(--glow-rgb) / 0.35);
+  --glow-shadow: 0 0 24px -8px rgb(var(--glow-rgb) / 0.5);
+  --shadow-lg: 0 30px 60px -28px rgb(0 0 0 / 0.7);
+  --shadow-md: 0 18px 36px -20px rgb(0 0 0 / 0.7);
+  --grid-line: rgb(var(--ivory-rgb) / 0.045);
+  --scrim: rgb(var(--obsidian-rgb) / 0.82);
+
+  /* Corte diagonal heredado del isotipo (esquinas biseladas). */
+  --cut: 12px;
+  --cut-sm: 7px;
+
+  /* Acento "cercano": marfil. Uso EXCLUSIVO en testimonios, contacto y nombres
+     reales de casos (Brand v1.2, "Personalidad de marca"). Nunca en nav ni CTAs. */
+  --warm-accent: var(--ivory);
+  --warm-accent-strong: var(--copper);
 
   --ok: #7ea888;
 

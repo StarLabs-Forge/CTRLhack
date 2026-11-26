@@ -6,7 +6,7 @@ import "./ProjectThumb.css";
 // siempre "un producto funcionando". El color cambia por proyecto (accent);
 // el estado deshabilitado (desaturado + candado) lo aplica <ProjectCard>.
 interface ProjectThumbProps {
-  accent: "cyan" | "blue" | "violet" | "purple" | "warm";
+  accent: "glow" | "copper" | "bronze" | "white" | "ivory";
   name: string;
 }
 
