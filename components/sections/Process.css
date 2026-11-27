@@ -1,80 +1,77 @@
 /* ============================================
-   PROCESO — timeline horizontal de 5 etapas, mucho espacio entre nodos.
+   PROCESO — 5 etapas, cada una con su escena animada encima del nodo, unidas
+   por una línea de energía que recorre el controlador. Las escenas viven en
+   process/scenes/scenes.css.
    ============================================ */
+.process { --scene-max-h: clamp(104px, 21dvh, 168px); }
+
 .timeline {
   display: flex;
   align-items: flex-start;
   position: relative;
 }
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 19px;
-  left: 40px;
-  right: 40px;
-  height: 1px;
-  background: var(--line);
-  z-index: 0;
-}
-/* línea que se ilumina progresivamente cuando la sección entra en vista */
-.timeline-fill {
-  position: absolute;
-  top: 19px;
-  left: 40px;
-  right: 40px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--bronze), var(--copper), var(--glow));
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--dur-xslow) var(--ease-in-out);
-  z-index: 0;
-  pointer-events: none;
-}
-.timeline.in .timeline-fill { transform: scaleX(1); }
 
-/* pulso que recorre la línea una vez — "una idea avanza hasta convertirse
-   en un producto". Elemento aparte (no hijo de .timeline-fill) para que su
-   posición no se deforme por el scaleX del fill. */
-.timeline-pulse {
+/* ---------- línea de energía ---------- */
+.energy {
   position: absolute;
-  top: 19px;
-  left: 40px;
-  right: 40px;
-  height: 1px;
+  left: var(--x0);
+  top: var(--y0);
   pointer-events: none;
   z-index: 0;
 }
-.timeline-pulse::before {
+.timeline[data-axis="h"] .energy { width: var(--len); height: 1px; }
+.timeline[data-axis="v"] .energy { width: 1px; height: var(--len); }
+.energy-base, .energy-fill { position: absolute; inset: 0; }
+.energy-base { background: var(--line); }
+.energy-fill {
+  background: linear-gradient(90deg, var(--bronze), var(--copper), var(--glow));
+  box-shadow: 0 0 8px var(--glow-line);
+  transform-origin: left center;
+  transform: scaleX(var(--pos, 0));
+  transition: transform var(--travel, 0ms) var(--ease-in-out);
+}
+.timeline[data-axis="v"] .energy-fill {
+  background: linear-gradient(180deg, var(--bronze), var(--copper), var(--glow));
+  transform-origin: center top;
+  transform: scaleY(var(--pos, 0));
+}
+/* cabeza luminosa + estela */
+.energy-head {
+  position: absolute;
+  left: 0; top: 0;
+  width: 0; height: 0;
+  transition: transform var(--travel, 0ms) var(--ease-in-out);
+  transform: translateX(calc(var(--len) * var(--pos, 0)));
+}
+.timeline[data-axis="v"] .energy-head { transform: translateY(calc(var(--len) * var(--pos, 0))); }
+.energy-head::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 0;
-  width: 6px;
-  height: 6px;
+  left: -4px; top: -4px;
+  width: 9px; height: 9px;
   border-radius: 50%;
   background: var(--glow);
-  box-shadow: 0 0 10px var(--glow-line);
-  transform: translate(-50%, -50%);
-  opacity: 0;
+  box-shadow: 0 0 12px 2px var(--glow-line), 0 0 28px 6px rgb(var(--glow-rgb) / 0.25);
 }
-.timeline.in .timeline-pulse::before {
-  animation: timeline-travel 1.1s var(--ease-in-out) 0.15s 1 both;
+.energy-head::after { /* estela */
+  content: "";
+  position: absolute;
+  right: 4px; top: -1px;
+  width: clamp(60px, 9vw, 120px); height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(270deg, rgb(var(--glow-rgb) / 0.85), transparent);
+  opacity: 0.9;
 }
-@keyframes timeline-travel-y {
-  0% { top: 0%; opacity: 0; }
-  12% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
-}
-@keyframes timeline-travel {
-  0% { left: 0%; opacity: 0; }
-  12% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+.timeline[data-axis="v"] .energy-head::after {
+  right: auto; top: auto; left: -1px; bottom: 4px;
+  width: 3px; height: 70px;
+  background: linear-gradient(0deg, rgb(var(--glow-rgb) / 0.85), transparent);
 }
 
+/* ---------- etapa ---------- */
 .timeline-step {
   flex: 1;
+  min-width: 0;
   position: relative;
   z-index: 1;
   display: flex;
@@ -82,13 +79,32 @@
   align-items: center;
   text-align: center;
   gap: 14px;
-  padding: 0 14px;
+  padding: 0 6px;
   opacity: 0;
   transform: translateY(14px);
   transition: opacity var(--dur-moderate) var(--ease), transform var(--dur-moderate) var(--ease);
+  outline: none;
+  cursor: default;
 }
 .timeline.in .timeline-step { opacity: 1; transform: none; }
+.timeline-step:focus-visible { outline: 1px solid var(--accent-strong); outline-offset: 4px; border-radius: 4px; }
+
+.step-scene {
+  width: 100%;
+  height: var(--scene-max-h);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+/* foco: la etapa activa brilla; las demás se atenúan sin ocultarse */
+.timeline-step .scene-frame { opacity: 0.5; }
+.timeline-step.is-done .scene-frame { opacity: 0.82; }
+.timeline-step.is-active .scene-frame { opacity: 1; }
+.timeline.is-interacting .timeline-step:not(.is-active) .scene-frame { opacity: 0.4; }
+.timeline.is-rewinding .timeline-step .scene-frame { opacity: 0.22; }
+
 .timeline-node {
+  position: relative;
   width: 38px;
   height: 38px;
   flex-shrink: 0;
@@ -101,36 +117,61 @@
   font-family: var(--mono);
   font-size: 12px;
   color: var(--text-300);
-  transition: transform var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+  transition: transform var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease), box-shadow var(--dur-moderate) var(--ease), color var(--dur-base) var(--ease);
 }
-.timeline-step:hover .timeline-node { transform: translateY(-3px) scale(1.06); border-color: var(--accent-strong); }
-.timeline-step.done .timeline-node {
+.timeline-step.is-lit .timeline-node { border-color: var(--accent-strong); color: var(--text-100); box-shadow: 0 0 14px -4px var(--glow-line); }
+.timeline-step.is-active .timeline-node { border-color: var(--glow); color: var(--glow); box-shadow: 0 0 22px -2px var(--glow-line), inset 0 0 10px -4px var(--glow-line); transform: scale(1.1); }
+.timeline-step:hover .timeline-node { border-color: var(--glow); }
+/* el último nodo, ya lanzado, adopta el verde de "en producción" */
+.timeline-step:last-child.is-done .timeline-node {
   border-color: var(--ok);
   color: var(--ok);
-  animation: node-pulse 2.4s ease-in-out 1.3s infinite;
+  animation: node-pulse 2.4s ease-in-out infinite;
 }
 @keyframes node-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(126, 168, 136, 0.4); }
   50% { box-shadow: 0 0 0 6px rgba(126, 168, 136, 0); }
 }
-.timeline-step h3 { font-size: 0.98rem; }
-.timeline-step p { color: var(--text-500); font-size: 13.5px; max-width: 22ch; }
+/* expansión circular de energía al llegar el pulso */
+.node-ripple {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid var(--glow);
+  pointer-events: none;
+  animation: node-ripple 0.9s var(--ease-out) both;
+}
+@keyframes node-ripple {
+  from { transform: scale(1); opacity: 0.9; }
+  to { transform: scale(3); opacity: 0; }
+}
 
+.timeline-step h3 { font-size: 0.98rem; color: var(--text-300); transition: color var(--dur-base) var(--ease); }
+.timeline-step p { color: var(--text-500); font-size: 13.5px; max-width: 22ch; }
+.timeline-step.is-active h3, .timeline-step:hover h3 { color: var(--text-100); }
+
+/* ---------- móvil: recorrido vertical, la energía baja ---------- */
 @media (max-width: 860px) {
-  .timeline { flex-direction: column; gap: 28px; }
-  .timeline::before { top: 0; bottom: 0; left: 19px; right: auto; width: 1px; height: auto; }
-  /* la animación sigue a la distribución: en vertical la línea se ilumina de
-     arriba abajo (scaleY) y el pulso viaja por `top`, no por `left`. */
-  .timeline-fill {
-    top: 0; bottom: 0; left: 19px; right: auto; width: 1px; height: auto;
-    background: linear-gradient(180deg, var(--bronze), var(--copper), var(--glow));
-    transform: scaleY(0);
-    transform-origin: center top;
+  .process { --scene-max-h: 150px; }
+  .timeline { flex-direction: column; gap: 30px; }
+  .timeline-step {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    grid-template-areas: ". scene" "node title" ". desc";
+    column-gap: 16px;
+    row-gap: 8px;
+    align-items: start;
+    text-align: left;
+    padding: 0;
   }
-  .timeline.in .timeline-fill { transform: scaleY(1); }
-  .timeline-pulse { top: 0; bottom: 0; left: 19px; right: auto; width: 1px; height: auto; }
-  .timeline-pulse::before { top: 0; left: 50%; }
-  .timeline.in .timeline-pulse::before { animation-name: timeline-travel-y; }
-  .timeline-step { flex-direction: row; text-align: left; padding: 0; }
-  .timeline-step p { max-width: none; }
+  .step-scene { grid-area: scene; justify-content: flex-start; height: auto; }
+  .step-scene .scene-frame { width: min(100%, 260px); }
+  .timeline-node { grid-area: node; }
+  .timeline-step h3 { grid-area: title; align-self: center; }
+  .timeline-step p { grid-area: desc; max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .energy-fill, .energy-head { transition: none; }
+  .node-ripple { display: none; }
 }
