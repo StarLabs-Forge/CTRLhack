@@ -96,19 +96,13 @@
   align-items: flex-end;
   justify-content: center;
 }
-/* cada etapa aparece solo cuando la energía la alcanza: hasta entonces su escena
-   no está (ocupa su sitio, sin saltos de layout) */
-.timeline-step .scene-frame {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.6s var(--ease-in-out), transform 0.7s var(--ease-out), filter 0.5s var(--ease-in-out);
-}
-.timeline-step.is-lit .scene-frame {
-  opacity: 1;
-  transform: none;
-  /* Más luz sin usar filter (que se recalculaba en cada cuadro con las escenas
-     animadas): los colores de las escenas se aclaran aquí mismo. El halo va
-     aparte en .step-scene::before. */
+/* foco: la etapa activa brilla; las demás se atenúan sin ocultarse (en reposo, un
+   "fantasma" tenue de cada escena que se va construyendo cuando llega la energía) */
+.timeline-step .scene-frame { opacity: 0.5; }
+.timeline-step.is-done .scene-frame { opacity: 0.82; }
+.timeline-step.is-active .scene-frame { opacity: 1; }
+/* más luz sin usar filter: los colores de las escenas se aclaran aquí mismo. */
+.timeline.in .timeline-step .scene-frame {
   --obsidian-rgb: 24 20 17;
   --graphite-rgb: 66 60 55;
   --copper-rgb: 222 146 76;
@@ -117,8 +111,8 @@
   --text-500: #dfd3c8;
   --text-600: #cbbeb1;
 }
-.timeline.is-interacting .timeline-step.is-lit:not(.is-active) .scene-frame { opacity: 0.4; }
-.timeline.is-rewinding .timeline-step.is-lit .scene-frame { opacity: 0.22; }
+.timeline.is-interacting .timeline-step:not(.is-active) .scene-frame { opacity: 0.4; }
+.timeline.is-rewinding .timeline-step .scene-frame { opacity: 0.22; }
 /* halo cobre fijo detrás de cada escena (nace con ella): antes era un drop-shadow
    que se recalculaba en cada cuadro porque la escena está animada */
 .step-scene { position: relative; }

@@ -1,5 +1,5 @@
 import { forwardRef, useRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type MouseEvent } from "react";
-import { LOOP_SLOWDOWN, PROCESS_STEPS, PROCESS_TIMING } from "./processConfig";
+import { PROCESS_STEPS, PROCESS_TIMING } from "./processConfig";
 import type { ProcessApi, ProcessView } from "./ProcessAnimationController";
 import { ConstructionScene, ConversationScene, LaunchScene, PlanningScene, TestingScene } from "./scenes/scenes";
 import "./scenes/scenes.css";
@@ -11,21 +11,17 @@ interface Props {
   view: ProcessView;
   api: ProcessApi;
   delay: string;
-  /** true: la escena corre en bucle (todas a la vez), sin esperar su turno. */
-  looping: boolean;
 }
 
 // Una etapa: escena animada + nodo + texto. Recibe SOLO el estado ya decidido
 // por el controlador; sus únicos efectos propios son el parallax del cursor
 // (variables CSS escritas por rAF, sin pasar por React) y reenviar eventos.
-export const ProcessStep = forwardRef<HTMLSpanElement, Props>(function ProcessStep({ index, view, api, delay, looping }, nodeRef) {
+export const ProcessStep = forwardRef<HTMLSpanElement, Props>(function ProcessStep({ index, view, api, delay }, nodeRef) {
   const step = PROCESS_STEPS[index];
   const Scene = SCENES[index];
   const el = useRef<HTMLDivElement>(null);
   const raf = useRef(0);
   const state = view.scenes[index];
-  // Las escenas en bucle no cambian los nodos ni el estado del controlador.
-  const sceneState = looping ? "loop" : state;
   const isActive = view.active === index && view.status !== "idle";
 
   const setTilt = (x: number, y: number) => {
@@ -72,7 +68,7 @@ export const ProcessStep = forwardRef<HTMLSpanElement, Props>(function ProcessSt
       className={cls}
       style={{
         transitionDelay: delay,
-        ["--scene-dur" as string]: `${PROCESS_TIMING.scenes[index] * (looping ? LOOP_SLOWDOWN[index] : 1)}ms`,
+        ["--scene-dur" as string]: `${PROCESS_TIMING.scenes[index]}ms`,
       } as CSSProperties}
       tabIndex={0}
       aria-label={`Paso ${step.num}: ${step.title}. ${step.description}`}
@@ -88,7 +84,7 @@ export const ProcessStep = forwardRef<HTMLSpanElement, Props>(function ProcessSt
         <div className="scene-frame">
           <div className="scene-persp">
             <div className="scene-tilt">
-              <Scene key={view.runs[index]} state={sceneState} />
+              <Scene key={view.runs[index]} state={state} />
             </div>
           </div>
         </div>

@@ -101,7 +101,6 @@ export function Process() {
             view={view}
             api={api}
             delay={entered ? `${160 + i * 130}ms` : "0ms"}
-            looping={entered}
             ref={(n) => {
               nodes.current[i] = n;
             }}
