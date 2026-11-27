@@ -188,9 +188,14 @@ h2 {
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.14em;
-  color: var(--text-600);
+  color: rgb(var(--ivory-rgb) / 0.78);
   margin-bottom: 10px;
 }
+
+/* Modo oscuro: sombra suave bajo todo el texto para que no se pierda entre
+   los cubos del fondo. Los títulos con degradado no la usan (ya llevan la suya). */
+:root:not([data-theme="light"]) body { text-shadow: 0 1px 10px rgb(0 0 0 / 0.75), 0 0 2px rgb(0 0 0 / 0.6); }
+h1, h2, .btn, .service-cta { text-shadow: none; }
 
 /* ============================================
    SCROLL REVEAL (class added by JS only —

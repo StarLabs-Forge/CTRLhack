@@ -41,9 +41,10 @@
 
   /* Texto sobre --bg-950 (ratio WCAG): 100 = 17.5:1 · 300 = 11.7:1 · 500 = 6.9:1 · 600 = 5.4:1 (≥ 4.9:1 también sobre bg-800) */
   --text-100: var(--white);
-  --text-300: #cfc5bc;
-  --text-500: #a1968d;
-  --text-600: #8f847a;
+  /* más claros que antes: el texto pequeño tiene que leerse sobre el fondo de cubos */
+  --text-300: #e2d8cf;
+  --text-500: #c7bbb0;
+  --text-600: #b3a598;
 
   /* ---------- 3. Semánticos ---------- */
   --accent: var(--glow);          /* texto/estado activo (ratio 9.6:1 sobre obsidiana) */
