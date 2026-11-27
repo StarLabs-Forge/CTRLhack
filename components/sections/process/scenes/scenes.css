@@ -37,7 +37,7 @@
   position: absolute;
   left: 8%; right: 8%; bottom: -2%;
   height: 22%;
-  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / 0.16), transparent);
+  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / 0.34), transparent);
   pointer-events: none;
 }
 
@@ -129,7 +129,7 @@
 .typing b {
   width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); border-radius: 50%;
   background: var(--text-300);
-  animation: typing-dot 0.9s ease-in-out infinite;
+  animation: typing-dot 1.5s ease-in-out infinite;
 }
 .typing b:nth-child(2) { animation-delay: 0.15s; }
 .typing b:nth-child(3) { animation-delay: 0.3s; }
@@ -378,7 +378,7 @@
 .lap-floor {
   position: absolute; left: 50%; bottom: calc(var(--u) * 1); width: calc(var(--u) * 84); height: calc(var(--u) * 14);
   margin-left: calc(var(--u) * -42);
-  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / 0.3), transparent);
+  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / 0.55), transparent);
   opacity: 0; animation: sc-fade calc(var(--scene-dur) * 0.25) ease-out calc(var(--scene-dur) * 0.2) both;
 }
 .lap-rig {
@@ -391,7 +391,7 @@
   opacity: 0;
   animation:
     sc-fade calc(var(--scene-dur) * 0.12) ease-out both,
-    lap-float 3.6s ease-in-out calc(var(--scene-dur) * 0.3) infinite;
+    lap-float 7s ease-in-out calc(var(--scene-dur) * 0.3) infinite;
 }
 @keyframes lap-float {
   0%, 100% { translate: 0 0; }
@@ -441,7 +441,7 @@
   background: rgb(var(--obsidian-rgb) / 0.82); border: 1px solid var(--ok); color: var(--ok);
   font-size: calc(var(--u) * 2.6); letter-spacing: 0.06em;
 }
-.lap-status i { width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); border-radius: 50%; background: var(--ok); animation: lap-live 1.6s ease-in-out infinite; }
+.lap-status i { width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); border-radius: 50%; background: var(--ok); animation: lap-live 2.8s ease-in-out infinite; }
 @keyframes lap-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 .lap-sheen { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 36%, rgb(255 255 255 / 0.1) 48%, transparent 60%); }
 .lap-base {
