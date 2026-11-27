@@ -105,7 +105,7 @@ export function CredentialGallery({ member }: { member: TeamMember }) {
         <div>
           <span className="member-block-label">Conocimiento respaldado</span>
           <p className="creds-sub">
-            {member.credentials.length} credenciales de {member.orgs.length} organizaciones formativas. Toca un certificado para verlo completo.
+            {member.credentials.length} credenciales. Toca una para verla.
           </p>
         </div>
         <ul className="creds-orgs" aria-label="Organizaciones formativas">

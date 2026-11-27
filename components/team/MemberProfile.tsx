@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { Specialty, TeamMember } from "../../data/team";
 import { Reveal } from "../ui/Reveal";
 import { MemberPhoto } from "./MemberPhoto";
@@ -45,8 +45,10 @@ function SpecialtyRow({ specialty }: { specialty: Specialty }) {
 }
 
 export function MemberProfile({ member }: { member: TeamMember }) {
+  // la biografía completa va colapsada: se ve el primer párrafo y "Leer más" despliega el resto
+  const [more, setMore] = useState(false);
   return (
-    <article className="member" aria-labelledby={`member-${member.id}`}>
+    <article className="member member-panel" aria-labelledby={`member-${member.id}`}>
       <div className="member-top">
         <Reveal variant="scale" className="member-photo-col">
           <MemberPhoto member={member} />
@@ -65,23 +67,21 @@ export function MemberProfile({ member }: { member: TeamMember }) {
               <p>{member.quote}</p>
             </blockquote>
             <div className="member-bio">
-              {member.bio.map((p) => (
+              {(more ? member.bio : member.bio.slice(0, 1)).map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
+              {member.bio.length > 1 && (
+                <button type="button" className="member-more" aria-expanded={more} onClick={() => setMore((v) => !v)}>
+                  {more ? "Leer menos" : "Leer más"}
+                </button>
+              )}
             </div>
             <ul className="member-specs" aria-label="Especialidades">
               {member.specialties.map((s) => (
                 <SpecialtyRow specialty={s} key={s.id} />
               ))}
             </ul>
-            <div className="member-skills">
-              <span className="member-skills-label">También aporta</span>
-              <ul>
-                {member.skills.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
-              </ul>
-            </div>
+            <p className="member-skills-line">También: {member.skills.join(" · ")}</p>
           </Reveal>
           <Reveal delay={320}>
             <div className="member-stats">

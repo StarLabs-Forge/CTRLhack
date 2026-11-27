@@ -10,6 +10,20 @@
 .team-members { margin-top: clamp(36px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(80px, 10vw, 140px); }
 .member, .member-block, .creds { min-width: 0; }
 
+/* un solo módulo: foto, info, especialidades y certificados dentro del mismo panel */
+.member-panel {
+  padding: clamp(24px, 4vw, 48px);
+  background: rgb(var(--obsidian-rgb) / 0.86);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.member-panel .member-block {
+  margin-top: clamp(40px, 6vw, 64px);
+  padding-top: clamp(32px, 5vw, 48px);
+  border-top: 1px solid var(--line);
+}
+.member-skills-line { margin-top: 16px; font-size: 13px; color: var(--text-500); }
+
 .team-sr {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -29,7 +43,7 @@
   --cut-photo: 28px;
   position: relative;
   margin: 0 auto;
-  max-width: 440px;
+  max-width: 300px;
   transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform 0.6s var(--ease-out);
 }
@@ -43,29 +57,29 @@
 @keyframes member-breathe { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
 .member-photo-frame {
   position: relative;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--bg-900);
-  clip-path: polygon(var(--cut-photo) 0, 100% 0, 100% calc(100% - var(--cut-photo)), calc(100% - var(--cut-photo)) 100%, 0 100%, 0 var(--cut-photo));
+  border-radius: 50%;
 }
 .member-photo-frame img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* solo el borde inferior se funde con el fondo; la persona no se toca */
-  -webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
+  object-position: 50% 22%;
 }
-/* filete cobre del marco */
+/* aro cobre del avatar */
 .member-photo-frame::after {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgb(var(--copper-rgb) / 0.55);
-  clip-path: inherit;
+  border: 2px solid rgb(var(--copper-rgb) / 0.6);
+  border-radius: 50%;
   pointer-events: none;
 }
+/* estilo avatar: sin líneas ni etiqueta alrededor */
+.member-photo-lines, .member-photo-tag { display: none !important; }
 /* luz cálida suave que sigue al cursor por los bordes */
 .member-photo-light {
   position: absolute;
@@ -171,6 +185,21 @@
   max-width: 64ch;
 }
 .member-bio p + p { margin-top: 10px; }
+.member-more {
+  margin-top: 8px;
+  padding: 0;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--accent-strong);
+  cursor: pointer;
+}
+.member-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* Indicadores */
 .member-stats {
@@ -471,7 +500,7 @@
 }
 @media (max-width: 860px) {
   .member-top { grid-template-columns: 1fr; }
-  .member-photo { max-width: 340px; }
+  .member-photo { max-width: 230px; }
   .creds-head { flex-direction: column; align-items: flex-start; }
   .cred-viewer { grid-template-columns: 1fr; overflow-y: auto; }
   .cred-viewer-figure { padding: 12px; }
