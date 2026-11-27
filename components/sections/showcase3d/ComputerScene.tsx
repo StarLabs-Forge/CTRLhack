@@ -5,7 +5,7 @@ import { Atmosphere, Shapes, Studio } from "./Atmosphere";
 import { Computer } from "./Computer";
 import { FloatingPanels, panelCount } from "./FloatingPanels";
 import { loadBrandFonts, loadLogoTexture } from "./assets";
-import { createState, playIntro, stopAnimations, type SceneState } from "./timeline";
+import { createState, playIntro, resetState, stopAnimations, type SceneState } from "./timeline";
 import type { PointerInput, Rig } from "./types";
 
 const FOV = 30;
@@ -71,6 +71,14 @@ function World({ input, active, compact, onFail, S }: SceneProps & { S: SceneSta
   useEffect(() => {
     if (ready && active && !S.started) intro.current = playIntro(S);
   }, [ready, active, S]);
+  // Al salir el hero de pantalla se reinicia la coreografía: al volver, la
+  // intro (encendido, isotipo, paneles) se reproduce otra vez.
+  useEffect(() => {
+    if (active || !S.started) return;
+    stopAnimations(S, intro.current);
+    intro.current = null;
+    resetState(S);
+  }, [active, S]);
   useEffect(
     () => () => {
       stopAnimations(S, intro.current);

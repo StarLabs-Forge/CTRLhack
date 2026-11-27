@@ -67,6 +67,12 @@ function startPulse(S: SceneState) {
   gsap.to(S, { wave: 1, duration: 2.4, ease: "none", repeat: -1, repeatDelay: 8, delay: 6 });
 }
 
+// Vuelve la coreografía al negro inicial para poder repetir la intro.
+export function resetState(S: SceneState) {
+  const fresh = createState(S.panels.length);
+  Object.assign(S, fresh, { panels: S.panels.map(() => 0) });
+}
+
 export function stopAnimations(S: SceneState, tl: gsap.core.Timeline | null) {
   tl?.kill();
   gsap.killTweensOf(S);
