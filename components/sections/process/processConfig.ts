@@ -27,3 +27,6 @@ export const PROCESS_STEPS = [
 ] as const;
 
 export const STEP_COUNT = PROCESS_STEPS.length;
+
+/** Factor de lentitud de las escenas en bucle (todas a la vez): más lento = más natural. */
+export const LOOP_SLOWDOWN = 2.6;

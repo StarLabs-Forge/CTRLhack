@@ -1,5 +1,5 @@
 import { forwardRef, useRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type MouseEvent } from "react";
-import { PROCESS_STEPS, PROCESS_TIMING } from "./processConfig";
+import { LOOP_SLOWDOWN, PROCESS_STEPS, PROCESS_TIMING } from "./processConfig";
 import type { ProcessApi, ProcessView } from "./ProcessAnimationController";
 import { ConstructionScene, ConversationScene, LaunchScene, PlanningScene, TestingScene } from "./scenes/scenes";
 import "./scenes/scenes.css";
@@ -70,7 +70,10 @@ export const ProcessStep = forwardRef<HTMLSpanElement, Props>(function ProcessSt
     <div
       ref={el}
       className={cls}
-      style={{ transitionDelay: delay, ["--scene-dur" as string]: `${PROCESS_TIMING.scenes[index]}ms` } as CSSProperties}
+      style={{
+        transitionDelay: delay,
+        ["--scene-dur" as string]: `${PROCESS_TIMING.scenes[index] * (looping ? LOOP_SLOWDOWN : 1)}ms`,
+      } as CSSProperties}
       tabIndex={0}
       aria-label={`Paso ${step.num}: ${step.title}. ${step.description}`}
       onPointerEnter={onEnter}
