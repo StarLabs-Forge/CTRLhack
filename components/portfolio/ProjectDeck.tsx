@@ -48,6 +48,23 @@ export function ProjectDeck() {
     ? clientCases.find((c) => c.slug === openProject.clientCaseSlug)
     : undefined;
   const shellRef = useRef<HTMLDivElement>(null);
+  // La entrada del carrusel se repite cada vez que la sección vuelve a pantalla:
+  // `entered` se apaga solo cuando sale por completo y se enciende al volver.
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    const el = shellRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setEntered(true); return; }
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1];
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.2) setEntered(true);
+        else if (entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top >= window.innerHeight) setEntered(false);
+      },
+      { threshold: [0, 0.2] }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const drag = useRef({ dragging: false, startX: 0, delta: 0, lastX: 0, lastT: 0, velocity: 0, moved: false });
   // Tilt/glare solo con puntero fino y sin reduced-motion (mismo criterio que useMagnetic).
   const canTilt = useRef(false);
@@ -160,7 +177,7 @@ export function ProjectDeck() {
       <div
         hidden={count === 0}
         data-swapped={swapped || undefined}
-        className="deck-shell"
+        className={`deck-shell${entered ? " deck-in" : ""}`}
         ref={shellRef}
         tabIndex={0}
         role="group"
@@ -211,7 +228,7 @@ export function ProjectDeck() {
             <div
               key={project.slug}
               className={`deck-card${isActive ? " is-active" : ""}${isSoon ? " pcard-soon" : ""}`}
-              style={style}
+              style={{ ...style, "--ci": abs } as CSSProperties}
               aria-hidden={!isActive}
               onClick={() => !isActive && !drag.current.moved && goTo(i)}
               onPointerMove={isActive ? onCardMove : undefined}
