@@ -1,82 +1,21 @@
 /* ============================================
-   LOADING — fallback de <Suspense> mientras carga el chunk de una vista.
-   Reusa tokens de marca.
+   LOADING — fallback de <Suspense>. La escena (tecla fracturada) vive en
+   components/ui/loader/BrandLoader.css; aquí solo el contenedor.
    ============================================ */
 .loading-screen {
   min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
+  display: grid;
+  place-items: center;
   background: var(--bg-950);
   background-image:
-    radial-gradient(circle at 15% 0%, rgb(var(--copper-rgb) / 0.09), transparent 40%),
-    radial-gradient(circle at 85% 20%, rgb(var(--bronze-rgb) / 0.16), transparent 50%);
+    radial-gradient(60% 50% at 50% 46%, rgb(var(--copper-rgb) / 0.1), transparent 70%),
+    radial-gradient(circle at 12% 0%, rgb(var(--bronze-rgb) / 0.12), transparent 45%);
   /* aparece con retardo: si el chunk llega en <150 ms el usuario nunca ve el
      loader (un parpadeo de pantalla completa es peor que no mostrarlo). */
   animation: loading-appear var(--dur-base) var(--ease-out) 150ms both;
 }
 @keyframes loading-appear { from { opacity: 0; } }
 
-/* El isotipo oficial se ensambla (chevrones + tecla + luz, ver Logo.css) y,
-   una vez armado, la luz respira suave hasta que llega la vista. */
-.loading-mark { position: relative; width: clamp(150px, 22vw, 200px); display: block; }
-.loading-mark svg { width: 100%; height: auto; }
-.loading-svg .sl-ambient {
-  animation: sl-light-in 0.7s var(--ease-out) 1s both, loading-glow 2.4s var(--ease-in-out) 1.8s infinite;
-}
-@keyframes loading-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
-
-.loading-word {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: -0.01em;
-}
-.loading-word .wm-ctrl { color: var(--text-100); }
-.loading-word .grad {
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.loading-word .dim { color: var(--text-500); font-weight: 400; font-family: var(--mono); font-size: 13px; }
-
-.loading-bar {
-  width: 128px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--line-soft);
-  overflow: hidden;
-}
-.loading-bar::after {
-  content: "";
-  display: block;
-  width: 40%;
-  height: 100%;
-  border-radius: 2px;
-  background: var(--brand-gradient);
-  animation: loading-slide 1.1s var(--ease-in-out) infinite;
-}
-@keyframes loading-slide {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(340%); }
-}
-
-.loading-hint {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-600);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .loading-screen,
-  .loading-svg .sl-ambient,
-  .loading-bar::after {
-    animation: none !important;
-  }
-  .loading-bar::after { transform: translateX(0); width: 100%; opacity: 0.5; }
+  .loading-screen { animation: none; }
 }

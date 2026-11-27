@@ -1,0 +1,168 @@
+/* ============================================
+   LOADER DE MARCA — tecla Ctrl fracturada que se reconstruye.
+   Secuencia (clases de fase en .bl-root):
+     loading → 4 piezas atraídas al centro, flotando; la barra avanza (--p)
+     joined  → encajan (--gap → 0), destello recorre las grietas
+     brand   → aparecen < y > (chevrones del isotipo oficial)
+     exit    → fundido hacia la interfaz
+   Todo el movimiento es transform/opacity/translate sobre capas propias
+   (cada pieza es un SVG en su div con will-change): sin repintados por fotograma.
+   --p (0…1) lo escribe useLoaderSequence por ref; --gap y --amp son propiedades
+   registradas para poder TRANSICIONARLAS al encajar.
+   ============================================ */
+@property --gap { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --amp { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+html.bl-lock { overflow: hidden; }
+
+.bl-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: var(--bg-950);
+  background-image:
+    radial-gradient(60% 50% at 50% 46%, rgb(var(--copper-rgb) / 0.12), transparent 70%),
+    radial-gradient(circle at 12% 0%, rgb(var(--bronze-rgb) / 0.14), transparent 45%);
+  transition: opacity 0.6s var(--ease-in-out);
+}
+.bl-overlay--exit { opacity: 0; pointer-events: none; }
+.bl-overlay--exit .bl-root { transform: scale(1.03); }
+
+.bl-root {
+  --p: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(22px, 5vh, 44px);
+  transition: transform 0.6s var(--ease-in-out);
+}
+
+/* ---------- escena ---------- */
+.bl-stage { position: relative; width: clamp(280px, 58vw, 620px); aspect-ratio: 2 / 1; }
+.bl-stage > svg, .bl-key svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bl-key { position: absolute; inset: 0; }
+.bl-halo {
+  position: absolute; left: 50%; top: 55%; width: 70%; height: 90%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / 0.16), transparent);
+  opacity: 0.7;
+  transition: opacity 0.8s var(--ease-out);
+}
+.bl--joined .bl-halo, .bl--brand .bl-halo, .bl--exit .bl-halo { opacity: 1; }
+
+/* ---------- piezas ---------- */
+.bl-piece {
+  position: absolute; inset: 0;
+  will-change: translate, rotate;
+  /* la separación decrece con el progreso: 7 % del ancho → 0,9 % */
+  --gap: calc((1 - var(--p)) * 7 + 0.9);
+  translate: calc(var(--dx) * var(--gap) * 1%) calc(var(--dy) * var(--gap) * 1.2%);
+  rotate: calc(var(--rot) * var(--gap) * 0.45deg);
+  filter: drop-shadow(0 6px 9px rgb(0 0 0 / 0.55));
+  transition: filter 0.4s var(--ease-out);
+}
+.bl-piece-in {
+  position: absolute; inset: 0;
+  --amp: calc(1 - var(--p) * 0.55);
+  will-change: translate, rotate;
+  /* atracción magnética: se acerca al centro y vuelve, cada pieza a su ritmo */
+  animation: bl-magnet var(--fd) var(--ease-in-out) var(--fdelay) infinite;
+}
+@keyframes bl-magnet {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% {
+    translate: calc(var(--dx) * -2.2% * var(--amp)) calc(var(--dy) * -2.6% * var(--amp));
+    rotate: calc(var(--rot) * -0.7deg * var(--amp));
+  }
+}
+
+/* ---------- encaje ---------- */
+.bl--joined .bl-piece, .bl--brand .bl-piece, .bl--exit .bl-piece {
+  --gap: 0;
+  transition: --gap 0.6s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.bl--joined .bl-piece-in, .bl--brand .bl-piece-in, .bl--exit .bl-piece-in {
+  --amp: 0;
+  transition: --amp 0.45s var(--ease-out);
+}
+/* peso: un asentamiento mínimo al encajar */
+.bl--joined .bl-key { animation: bl-thud 0.5s cubic-bezier(0.3, 0, 0.2, 1) 0.5s both; }
+@keyframes bl-thud { 0%, 100% { scale: 1; } 38% { scale: 0.984; } }
+
+/* tecla íntegra: toma el relevo de las piezas cuando ya encajaron */
+.bl-whole { opacity: 0; filter: drop-shadow(0 6px 9px rgb(0 0 0 / 0.55)); }
+.bl--joined .bl-whole, .bl--brand .bl-whole, .bl--exit .bl-whole { opacity: 1; transition: opacity 0.2s linear 0.62s; }
+/* bisel de fractura y sombras de las piezas se desvanecen al encajar */
+.bl-edge { transition: opacity 0.35s var(--ease-out) 0.3s; }
+.bl--joined .bl-edge, .bl--brand .bl-edge, .bl--exit .bl-edge { opacity: 0; }
+.bl--joined .bl-piece, .bl--brand .bl-piece, .bl--exit .bl-piece { filter: drop-shadow(0 0 0 transparent); }
+
+/* ---------- grietas ---------- */
+.bl-hairlines { transition: opacity 0.4s var(--ease-out) 0.1s; }
+.bl--joined .bl-hairlines, .bl--brand .bl-hairlines, .bl--exit .bl-hairlines { opacity: 0; }
+
+.bl-seams { opacity: 0; pointer-events: none; }
+.bl-seam { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.bl--joined .bl-seams, .bl--brand .bl-seams, .bl--exit .bl-seams { animation: bl-seam-fade 1s ease-out 0.45s both; }
+.bl--joined .bl-seam, .bl--brand .bl-seam, .bl--exit .bl-seam { animation: bl-seam-draw 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.45s both; }
+.bl-seam--wide { opacity: 0.45; }
+@keyframes bl-seam-draw { to { stroke-dashoffset: 0; } }
+@keyframes bl-seam-fade { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+
+.bl-flash {
+  position: absolute; width: 38%; aspect-ratio: 1; margin: -19% 0 0 -19%;
+  border-radius: 50%; pointer-events: none; opacity: 0;
+  background: radial-gradient(closest-side, rgb(255 238 205 / 0.75), rgb(var(--glow-rgb) / 0.3) 45%, transparent);
+}
+.bl--joined .bl-flash, .bl--brand .bl-flash, .bl--exit .bl-flash { animation: bl-flash 0.75s var(--ease-out) 0.5s both; }
+@keyframes bl-flash { 0% { opacity: 0; scale: 0.4; } 30% { opacity: 0.9; } 100% { opacity: 0; scale: 1.5; } }
+
+/* ---------- < > : solo después de unida la tecla ---------- */
+.bl-chevrons { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bl-chevrons .sl-key, .bl-chevrons .sl-ambient { display: none; }
+.bl-chevrons .sl-chevron { opacity: 0; transition: opacity 0.7s var(--ease-out), translate 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.bl-chevrons .sl-chevron--left { translate: 150px 0; scale: 0.96; }
+.bl-chevrons .sl-chevron--right { translate: -150px 0; scale: 0.96; }
+.bl--brand .bl-chevrons .sl-chevron, .bl--exit .bl-chevrons .sl-chevron { opacity: 1; translate: 0 0; scale: 1; }
+.bl--brand .bl-chevrons .sl-chevron--right, .bl--exit .bl-chevrons .sl-chevron--right { transition-delay: 0.08s; }
+
+/* ---------- barra + etiqueta ---------- */
+.bl-meta { display: grid; justify-items: center; gap: 12px; transition: opacity 0.4s var(--ease-out) 0.25s; }
+.bl--joined .bl-meta, .bl--brand .bl-meta, .bl--exit .bl-meta { opacity: 0; }
+.bl-bar {
+  width: clamp(130px, 26vw, 220px); height: 2px; border-radius: 2px;
+  background: rgb(var(--ivory-rgb) / 0.1); overflow: hidden;
+}
+.bl-bar-fill {
+  display: block; width: 100%; height: 100%; border-radius: 2px;
+  transform-origin: left center; transform: scaleX(var(--p));
+  background: linear-gradient(90deg, var(--bronze), var(--copper) 55%, var(--glow));
+  box-shadow: 0 0 8px var(--glow-line);
+  will-change: transform;
+}
+.bl-label { position: relative; height: 12px; padding-left: 0.32em; font-family: var(--mono); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--text-600); }
+.bl-label span { display: block; white-space: nowrap; }
+.bl-label .bl-label-b { display: none; }
+
+/* ---------- variante sin progreso real (Suspense entre rutas) ---------- */
+.bl--indeterminate { --p: 0.35; }
+.bl--indeterminate .bl-piece { --gap: 4.5; }
+.bl--indeterminate .bl-piece-in { --amp: 1; }
+.bl--indeterminate .bl-bar-fill { width: 40%; transform: none; animation: bl-slide 1.3s var(--ease-in-out) infinite; }
+@keyframes bl-slide { 0% { translate: -100% 0; } 100% { translate: 250% 0; } }
+
+/* ---------- móvil ---------- */
+@media (max-width: 520px) {
+  .bl-stage { width: min(86vw, 340px); }
+  .bl-root { gap: 26px; }
+}
+
+/* ---------- movimiento reducido: imagotipo completo, sin animar ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .bl-piece, .bl-piece-in { --gap: 0; --amp: 0; animation: none; transition: none; }
+  .bl-chevrons .sl-chevron { opacity: 1; translate: 0 0; scale: 1; transition: none; }
+  .bl-bar-fill { animation: none; transform: none; width: 100%; opacity: 0.5; }
+  .bl-hairlines, .bl-seams, .bl-flash { display: none; }
+}
