@@ -1,4 +1,4 @@
-import type { CSSProperties, PointerEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { Specialty, TeamMember } from "../../data/team";
 import { Reveal } from "../ui/Reveal";
 import { MemberPhoto } from "./MemberPhoto";
@@ -32,23 +32,15 @@ const SPECIALTY_ICONS: Record<Specialty["id"], ReactNode> = {
   ),
 };
 
-function SpecialtyCard({ specialty, index }: { specialty: Specialty; index: number }) {
-  // luz que sigue al cursor dentro de la tarjeta (solo ratón)
-  const onMove = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse") return;
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
-    e.currentTarget.style.setProperty("--my", `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
-  };
+function SpecialtyRow({ specialty }: { specialty: Specialty }) {
   return (
-    <div className={`specialty specialty--${specialty.id}`} onPointerMove={onMove} style={{ "--i": index } as CSSProperties}>
-      <span className="specialty-icon">{SPECIALTY_ICONS[specialty.id]}</span>
-      <h4>{specialty.title}</h4>
-      <p>{specialty.description}</p>
-      <span className="specialty-index" aria-hidden="true">
-        0{index + 1}
+    <li className="member-spec">
+      <span className="member-spec-icon">{SPECIALTY_ICONS[specialty.id]}</span>
+      <span>
+        <strong>{specialty.title}</strong>
+        <span className="member-spec-desc">{specialty.description}</span>
       </span>
-    </div>
+    </li>
   );
 }
 
@@ -77,6 +69,19 @@ export function MemberProfile({ member }: { member: TeamMember }) {
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
             </div>
+            <ul className="member-specs" aria-label="Especialidades">
+              {member.specialties.map((s) => (
+                <SpecialtyRow specialty={s} key={s.id} />
+              ))}
+            </ul>
+            <div className="member-skills">
+              <span className="member-skills-label">También aporta</span>
+              <ul>
+                {member.skills.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
           <Reveal delay={320}>
             <div className="member-stats">
@@ -87,25 +92,6 @@ export function MemberProfile({ member }: { member: TeamMember }) {
           </Reveal>
         </div>
       </div>
-
-      <Reveal className="member-block">
-        <div className="member-block-head">
-          <span className="member-block-label">Especialidades</span>
-        </div>
-        <div className="specialties">
-          {member.specialties.map((s, i) => (
-            <SpecialtyCard specialty={s} index={i} key={s.id} />
-          ))}
-        </div>
-        <div className="member-skills">
-          <span className="member-skills-label">También aporta</span>
-          <ul>
-            {member.skills.map((s) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ul>
-        </div>
-      </Reveal>
 
       <Reveal className="member-block">
         <CredentialGallery member={member} />

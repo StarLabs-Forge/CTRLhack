@@ -140,17 +140,17 @@ export const team: TeamMember[] = [
       {
         id: "fullstack",
         title: "Full Stack Development",
-        description: "Desarrollo frontend y backend, aplicaciones web y multiplataforma, bases de datos, APIs e integración de sistemas.",
+        description: "Frontend, backend, APIs y bases de datos.",
       },
       {
         id: "security",
         title: "Cybersecurity",
-        description: "Hacking ético, análisis de vulnerabilidades, análisis de malware, ingeniería forense digital y seguridad de la información.",
+        description: "Hacking ético, malware y análisis forense.",
       },
       {
         id: "ai",
         title: "Artificial Intelligence",
-        description: "Inteligencia artificial generativa, integración de modelos de lenguaje, ingeniería de prompts, MCP, automatización inteligente e implementación empresarial de IA.",
+        description: "Modelos de lenguaje, automatización y MCP.",
       },
     ],
     skills: ["Data Science", "Gestión de proyectos", "Análisis empresarial", "Análisis de datos", "Innovación tecnológica"],
