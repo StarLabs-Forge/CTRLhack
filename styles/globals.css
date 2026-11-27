@@ -141,9 +141,10 @@ section.tight { padding: 88px 0; }
 .page-hero-block > section > .wrap { width: 100%; }
 .section-head { max-width: 640px; margin-bottom: 56px; }
 /* Títulos de sección: mismo tamaño y peso que "Sobre", y color que va de blanco a naranja */
-.section-head h2 { font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 700; line-height: 1.12; margin-top: 14px; }
+.section-head h2 { font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 800; line-height: 1.12; margin-top: 14px; }
 h2 {
-  background: linear-gradient(90deg, #fff1e4 0%, var(--glow) 55%, var(--copper) 100%);
+  font-weight: 800;
+  background: linear-gradient(90deg, #ffc08a 0%, var(--glow) 50%, #d9722a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
