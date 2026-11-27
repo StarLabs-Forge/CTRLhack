@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/layout/Navbar";
+import { BackButton } from "./components/layout/BackButton";
 import { Footer } from "./components/layout/Footer";
 import { ScrollManager } from "./components/layout/ScrollManager";
 import { ViewTransitionGate } from "./components/ui/TransitionLink";
@@ -26,6 +27,7 @@ export function App() {
       <ScrollManager />
       <ViewTransitionGate />
       <Navbar />
+      <BackButton />
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<HomeView />} />
