@@ -12,6 +12,7 @@
    ============================================ */
 @property --gap { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --amp { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --p { syntax: "<number>"; inherits: true; initial-value: 0; }
 
 html.bl-lock { overflow: hidden; }
 
@@ -147,17 +148,11 @@ html.bl-lock { overflow: hidden; }
 .bl-label .bl-label-b { display: none; }
 
 /* ---------- variante sin progreso real (Suspense entre rutas) ----------
-   Un fallback se desmonta cuando llega el chunk y no puede esperar a que las
-   piezas encajen: mostrar la tecla a medias se leería como una animación rota.
-   Aquí la tecla ya está armada, respira suave y la barra desliza. */
-.bl--indeterminate .bl-piece { --gap: 0; filter: none; }
-.bl--indeterminate .bl-piece-in { --amp: 0; animation: none; }
-.bl--indeterminate .bl-edge, .bl--indeterminate .bl-hairlines { opacity: 0; }
-.bl--indeterminate .bl-whole { opacity: 1; }
-.bl--indeterminate .bl-key { animation: bl-breathe 2.4s var(--ease-in-out) infinite; }
-@keyframes bl-breathe { 0%, 100% { scale: 1; } 50% { scale: 1.025; } }
-.bl--indeterminate .bl-bar-fill { width: 40%; transform: none; animation: bl-slide 1.3s var(--ease-in-out) infinite; }
-@keyframes bl-slide { 0% { translate: -100% 0; } 100% { translate: 250% 0; } }
+   Mismas piezas fracturadas, con un avance simulado asintótico: la separación
+   y la barra evolucionan solas mientras llega el chunk. La secuencia completa
+   (encaje + < >) es la intro de BrandLoader, que sí conoce el progreso real. */
+.bl--indeterminate { animation: bl-creep 6s cubic-bezier(0.15, 0.6, 0.3, 1) both; }
+@keyframes bl-creep { from { --p: 0.08; } to { --p: 0.86; } }
 
 /* ---------- móvil ---------- */
 @media (max-width: 520px) {
@@ -168,6 +163,9 @@ html.bl-lock { overflow: hidden; }
 /* ---------- movimiento reducido: imagotipo completo, sin animar ---------- */
 @media (prefers-reduced-motion: reduce) {
   .bl-piece, .bl-piece-in { --gap: 0; --amp: 0; animation: none; transition: none; }
+  .bl--indeterminate { animation: none; --p: 1; }
+  .bl--indeterminate .bl-whole { opacity: 1; }
+  .bl--indeterminate .bl-edge { opacity: 0; }
   .bl-chevrons .sl-chevron { opacity: 1; translate: 0 0; scale: 1; transition: none; }
   .bl-bar-fill { animation: none; transform: none; width: 100%; opacity: 0.5; }
   .bl-hairlines, .bl-seams, .bl-flash { display: none; }
