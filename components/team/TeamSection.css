@@ -516,3 +516,42 @@
 @media (prefers-reduced-motion: reduce) {
   .member-photo, .cred-card, .cred-card:hover { transform: none !important; }
 }
+
+/* ---------- Compacto: todo el equipo en una pantalla de escritorio ---------- */
+#equipo { padding-top: clamp(40px, 6vh, 72px); padding-bottom: clamp(32px, 5vh, 56px); }
+#equipo .team-head { margin-bottom: 0; }
+#equipo .team-sub { margin-top: 6px; font-size: 15px; }
+#equipo .team-members { margin-top: 22px; gap: 0; }
+.member-panel { padding: clamp(20px, 2.6vw, 30px); }
+.member-top { grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr); gap: clamp(28px, 3.4vw, 48px); align-items: start; }
+.member-photo { max-width: 210px; margin: 0; }
+.member-kicker { font-size: 11px; }
+.member-name { font-size: clamp(1.6rem, 2.4vw, 2.1rem); margin: 6px 0 4px; }
+.member-role { font-size: 12px; }
+.member-quote { margin: 12px 0 10px; padding-left: 14px; }
+.member-quote p { font-size: clamp(0.98rem, 1.2vw, 1.1rem); }
+.member-bio p { font-size: 14px; line-height: 1.55; }
+.member-specs { margin-top: 12px; gap: 6px; }
+.member-spec { font-size: 13.5px; line-height: 1.4; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
+.member-spec-icon { width: 28px; height: 28px; padding: 5px; }
+.member-skills-line { margin-top: 8px; font-size: 12px; }
+.member-stats { margin-top: 14px; gap: 8px; }
+.member-stat { padding: 10px 10px 9px; }
+.member-stat-value { font-size: clamp(1.4rem, 2vw, 1.7rem); }
+.member-panel .member-block { margin-top: 22px; padding-top: 18px; }
+.creds-sub { margin-top: 4px; font-size: 13px; }
+.creds-toolbar { margin-top: 12px; }
+.creds-track { padding: 10px 4px 14px; gap: 12px; }
+.cred-slot { flex-basis: clamp(200px, 17vw, 230px); }
+.cred-title { font-size: 13.5px; min-height: 0; }
+.cred-body { padding: 8px 4px 0; gap: 4px; }
+.creds-more { margin-top: 4px; }
+@media (max-width: 860px) {
+  .member-top { grid-template-columns: 1fr; }
+  .member-photo { max-width: 170px; }
+}
+
+/* indicadores bajo la foto (columna izquierda) */
+.member-photo-col { display: flex; flex-direction: column; gap: 14px; }
+.member-photo-col .member-photo { margin: 0; }
+.member-photo-col .member-stats { margin-top: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }

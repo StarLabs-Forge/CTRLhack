@@ -50,9 +50,18 @@ export function MemberProfile({ member }: { member: TeamMember }) {
   return (
     <article className="member member-panel" aria-labelledby={`member-${member.id}`}>
       <div className="member-top">
-        <Reveal variant="scale" className="member-photo-col">
-          <MemberPhoto member={member} />
-        </Reveal>
+        <div className="member-photo-col">
+          <Reveal variant="scale">
+            <MemberPhoto member={member} />
+          </Reveal>
+          <Reveal delay={320}>
+            <div className="member-stats">
+              {member.stats.map((s, i) => (
+                <StatCounter stat={s} index={i} key={s.label} />
+              ))}
+            </div>
+          </Reveal>
+        </div>
 
         <div className="member-info">
           <Reveal delay={120}>
@@ -82,13 +91,6 @@ export function MemberProfile({ member }: { member: TeamMember }) {
               ))}
             </ul>
             <p className="member-skills-line">También: {member.skills.join(" · ")}</p>
-          </Reveal>
-          <Reveal delay={320}>
-            <div className="member-stats">
-              {member.stats.map((s, i) => (
-                <StatCounter stat={s} index={i} key={s.label} />
-              ))}
-            </div>
           </Reveal>
         </div>
       </div>
