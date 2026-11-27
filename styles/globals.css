@@ -144,7 +144,9 @@ section.tight { padding: 88px 0; }
 .section-head h2 { font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 800; line-height: 1.12; margin-top: 14px; }
 h2 {
   font-weight: 800;
-  background: linear-gradient(90deg, #ffc08a 0%, var(--glow) 50%, #d9722a 100%);
+  /* crema claro → naranja: se lee sobre los cubos y conserva el color de marca */
+  background: linear-gradient(90deg, #fff3e6 0%, #ffd9b3 45%, var(--glow) 100%);
+  filter: drop-shadow(0 2px 12px rgb(0 0 0 / 0.65));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
