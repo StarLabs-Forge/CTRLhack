@@ -146,6 +146,39 @@
   --radius-md: var(--radius-lg);
 }
 
+/* ============================================
+   MODO CLARO — se activa con <html data-theme="light"> (botón del nav).
+   Solo cambia las variables de superficie, texto y acento; los componentes
+   heredan todo desde aquí.
+   ============================================ */
+:root[data-theme="light"] {
+  --bg-950: #f7f3ee;
+  --bg-900: #efe8df;
+  --bg-800: #e6ddd2;
+  --bg-750: #ddd3c6;
+  --line: #cbbfb1;
+  --line-soft: #e2d8cc;
+
+  --white: #1a1411;
+  --white-rgb: 26 20 17;
+  --obsidian-rgb: 247 243 238;
+  --ivory-rgb: 120 80 45;
+
+  --text-100: var(--white);
+  --text-300: #3d342d;
+  --text-500: #6b5f55;
+  --text-600: #6e6357;
+
+  --accent: #a4531a;
+  --accent-strong: #b86a2e;
+  --accent-dim: #c9a27a;
+  --brand-gradient: linear-gradient(90deg, #7a3b12, #b8651f 55%, #8c4a20);
+  --warm-accent: #7a3b12;
+  --warm-accent-strong: #a4531a;
+  --grid-line: rgb(120 80 45 / 0.08);
+  --glow-soft: rgb(var(--glow-rgb) / 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

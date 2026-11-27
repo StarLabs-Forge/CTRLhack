@@ -4,6 +4,7 @@ import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { ScrollManager } from "./components/layout/ScrollManager";
 import { ViewTransitionGate } from "./components/ui/TransitionLink";
+import { CubeField } from "./components/effects/CubeField";
 import { Loading } from "./views/Loading";
 
 // Cada vista se carga bajo demanda: el bundle inicial trae solo la Home, y
@@ -21,6 +22,7 @@ const NotFoundView = lazy(() => import("./views/NotFoundView"));
 export function App() {
   return (
     <>
+      <CubeField />
       <ScrollManager />
       <ViewTransitionGate />
       <Navbar />
