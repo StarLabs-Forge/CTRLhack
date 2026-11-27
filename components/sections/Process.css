@@ -105,8 +105,16 @@
 /* con las escenas en bucle, todas están activas: se ven completas y con brillo cobre */
 .timeline.in .timeline-step .scene-frame {
   opacity: 1;
-  /* brillo barato (sin desenfoque); el halo va aparte en .step-scene::before */
-  filter: brightness(1.3) saturate(1.1);
+  /* Más luz sin usar filter (que se recalculaba en cada cuadro con las escenas
+     animadas): los colores de las escenas se aclaran aquí mismo. El halo va
+     aparte en .step-scene::before. */
+  --obsidian-rgb: 24 20 17;
+  --graphite-rgb: 66 60 55;
+  --copper-rgb: 222 146 76;
+  --line: #5c4c40;
+  --text-300: #f4ebe3;
+  --text-500: #dfd3c8;
+  --text-600: #cbbeb1;
 }
 /* halo cobre fijo detrás de cada escena: antes era un drop-shadow que se
    recalculaba en cada cuadro porque la escena está animada */
