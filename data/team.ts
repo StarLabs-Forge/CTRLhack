@@ -180,9 +180,11 @@ export const team: TeamMember[] = [
   {
     id: "geraldine",
     name: "Geraldine Lavadenz Tapia",
-    role: "",
+    role: "Full Stack Developer | Especialista en IA y automatización",
     quote: "",
-    bio: [],
+    bio: [
+      "Desarrolladora Full Stack con un año de experiencia profesional, formada en Platzi y Claude Academy. Especialista en inteligencia artificial y automatizaciones.",
+    ],
     photo: {
       src: "/team/geraldine.webp",
       srcSm: "/team/geraldine-600.webp",
@@ -190,8 +192,23 @@ export const team: TeamMember[] = [
       height: 868,
       alt: "Geraldine Lavadenz Tapia, integrante del equipo CtrlHack",
     },
-    stats: [],
-    specialties: [],
+    stats: [
+      { value: 1, unit: "año", label: "Desarrollo Full Stack" },
+      { value: 8, label: "Credenciales de formación" },
+      { value: 2, label: "Organizaciones formativas" },
+    ],
+    specialties: [
+      {
+        id: "fullstack",
+        title: "Full Stack Development",
+        description: "Desarrollo de aplicaciones web.",
+      },
+      {
+        id: "ai",
+        title: "Inteligencia Artificial",
+        description: "IA y automatizaciones.",
+      },
+    ],
     skills: [],
     orgs: [ORGANIZATIONS.anthropic, ORGANIZATIONS.platzi],
     credentials: GERALDINE_CREDENTIALS,
