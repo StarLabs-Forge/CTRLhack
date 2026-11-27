@@ -13,6 +13,10 @@
   width: min(100%, calc(var(--scene-max-h, 170px) * 100 / 72));
   aspect-ratio: 100 / 72;
   container-type: inline-size;
+  /* las animaciones que mueven tarjetas (Definimos) recalculan el diseño solo
+     dentro de la escena, no en toda la página. Sin "paint": hay luces y
+     chispas que salen del marco y no deben recortarse. */
+  contain: layout style;
   transition: opacity 0.5s var(--ease-in-out), filter 0.5s var(--ease-in-out);
 }
 .scene-persp { position: absolute; inset: 0; perspective: calc(var(--u) * 150); }

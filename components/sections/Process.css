@@ -105,7 +105,18 @@
 /* con las escenas en bucle, todas están activas: se ven completas y con brillo cobre */
 .timeline.in .timeline-step .scene-frame {
   opacity: 1;
-  filter: brightness(1.3) saturate(1.1) drop-shadow(0 0 18px rgb(var(--glow-rgb) / 0.45));
+  /* brillo barato (sin desenfoque); el halo va aparte en .step-scene::before */
+  filter: brightness(1.3) saturate(1.1);
+}
+/* halo cobre fijo detrás de cada escena: antes era un drop-shadow que se
+   recalculaba en cada cuadro porque la escena está animada */
+.step-scene { position: relative; }
+.timeline.in .step-scene::before {
+  content: "";
+  position: absolute;
+  inset: 4% 6% -6%;
+  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / 0.32), transparent);
+  pointer-events: none;
 }
 
 .timeline-node {
