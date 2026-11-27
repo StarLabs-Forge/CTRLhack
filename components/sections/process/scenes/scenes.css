@@ -46,6 +46,12 @@
 .scene[data-state="idle"] * { animation: none !important; }
 .scene[data-state="done"] * { animation-delay: -90s !important; }
 .process[data-paused="true"] .scene * { animation-play-state: paused !important; }
+/* loop: todas las escenas corren a la vez y se repiten, para que se vean
+   activas en la sección sin esperar su turno en la línea de tiempo. */
+.scene[data-state="loop"] * { animation-iteration-count: infinite !important; animation-delay: 0s !important; }
+.scene[data-state="loop"] .chat-win,
+.scene[data-state="loop"] .plan-card,
+.scene[data-state="loop"] .box { opacity: 1; }
 
 /* reposo: un "fantasma" tenue de cada escena, para que la fila nunca quede vacía */
 .scene[data-state="idle"] .chat-win { opacity: 0.4; }

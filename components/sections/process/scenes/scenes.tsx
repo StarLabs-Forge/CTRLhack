@@ -6,7 +6,7 @@ import type { CSSProperties } from "react";
 // Todo es CSS 3D + SVG: cero contextos WebGL, solo transform/opacity en caliente.
 
 export interface SceneProps {
-  state: "idle" | "playing" | "done";
+  state: "idle" | "playing" | "done" | "loop";
 }
 
 const v = (o: Record<string, number | string>) => o as CSSProperties;
