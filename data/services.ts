@@ -7,6 +7,8 @@ export interface Service {
   name: string;
   hook: string;
   description: string;
+  // Frase corta de la tarjeta (Home y /servicios): invita a entrar a la página.
+  teaser: string;
   // Página propia de esta categoría — la card ya no redirige a /contacto,
   // cada una es puerta de entrada a su propia página (ver App.tsx).
   path: string;
@@ -18,6 +20,7 @@ export const services: Service[] = [
     name: "Web",
     hook: "Tu presencia digital.",
     description: "Sitios y plataformas web pensados para crecer.",
+    teaser: "Descubre los diferentes tipos de páginas web que podemos hacer.",
     path: "/servicios/web",
   },
   {
@@ -25,6 +28,7 @@ export const services: Service[] = [
     name: "Apps",
     hook: "Tu idea, convertida en producto.",
     description: "Aplicaciones diseñadas para tus usuarios.",
+    teaser: "Descubre los diferentes tipos de aplicaciones que podemos crear.",
     path: "/servicios/apps",
   },
   {
@@ -32,6 +36,7 @@ export const services: Service[] = [
     name: "Sistemas",
     hook: "Más control. Menos trabajo.",
     description: "Sistemas que organizan y automatizan tus procesos.",
+    teaser: "Descubre los diferentes tipos de sistemas que podemos construir.",
     path: "/servicios/sistemas",
   },
   {
@@ -39,6 +44,7 @@ export const services: Service[] = [
     name: "Productos propios",
     hook: "Nuestras ideas, hechas realidad.",
     description: "Productos y proyectos que nacen dentro de CTRLHACK.",
+    teaser: "Descubre los productos que creamos dentro de CtrlHack.",
     path: "/productos",
   },
 ];

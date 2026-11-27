@@ -1,74 +1,98 @@
 /* ============================================
    IDENTITY — Sobre (Home)
+   Titular grande en Poppins (peso alto, interlineado corto) con la última
+   parte en el gradiente de marca; a la derecha, misión y visión.
    ============================================ */
-.about-lead {
-  border-left: 2px solid var(--accent-dim);
-  padding-left: 22px;
-  margin-bottom: clamp(16px, 4.4dvh, 52px);
-  max-width: 66ch;
-}
-.about-lead p {
-  color: var(--text-300);
-  font-size: 15.5px;
-  line-height: 1.75;
+/* cabecera de la sección (01 / SOBRE + eyebrow): el titular grande va dentro de .about */
+.section-head.about-head { margin-bottom: 0; }
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
 }
 
-/* process steps (real sequence: architecture -> mvp -> production).
-   Ghost numeral + alternating surface + connector arrow read as a pipeline
-   instead of three identical boxes in a row — same tokens, no new color. */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line-soft);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.step { position: relative; background: var(--bg-950); padding: 38px 28px 30px; }
-.step:nth-child(2) { background: var(--bg-900); }
-.step .num {
-  display: block;
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 3.1rem;
-  line-height: 1;
+.about-title {
+  font-family: "Poppins", var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 3.5vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
   color: var(--text-100);
-  opacity: 0.06;
-  margin-bottom: -8px;
+  margin: 18px 0 22px;
+  text-wrap: balance;
 }
-.step h3 { position: relative; font-size: 1.05rem; margin: 12px 0 10px; }
-.step p { position: relative; color: var(--text-500); font-size: 14px; }
-.step:not(:last-child)::after {
-  content: "→";
+.about-title-accent {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.about-text {
+  font-family: "Poppins", var(--body);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--text-300);
+  max-width: 52ch;
+}
+.about-text strong { color: var(--text-100); font-weight: 700; }
+
+.about-pillars {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.about-pillar {
+  position: relative;
+  padding: 22px 24px 22px 26px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgb(var(--obsidian-rgb) / 0.72);
+  backdrop-filter: blur(6px);
+  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+/* filete de cobre a la izquierda, como el borde del antiguo texto de Sobre */
+.about-pillar::before {
+  content: "";
   position: absolute;
-  top: 44px;
-  right: -11px;
-  z-index: 3;
-  font-family: var(--mono);
-  font-size: 15px;
-  color: var(--text-600);
-  background: var(--bg-950);
-  pointer-events: none;
+  left: -1px;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  background: var(--brand-gradient);
+  border-radius: 2px;
 }
-.step-kicker {
+.about-pillar:hover { border-color: var(--accent-strong); transform: translateY(-2px); }
+.about-pillar-kicker {
   display: block;
   font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+}
+.about-pillar p {
+  font-family: "Poppins", var(--body);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-100);
+}
+.about-origin {
+  align-self: flex-end;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-500);
 }
 
 @media (max-width: 860px) {
-  .steps { grid-template-columns: 1fr; }
-  .step:not(:last-child)::after { content: none; }
-}
-
-/* tablet estrecha: los 3 pasos se apilan, así que el relleno de cada uno
-   escala con el alto para que la sección siga cabiendo en la pantalla. */
-@media (min-width: 601px) and (max-width: 860px) {
-  .step { padding: clamp(14px, 2.6dvh, 38px) 28px clamp(12px, 2.2dvh, 30px); }
-  .step .num { font-size: clamp(2rem, 4dvh, 3.1rem); }
+  .about { grid-template-columns: 1fr; gap: 28px; }
+  .about-origin { align-self: flex-start; }
 }

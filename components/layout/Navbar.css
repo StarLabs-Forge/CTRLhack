@@ -55,9 +55,26 @@
 .navlinks {
   display: flex;
   align-items: center;
-  gap: 26px;
-  font-size: 13.5px;
+  gap: 34px;
+  font-size: 14.5px;
 }
+/* botón de tema claro/oscuro: aro fino, mismo lenguaje que el resto del nav */
+.themetoggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text-100);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.themetoggle:hover { color: var(--accent); border-color: var(--accent-strong); }
+.themetoggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .navlinks a:not(.btn) {
   position: relative;
   color: var(--text-300);
@@ -129,6 +146,7 @@
   }
   .navlinks a:not(.btn) { padding: 10px 0; width: 100%; }
   .navlinks .btn { margin-top: 8px; justify-content: center; }
+  .navlinks .themetoggle { margin-top: 8px; }
   .navlinks.open {
     opacity: 1;
     visibility: visible;

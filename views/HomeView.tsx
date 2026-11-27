@@ -96,12 +96,11 @@ export default function HomeView() {
         <SectionArt variant="sobre" />
         <div className="section-index">01</div>
         <div className="wrap">
-          <Reveal className="section-head">
+          <Reveal className="section-head about-head">
             <span className="idx">01 / SOBRE</span>
             <Eyebrow>Sobre CTRLHACK</Eyebrow>
-            <h2 className="kinetic"><KineticTitle lines={["Las buenas ideas merecen convertirse en algo real"]} /></h2>
           </Reveal>
-          <Reveal delay={200} variant="assemble">
+          <Reveal delay={120}>
             <Identity />
           </Reveal>
         </div>
@@ -124,10 +123,10 @@ export default function HomeView() {
         <SectionArt variant="servicios" />
         <div className="section-index">03</div>
         <div className="wrap">
-          <Reveal className="section-head">
+          <Reveal className="section-head services-head">
             <span className="idx">03 / SERVICIOS</span>
             <Eyebrow>Qué construimos</Eyebrow>
-            <h2 className="kinetic"><KineticTitle lines={["¿Qué podemos construir contigo?"]} /></h2>
+            <h2 className="kinetic services-title"><KineticTitle lines={["¿Qué podemos construir contigo?"]} /></h2>
             <p style={{ color: "var(--text-500)", marginTop: 10 }}>
               Desde una idea hasta una solución lista para usar.
             </p>

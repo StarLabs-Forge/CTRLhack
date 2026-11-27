@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from "react";
 import { useLocation } from "react-router-dom";
 import { TransitionLink as Link } from "../ui/TransitionLink";
 import { Logo } from "../ui/Logo";
@@ -28,11 +28,34 @@ function readHomeSection(): Spy {
   return null;
 }
 
+type Theme = "dark" | "light";
+const THEME_KEY = "ctrlhack-theme";
+
+// Lee la preferencia guardada por el visitante. Si el navegador bloquea el
+// almacenamiento (modo privado, datos bloqueados) se usa el modo oscuro.
+function readTheme(): Theme {
+  try {
+    return localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
+}
+
 export function Navbar() {
   const { pathname, hash } = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [spy, setSpy] = useState<Spy>("inicio");
+  const [theme, setTheme] = useState<Theme>(readTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      /* sin almacenamiento: el cambio dura solo esta visita */
+    }
+  }, [theme]);
 
   useEffect(() => {
     const onHomeRoute = pathname === "/";
@@ -77,6 +100,29 @@ export function Navbar() {
   };
   const sectionCurrent = (id: HomeSection) => (onHome && spy === id ? "location" : undefined);
 
+  // Navegar con solo pasar el ratón: en la Home, si el cursor se queda un
+  // momento sobre un enlace, la página baja sola a esa sección. La espera
+  // evita saltos al cruzar el menú de paso. Solo con ratón (no táctil) y solo
+  // en la Home: en otras páginas pasar el ratón no te saca de donde estás.
+  const HOVER_DELAY = 280;
+  const hoverTimer = useRef<number | undefined>(undefined);
+  const cancelHover = () => {
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = undefined;
+  };
+  useEffect(() => cancelHover, []);
+  const hoverGo = (target: "inicio" | HomeSection) => ({
+    onPointerEnter: (e: PointerEvent<HTMLAnchorElement>) => {
+      if (!onHome || e.pointerType !== "mouse" || spy === target) return;
+      cancelHover();
+      hoverTimer.current = window.setTimeout(() => {
+        if (target === "inicio") window.scrollTo({ top: 0, behavior: "smooth" });
+        else document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, HOVER_DELAY);
+    },
+    onPointerLeave: cancelHover,
+  });
+
   return (
     <nav className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="wrap">
@@ -88,31 +134,50 @@ export function Navbar() {
           </span>
         </Link>
         <div className={`navlinks${open ? " open" : ""}`}>
-          <Link to="/" aria-current={onHome && spy === "inicio" ? "page" : undefined} onClick={goTop}>
+          <Link to="/" aria-current={onHome && spy === "inicio" ? "page" : undefined} onClick={goTop} {...hoverGo("inicio")}>
             Inicio
           </Link>
           {/* Anchors a secciones de la Home — funcionan desde cualquier página:
               React Router navega a "/" y <ScrollManager> salta al hash. No pasan
               por aria-current porque no son rutas, son secciones dentro de "/". */}
-          <Link to="/#identidad" aria-current={sectionCurrent("identidad")} onClick={goSection("identidad")}>
+          <Link to="/#identidad" aria-current={sectionCurrent("identidad")} onClick={goSection("identidad")} {...hoverGo("identidad")}>
             Sobre
           </Link>
-          <Link to="/#proceso" aria-current={sectionCurrent("proceso")} onClick={goSection("proceso")}>
+          <Link to="/#proceso" aria-current={sectionCurrent("proceso")} onClick={goSection("proceso")} {...hoverGo("proceso")}>
             Proceso
           </Link>
           <Link
             to="/#servicios"
             aria-current={pathname === "/servicios" ? "page" : sectionCurrent("servicios")}
             onClick={goSection("servicios")}
+            {...hoverGo("servicios")}
           >
             Servicios
           </Link>
           {/* Portafolio ya no es una ruta propia: es la sección "04 / PORTAFOLIO"
               del Home (ver <ProjectDeck>). /portafolio sigue existiendo como
               redirect de compatibilidad (ver App.tsx) para links viejos. */}
-          <Link to="/#proyectos" aria-current={sectionCurrent("proyectos")} onClick={goSection("proyectos")}>
+          <Link to="/#proyectos" aria-current={sectionCurrent("proyectos")} onClick={goSection("proyectos")} {...hoverGo("proyectos")}>
             Portafolio
           </Link>
+          <button
+            type="button"
+            className="themetoggle"
+            aria-label={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            title={theme === "dark" ? "Modo claro" : "Modo oscuro"}
+            onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+          >
+            {theme === "dark" ? (
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+              </svg>
+            )}
+          </button>
           <Link
             to="/#contacto"
             className="btn"

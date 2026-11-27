@@ -44,7 +44,7 @@ function useCardTilt() {
   return { ref, handlePointerMove, resetTilt };
 }
 
-function ServiceCard({ id, name, hook, description, path, index }: (typeof services)[number] & { index: number }) {
+function ServiceCard({ id, name, teaser, path, index }: (typeof services)[number] & { index: number }) {
   const { ref, handlePointerMove, resetTilt } = useCardTilt();
 
   return (
@@ -61,11 +61,10 @@ function ServiceCard({ id, name, hook, description, path, index }: (typeof servi
       </span>
       <span className="service-card-body">
         <h3>{name}</h3>
-        <p className="service-hook">{hook}</p>
-        <p className="service-desc">{description}</p>
+        <p className="service-teaser">{teaser}</p>
       </span>
       <span className="service-cta" aria-hidden="true">
-        <span className="arrow">→</span>
+        Ver más
       </span>
     </Link>
   );

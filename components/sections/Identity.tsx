@@ -1,49 +1,42 @@
 import "./Identity.css";
 
-// Sobre Ctrlhack (Home). Filosofía e identidad — quiénes somos y cómo
-// pensamos — no proceso: el paso a paso de cómo trabajamos ya vive en
-// <Process /> (sección "Proceso"), no se repite acá.
-const STAGES = [
+// Sobre CtrlHack (Home): titular grande a la izquierda (qué hacemos y para
+// quién) y, a la derecha, misión y visión con foco en Bolivia.
+// El paso a paso de cómo trabajamos vive en <Process /> (sección "Proceso").
+const PILLARS = [
   {
-    num: "01",
-    kicker: "Curiosidad",
-    title: "Siempre hay otra pregunta.",
-    description: "Cuestionamos, exploramos y buscamos nuevas posibilidades.",
+    kicker: "Misión",
+    text: "Impulsar a emprendedores y empresas de Bolivia con tecnología hecha a su medida, para que crezcan y compitan en el mundo digital.",
   },
   {
-    num: "02",
-    kicker: "Propósito",
-    title: "La tecnología debe servir para algo.",
-    description: "Creamos con una razón clara: resolver, mejorar o hacer posible.",
-  },
-  {
-    num: "03",
-    kicker: "Creación",
-    title: "No esperamos a que alguien nos diga qué construir.",
-    description: "También desarrollamos nuestras propias ideas y productos.",
+    kicker: "Visión",
+    text: "Liderar la tecnología en Bolivia y guiar al país hacia un futuro digital mejor.",
   },
 ];
 
 export function Identity() {
   return (
-    <>
-      <div className="about-lead">
-        <p>
-          En Ctrlhack creemos que la tecnología tiene sentido cuando resuelve algo, abre una posibilidad o permite
-          construir algo que antes no existía.
+    <div className="about">
+      <div className="about-main">
+        <h2 className="about-title">
+          Construimos tecnologías digitales que impulsan{" "}
+          <span className="about-title-accent">crecimiento de tu emprendimiento o empresa</span>
+        </h2>
+        <p className="about-text">
+          En <strong>CtrlHack</strong> no solo diseñamos webs; creamos ecosistemas digitales que transforman tu forma de
+          verte en el mundo digital.
         </p>
       </div>
 
-      <div className="steps">
-        {STAGES.map((stage) => (
-          <div className="step" key={stage.num}>
-            <span className="step-kicker">{stage.kicker}</span>
-            <span className="num">{stage.num}</span>
-            <h3>{stage.title}</h3>
-            <p>{stage.description}</p>
+      <div className="about-pillars">
+        {PILLARS.map((pillar) => (
+          <div className="about-pillar" key={pillar.kicker}>
+            <span className="about-pillar-kicker">{pillar.kicker}</span>
+            <p>{pillar.text}</p>
           </div>
         ))}
+        <span className="about-origin">Hecho en Bolivia</span>
       </div>
-    </>
+    </div>
   );
 }

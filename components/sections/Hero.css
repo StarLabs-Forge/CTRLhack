@@ -49,7 +49,8 @@
   inset: 0;
   z-index: 0;
   background: var(--bg-900);
-  opacity: calc(var(--hero-progress) * 0.9);
+  /* tope bajo: si llega a opaco tapa el fondo de cubos (CubeField) */
+  opacity: calc(var(--hero-progress) * 0.35);
   pointer-events: none;
 }
 .hero .wrap {
@@ -160,31 +161,36 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--text-600);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  color: var(--text-100, #fff);
+  text-shadow: 0 0 12px var(--accent), 0 0 24px var(--accent);
+  animation: scrollhint-glow 2.4s ease-in-out infinite;
 }
 .scrollhint-mouse {
   display: block;
+  flex: 0 0 auto;
   width: 16px;
-  height: 26px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  position: relative;
+  height: 16px;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-image: linear-gradient(135deg, #fff3e0 0%, var(--accent) 50%, #7a2e00 100%) 1;
+  transform: rotate(45deg);
+  margin: 0 0 6px;
+  filter: drop-shadow(0 4px 0 #5a2200) drop-shadow(0 0 10px var(--accent));
+  animation: scrollhint-arrow 1.4s var(--ease) infinite;
 }
-.scrollhint-mouse::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  width: 2px;
-  height: 5px;
-  border-radius: 1px;
-  background: var(--accent);
-  transform: translateX(-50%);
-  animation: scrollhint-drop 1.8s var(--ease) infinite;
+@keyframes scrollhint-arrow {
+  0%, 100% { transform: translate(0, 0) rotate(45deg); opacity: 0.6; }
+  50% { transform: translate(4px, 4px) rotate(45deg); opacity: 1; }
+}
+@keyframes scrollhint-glow {
+  0%, 100% { opacity: 0.85; transform: translate(-50%, 0); }
+  50% { opacity: 1; transform: translate(-50%, -4px); }
 }
 @keyframes scrollhint-drop {
   0% { opacity: 0; transform: translate(-50%, -2px); }

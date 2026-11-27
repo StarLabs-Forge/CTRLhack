@@ -1,0 +1,30 @@
+/* ============================================
+   FONDO DE CUBOS 3D
+   Capa fija detrás de todo el contenido (z-index negativo: queda sobre el
+   color del body y debajo de cualquier sección o tarjeta). No recibe clics.
+   ============================================ */
+.cubefield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.cubefield canvas {
+  display: block;
+  animation: cubefield-in 1.6s var(--ease) both;
+}
+/* Velo para que el texto siga leyéndose: oscurece un poco todo y bastante
+   los bordes, dejando los cubos más vivos hacia el centro. */
+.cubefield::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 70% at 50% 40%, transparent 30%, rgb(var(--obsidian-rgb) / 0.7) 100%),
+    linear-gradient(rgb(var(--obsidian-rgb) / 0.3), rgb(var(--obsidian-rgb) / 0.3));
+}
+@keyframes cubefield-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
