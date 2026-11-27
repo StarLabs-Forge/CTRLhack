@@ -13,6 +13,7 @@ import { KineticTitle } from "../components/ui/KineticTitle";
 import { SectionArt } from "../components/effects/SectionArt";
 import { HeroScrollFx } from "../components/effects/HeroScrollFx";
 import { SectionParallax } from "../components/effects/SectionParallax";
+import { TeamSection } from "../components/team/TeamSection";
 
 const TAGLINE_ITEMS = [
   {
@@ -105,6 +106,8 @@ export default function HomeView() {
           </Reveal>
         </div>
       </section>
+
+      <TeamSection />
 
       <section id="proceso" className="section-deco section-snap">
         <SectionArt variant="proceso" />
