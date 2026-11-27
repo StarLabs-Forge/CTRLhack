@@ -109,7 +109,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   border: 1px solid var(--glow-line);
-  background: rgb(var(--obsidian-rgb) / 0.72);
+  background: rgb(var(--obsidian-rgb) / 0.86);
   color: var(--text-300);
   transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
@@ -122,8 +122,7 @@
   .svc-example {
     position: absolute;
     pointer-events: auto;
-    white-space: nowrap;
-    backdrop-filter: blur(6px);
+    white-space: nowrap; /* sin desenfoque: fondo animado detrás */
     translate: calc(var(--tx) * var(--depth, 20) * 1px) calc(var(--ty) * var(--depth, 20) * 1px);
     transition: translate 0.45s var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }

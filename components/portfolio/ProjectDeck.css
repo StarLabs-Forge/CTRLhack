@@ -40,9 +40,9 @@
   min-width: 0;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
-  background: var(--brush), linear-gradient(160deg, rgb(var(--graphite-rgb) / 0.6), rgb(var(--obsidian-rgb) / 0.9));
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  /* sin backdrop-filter: seis tarjetas desenfocando el fondo animado en cada
+     cuadro era lo que más frenaba el carrusel; el fondo más opaco se ve igual */
+  background: var(--brush), linear-gradient(160deg, rgb(var(--graphite-rgb) / 0.88), rgb(var(--obsidian-rgb) / 0.96));
   overflow: hidden;
   display: flex;
   flex-direction: column;

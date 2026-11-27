@@ -51,8 +51,7 @@
   padding: 22px 24px 22px 26px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
-  background: rgb(var(--obsidian-rgb) / 0.72);
-  backdrop-filter: blur(6px);
+  background: rgb(var(--obsidian-rgb) / 0.86); /* sin desenfoque: fondo animado detrás */
   transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
 }
 /* filete de cobre a la izquierda, como el borde del antiguo texto de Sobre */

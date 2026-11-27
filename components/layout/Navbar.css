@@ -5,8 +5,9 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgb(var(--obsidian-rgb) / 0.85);
-  backdrop-filter: blur(10px);
+  /* sin backdrop-filter: con el fondo de cubos animado detrás, el desenfoque
+     se recalculaba en cada cuadro. Un fondo casi opaco se ve igual. */
+  background: rgb(var(--obsidian-rgb) / 0.93);
   border-bottom: 1px solid var(--line-soft);
   transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
