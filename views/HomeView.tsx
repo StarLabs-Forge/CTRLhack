@@ -149,9 +149,9 @@ export default function HomeView() {
           <Reveal className="section-head">
             <span className="idx">04 / PORTAFOLIO</span>
             <Eyebrow>Portafolio</Eyebrow>
-            <h2 className="kinetic"><KineticTitle lines={["Ya construimos uno. Y seguimos sumando."]} /></h2>
+            <h2 className="kinetic"><KineticTitle lines={["Echa un vistazo a todo lo que ya construimos con clientes."]} /></h2>
             <p style={{ color: "var(--text-500)", marginTop: 10 }}>
-              Un vistazo rápido a lo que CTRLHACK tiene en producción, en camino, y a lo que construimos para otros.
+              Lo que CTRLHACK ya tiene en producción, lo que viene en camino y lo que construimos para otros.
             </p>
           </Reveal>
           <Reveal delay={200} variant="scale">
