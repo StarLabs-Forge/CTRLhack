@@ -205,13 +205,9 @@ export function LaunchScene({ state }: SceneProps) {
               <i /><i /><i />
               <span>ctrlhack.com</span>
             </div>
-            <img className="lap-shot sc-in" style={v({ "--at": 0.5, "--len": 0.16 })} src="/screenshots/check-960.webp" alt="" loading="lazy" decoding="async" draggable={false} />
-            <div className="lap-load sc-blip" style={v({ "--at": 0.3, "--len": 0.3 })}>
-              <span>Desplegando</span>
-              <div className="lap-bar"><b /></div>
-              <em className="lap-pct" />
-            </div>
-            <div className="lap-status sc-in" style={v({ "--at": 0.8, "--len": 0.1 })}>
+            {/* la página ya está publicada: se muestra completa desde el inicio */}
+            <img className="lap-shot sc-in" style={v({ "--at": 0.12, "--len": 0.14 })} src="/screenshots/check-960.webp" alt="" loading="lazy" decoding="async" draggable={false} />
+            <div className="lap-status sc-in" style={v({ "--at": 0.3, "--len": 0.1 })}>
               <i /> EN LÍNEA
             </div>
             <div className="lap-sheen" />

@@ -72,7 +72,7 @@ export const ProcessStep = forwardRef<HTMLSpanElement, Props>(function ProcessSt
       className={cls}
       style={{
         transitionDelay: delay,
-        ["--scene-dur" as string]: `${PROCESS_TIMING.scenes[index] * (looping ? LOOP_SLOWDOWN : 1)}ms`,
+        ["--scene-dur" as string]: `${PROCESS_TIMING.scenes[index] * (looping ? LOOP_SLOWDOWN[index] : 1)}ms`,
       } as CSSProperties}
       tabIndex={0}
       aria-label={`Paso ${step.num}: ${step.title}. ${step.description}`}
