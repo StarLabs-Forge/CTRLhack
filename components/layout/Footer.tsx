@@ -18,7 +18,7 @@ export function Footer() {
             <Link to="/#identidad">Sobre</Link>
             <Link to="/#proceso">Proceso</Link>
             <Link to="/servicios">Servicios</Link>
-            <Link to="/portafolio">Portafolio</Link>
+            <Link to="/#proyectos">Portafolio</Link>
             <Link to="/#contacto">Contacto</Link>
           </div>
           <div className="foot-col">
