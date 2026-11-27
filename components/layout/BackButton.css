@@ -16,6 +16,7 @@
   border: 1px solid var(--line);
   border-radius: 999px;
   text-decoration: none;
+  cursor: pointer;
   transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 .back-btn svg {
