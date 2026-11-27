@@ -9,6 +9,8 @@ Sitio web de **Ctrlhack**, un estudio especializado en diseño y construcción d
 - **Enrutamiento**: React Router v6
 - **Estilos**: CSS modular con tokens de diseño
 - **Build Tool**: Vite 5.4
+- **3D del hero**: [Three.js](https://threejs.org/) + [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) 8 + [GSAP](https://gsap.com/) (chunk aparte, carga diferida)
+- **Herramientas de desarrollo**: `playwright-core` y `sharp` (solo para generar capturas; no entran al bundle)
 
 ## 📁 Estructura del Proyecto
 
@@ -17,22 +19,32 @@ Sitio web de **Ctrlhack**, un estudio especializado en diseño y construcción d
 ├── components/              # Componentes reutilizables
 │   ├── layout/             # Navbar, Footer, ScrollManager
 │   ├── sections/           # Secciones de página (Hero, Services, Process, etc)
+│   │   └── showcase3d/     # Escena 3D del hero (ordenador, paneles, shaders, timeline)
 │   ├── ui/                 # Componentes base (Button, Logo, Tag, etc)
 │   ├── cases/              # Componentes para casos de estudio
 │   ├── testimonials/       # Testimonios
-│   ├── portfolio/          # Componentes del portafolio
+│   ├── portfolio/          # Portafolio: ProjectDeck, ProjectCard, ProjectPreview,
+│   │                       #   ProjectFilters, ProjectViewer, CaseModal
 │   ├── effects/            # Efectos visuales (parallax, scroll effects)
 │   └── seo/                # Meta tags y SEO
 ├── views/                  # Vistas principales (páginas de la app)
 │   ├── HomeView.tsx        # Página de inicio
 │   ├── ServiciosView.tsx   # Página de servicios
+│   ├── ServicioWebView.tsx # Detalle de servicio (también Apps y Sistemas)
 │   ├── PortafolioView.tsx  # Página de portafolio
-│   ├── ContactoView.tsx    # Página de contacto
+│   ├── ProductosView.tsx   # Productos propios, con filtros por estado
 │   ├── NotFoundView.tsx    # Página 404
 │   └── Loading.tsx         # Fallback de carga
 ├── data/                   # Datos estáticos y constantes
 │   ├── socials.ts          # Enlaces de redes sociales
-│   └── portfolioProjects.ts # Proyectos del portafolio
+│   ├── serviceDetails.ts   # Contenido de /servicios/web, /apps y /sistemas
+│   ├── portfolioProjects.ts # Proyectos (fuente única: URL, estado, origen, visibilidad)
+│   ├── projectCatalog.ts   # Une cada proyecto con su captura (lo que consume la UI)
+│   ├── projectFilters.ts   # Lógica de los filtros del portafolio
+│   └── screenshots.json    # Registro de capturas (lo escribe `npm run shots`)
+├── scripts/
+│   └── capture-screenshots.mjs # Genera las capturas reales (Playwright + WebP)
+├── public/screenshots/     # Capturas WebP de los proyectos públicos
 ├── styles/                 # Estilos globales
 │   ├── globals.css         # Estilos base
 │   ├── tokens.css          # Tokens de diseño (colores, tipografía, etc)
@@ -62,13 +74,24 @@ import { Navbar } from "@/components/layout/Navbar";
 ### Tokens de Diseño
 Sistema centralizado de diseño en `styles/tokens.css` con variables CSS para colores, tipografía y espaciado.
 
+### Hero 3D con fallback
+El hero muestra un ordenador 3D con el isotipo oficial (`public/brand/isotipo.svg`), interfaces que
+emergen de la pantalla y parallax con el cursor. Se carga solo cuando el navegador está libre y se
+pausa fuera de pantalla. Cae a un monitor CSS estático con `prefers-reduced-motion`, ahorro de datos,
+equipos limitados, sin WebGL2 o si no se mantiene fluido.
+
+### Páginas de servicio
+`/servicios/web|apps|sistemas` comparten `ServiceDetail`: intro en piezas cortas junto a la imagen de
+marca, y tarjetas con ilustración SVG animada (`ServiceArt`). Todo el movimiento se apaga con
+`prefers-reduced-motion`.
+
 ### Componentes Modulares
 Cada componente es independiente y reutilizable, siguiendo el patrón de carpetas por funcionalidad.
 
 ## 🛠️ Desarrollo
 
 ### Requisitos
-- Node.js 18+
+- Node.js 18+ (22.6+ para `npm run shots`, que lee los datos TypeScript directamente)
 - npm o yarn
 
 ### Instalación
