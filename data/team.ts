@@ -209,7 +209,7 @@ export const team: TeamMember[] = [
         description: "IA y automatizaciones.",
       },
     ],
-    skills: [],
+    skills: ["Prompt engineering", "Claude Code", "Flutter", "v0 (creación web)", "Gamificación con Octalysis"],
     orgs: [ORGANIZATIONS.anthropic, ORGANIZATIONS.platzi],
     credentials: GERALDINE_CREDENTIALS,
   },
