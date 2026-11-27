@@ -12,11 +12,17 @@ export interface SceneProps {
 const v = (o: Record<string, number | string>) => o as CSSProperties;
 
 /* ───────── 01 · Hablamos ───────── */
-const MESSAGES = [
-  { side: "l", y: 13, text: "Tengo una idea", typeAt: 0.05, at: 0.17 },
-  { side: "r", y: 23, text: "Hagámosla realidad", typeAt: 0.29, at: 0.4 },
-  { side: "l", y: 33, text: "¿Cuándo empezamos?", typeAt: 0.52, at: 0.62 },
-  { side: "r", y: 43, text: "Esta semana.", typeAt: 0.7, at: 0.79 },
+// Conversación completa: cada mensaje llega con su indicador de "escribiendo"
+// y, al ir creciendo, el chat sube para dejar lugar al siguiente.
+const CHAT = [
+  { side: "l", text: "Tengo una idea" },
+  { side: "r", text: "¡Qué bien! Cuéntame más." },
+  { side: "l", text: "Quiero vender en línea." },
+  { side: "r", text: "Podemos armar tu tienda." },
+  { side: "l", text: "¿Y cuánto tomaría?" },
+  { side: "r", text: "Un plan claro en días." },
+  { side: "l", text: "¿Y cuándo arrancamos?" },
+  { side: "r", text: "Esta semana mismo." },
 ] as const;
 
 export function ConversationScene({ state }: SceneProps) {
@@ -28,16 +34,24 @@ export function ConversationScene({ state }: SceneProps) {
             <i /><i /><i />
             <span>ctrlhack · chat</span>
           </div>
-          {MESSAGES.map((m) => (
-            <div className={`chat-row ${m.side}`} style={v({ "--y": m.y })} key={m.text}>
-              <div className="typing sc-blip" style={v({ "--at": m.typeAt, "--len": m.at - m.typeAt })}>
-                <b /><b /><b />
-              </div>
-              <div className="bubble sc-in" style={v({ "--at": m.at, "--len": 0.07, "--fx": m.side === "l" ? "-6cqw" : "6cqw" })}>
-                {m.text}
-              </div>
+          <div className="chat-stack">
+            <div className="chat-track" style={v({ "--at": 0.1, "--len": 0.8 })}>
+              {CHAT.map((m, i) => {
+                const typeAt = 0.04 + i * 0.1;
+                const at = typeAt + 0.06;
+                return (
+                  <div className={`chat-row ${m.side}`} style={v({ "--y": 2 + i * 10 })} key={m.text}>
+                    <div className="typing sc-blip" style={v({ "--at": typeAt, "--len": at - typeAt })}>
+                      <b /><b /><b />
+                    </div>
+                    <div className="bubble sc-in" style={v({ "--at": at, "--len": 0.07, "--fx": m.side === "l" ? "-6cqw" : "6cqw" })}>
+                      {m.text}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
           <div className="chat-ok sc-in" style={v({ "--at": 0.88, "--len": 0.08 })}>✓ Acordado</div>
         </div>
       </div>
@@ -163,21 +177,42 @@ export function TestingScene({ state }: SceneProps) {
 }
 
 /* ───────── 05 · Lanzamos ───────── */
+// Chispas que suben desde la laptop cuando se lanza (posición fija: no es aleatoria
+// en cada render, así la escena siempre se ve igual).
+const SPARKS = [
+  { x: -14, d: 0.0 },
+  { x: -6, d: 0.22 },
+  { x: 3, d: 0.1 },
+  { x: 11, d: 0.36 },
+  { x: -10, d: 0.5 },
+  { x: 7, d: 0.62 },
+] as const;
+
 export function LaunchScene({ state }: SceneProps) {
   return (
     <div className="scene lap" data-state={state}>
       <div className="lap-floor" />
+      <div className="lap-ring" />
+      <div className="lap-ring lap-ring--2" />
+      <div className="lap-beam" />
+      {SPARKS.map((s, i) => (
+        <span key={i} className="lap-spark" style={v({ "--x": s.x, "--d": s.d })} />
+      ))}
       <div className="lap-rig">
         <div className="lap-lid">
           <div className="lap-screen">
-            <img className="lap-shot sc-in" style={v({ "--at": 0.66, "--len": 0.14 })} src="/screenshots/check-960.webp" alt="" loading="lazy" decoding="async" draggable={false} />
-            <div className="lap-load sc-blip" style={v({ "--at": 0.3, "--len": 0.4 })}>
+            <div className="lap-url sc-in" style={v({ "--at": 0.2, "--len": 0.1 })}>
+              <i /><i /><i />
+              <span>ctrlhack.com</span>
+            </div>
+            <img className="lap-shot sc-in" style={v({ "--at": 0.5, "--len": 0.16 })} src="/screenshots/check-960.webp" alt="" loading="lazy" decoding="async" draggable={false} />
+            <div className="lap-load sc-blip" style={v({ "--at": 0.3, "--len": 0.3 })}>
               <span>Desplegando</span>
               <div className="lap-bar"><b /></div>
               <em className="lap-pct" />
             </div>
-            <div className="lap-status sc-in" style={v({ "--at": 0.84, "--len": 0.08 })}>
-              <i /> ACTIVO
+            <div className="lap-status sc-in" style={v({ "--at": 0.8, "--len": 0.1 })}>
+              <i /> EN LÍNEA
             </div>
             <div className="lap-sheen" />
           </div>

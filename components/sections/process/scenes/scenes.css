@@ -105,6 +105,13 @@
 .chat-bar i { width: calc(var(--u) * 1.8); height: calc(var(--u) * 1.8); border-radius: 50%; background: var(--line); }
 .chat-bar i:first-child { background: var(--copper); }
 .chat-bar span { margin-left: auto; }
+/* área del chat: recorta lo que sube; la conversación se desplaza al crecer */
+.chat-stack { position: absolute; left: 0; right: 0; top: calc(var(--u) * 13); height: calc(var(--u) * 37); overflow: hidden; }
+.chat-track {
+  position: absolute; left: 0; right: 0; top: 0; height: calc(var(--u) * 90);
+  animation: chat-scroll calc(var(--scene-dur) * var(--len)) cubic-bezier(0.4, 0, 0.2, 1) calc(var(--scene-dur) * var(--at)) both;
+}
+@keyframes chat-scroll { from { transform: translateY(0); } to { transform: translateY(calc(var(--u) * -44)); } }
 .chat-row {
   position: absolute;
   top: calc(var(--y) * var(--u)); left: calc(var(--u) * 4); right: calc(var(--u) * 4);
@@ -444,6 +451,55 @@
 .lap-status i { width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); border-radius: 50%; background: var(--ok); animation: lap-live 2.8s ease-in-out infinite; }
 @keyframes lap-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 .lap-sheen { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 36%, rgb(255 255 255 / 0.1) 48%, transparent 60%); }
+/* barra de dirección dentro de la pantalla: la web "aparece" en el navegador */
+.lap-url {
+  position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: calc(var(--u) * 6.5);
+  display: flex; align-items: center; gap: calc(var(--u) * 1.2); padding: 0 calc(var(--u) * 2.4);
+  background: rgb(var(--obsidian-rgb) / 0.9); border-bottom: 1px solid rgb(var(--copper-rgb) / 0.35);
+  font-size: calc(var(--u) * 2.6); color: var(--text-500);
+}
+.lap-url i { width: calc(var(--u) * 1.4); height: calc(var(--u) * 1.4); border-radius: 50%; background: var(--line); }
+.lap-url i:first-child { background: var(--copper); }
+.lap-url span {
+  margin-left: calc(var(--u) * 2); padding: calc(var(--u) * 0.6) calc(var(--u) * 2.2); border-radius: calc(var(--u) * 1.2);
+  background: rgb(var(--white-rgb) / 0.08); color: var(--text-300);
+}
+/* lanzamiento: anillos en el piso, haz de luz y chispas que suben */
+.lap-ring {
+  position: absolute; left: 50%; bottom: calc(var(--u) * 5); width: calc(var(--u) * 60); height: calc(var(--u) * 14);
+  margin-left: calc(var(--u) * -30); border-radius: 50%;
+  border: 1.5px solid rgb(var(--glow-rgb) / 0.85); box-shadow: 0 0 calc(var(--u) * 3) var(--glow-line);
+  opacity: 0; animation: lap-ring calc(var(--scene-dur) * 0.4) ease-out calc(var(--scene-dur) * 0.5) both;
+}
+.lap-ring--2 { animation-delay: calc(var(--scene-dur) * 0.66); }
+@keyframes lap-ring {
+  0% { transform: scale(0.3); opacity: 0; }
+  25% { opacity: 0.9; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.lap-beam {
+  position: absolute; left: 50%; bottom: calc(var(--u) * 40); width: calc(var(--u) * 18); height: calc(var(--u) * 52);
+  margin-left: calc(var(--u) * -9); transform-origin: bottom center;
+  background: linear-gradient(to top, rgb(var(--glow-rgb) / 0.85), rgb(var(--glow-rgb) / 0.22) 45%, transparent);
+  filter: blur(calc(var(--u) * 1.2));
+  opacity: 0; animation: lap-beam calc(var(--scene-dur) * 0.35) ease-out calc(var(--scene-dur) * 0.45) both;
+}
+@keyframes lap-beam {
+  from { opacity: 0; transform: scaleY(0); }
+  60% { opacity: 1; }
+  to { opacity: 0.8; transform: scaleY(1); }
+}
+.lap-spark {
+  position: absolute; left: calc(50% + var(--x) * var(--u)); bottom: calc(var(--u) * 40);
+  width: calc(var(--u) * 1.2); height: calc(var(--u) * 1.2); border-radius: 50%;
+  background: var(--glow); box-shadow: 0 0 calc(var(--u) * 2.5) var(--glow);
+  opacity: 0; animation: lap-rise calc(var(--scene-dur) * 0.55) linear calc(var(--scene-dur) * (0.4 + var(--d) * 0.5)) both;
+}
+@keyframes lap-rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(calc(var(--u) * -48)) scale(1); }
+}
 .lap-base {
   position: absolute; left: 0; top: calc(var(--u) * 34);
   width: calc(var(--u) * 62); height: calc(var(--u) * 24);
