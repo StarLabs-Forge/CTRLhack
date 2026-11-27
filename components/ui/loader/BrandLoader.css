@@ -146,10 +146,16 @@ html.bl-lock { overflow: hidden; }
 .bl-label span { display: block; white-space: nowrap; }
 .bl-label .bl-label-b { display: none; }
 
-/* ---------- variante sin progreso real (Suspense entre rutas) ---------- */
-.bl--indeterminate { --p: 0.35; }
-.bl--indeterminate .bl-piece { --gap: 4.5; }
-.bl--indeterminate .bl-piece-in { --amp: 1; }
+/* ---------- variante sin progreso real (Suspense entre rutas) ----------
+   Un fallback se desmonta cuando llega el chunk y no puede esperar a que las
+   piezas encajen: mostrar la tecla a medias se leería como una animación rota.
+   Aquí la tecla ya está armada, respira suave y la barra desliza. */
+.bl--indeterminate .bl-piece { --gap: 0; filter: none; }
+.bl--indeterminate .bl-piece-in { --amp: 0; animation: none; }
+.bl--indeterminate .bl-edge, .bl--indeterminate .bl-hairlines { opacity: 0; }
+.bl--indeterminate .bl-whole { opacity: 1; }
+.bl--indeterminate .bl-key { animation: bl-breathe 2.4s var(--ease-in-out) infinite; }
+@keyframes bl-breathe { 0%, 100% { scale: 1; } 50% { scale: 1.025; } }
 .bl--indeterminate .bl-bar-fill { width: 40%; transform: none; animation: bl-slide 1.3s var(--ease-in-out) infinite; }
 @keyframes bl-slide { 0% { translate: -100% 0; } 100% { translate: 250% 0; } }
 
