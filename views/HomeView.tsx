@@ -6,7 +6,6 @@ import { Process } from "../components/sections/Process";
 import { Identity } from "../components/sections/Identity";
 import { ServicesGrid } from "../components/sections/ServicesGrid";
 import { ProjectDeck } from "../components/portfolio/ProjectDeck";
-import { Testimonials } from "../components/testimonials/Testimonials";
 import { ContactSection } from "../components/sections/ContactSection";
 import { Eyebrow } from "../components/ui/Eyebrow";
 import { Reveal } from "../components/ui/Reveal";
@@ -158,20 +157,6 @@ export default function HomeView() {
           </Reveal>
           <Reveal delay={200} variant="scale">
             <ProjectDeck />
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="testimonios" className="tight section-deco section-snap">
-        <SectionArt variant="testimonios" />
-        <div className="wrap">
-          <Reveal className="section-head">
-            <span className="idx">05 / TESTIMONIOS</span>
-            <Eyebrow>Lo que dicen quienes trabajaron con nosotros</Eyebrow>
-            <h2 className="kinetic"><KineticTitle lines={["Construimos, y quien nos contrató lo cuenta."]} /></h2>
-          </Reveal>
-          <Reveal delay={200} variant="assemble">
-            <Testimonials />
           </Reveal>
         </div>
       </section>
