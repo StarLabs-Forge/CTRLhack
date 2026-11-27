@@ -19,15 +19,15 @@
   font-size: clamp(2rem, 3.5vw, 3.1rem);
   line-height: 1.12;
   letter-spacing: -0.015em;
-  color: var(--text-100);
+  color: transparent; /* degradado blanco cálido → naranja, igual que el resto de títulos */
   margin: 18px 0 22px;
   text-wrap: balance;
 }
 .about-title-accent {
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: inherit;
 }
 
 .about-text {

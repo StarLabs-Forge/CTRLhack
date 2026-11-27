@@ -140,7 +140,14 @@ section.tight { padding: 88px 0; }
    causa de que el grid de /portafolio mostrara 2 columnas en vez de 3. */
 .page-hero-block > section > .wrap { width: 100%; }
 .section-head { max-width: 640px; margin-bottom: 56px; }
-.section-head h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); margin-top: 14px; }
+/* Títulos de sección: mismo tamaño y peso que "Sobre", y color que va de blanco a naranja */
+.section-head h2 { font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 700; line-height: 1.12; margin-top: 14px; }
+h2 {
+  background: linear-gradient(90deg, #fff1e4 0%, var(--glow) 55%, var(--copper) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 /* wipe reveal — solo cuando Reveal está armado (clase .reveal presente);
    sin JS/reduced-motion el título nunca queda recortado. */
 .section-head.reveal h2 {

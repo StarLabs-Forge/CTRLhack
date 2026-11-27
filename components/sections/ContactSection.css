@@ -30,7 +30,8 @@
 .contact-aside { grid-area: aside; align-self: start; display: grid; gap: clamp(14px, 3dvh, 28px); }
 
 .contact-head h2 {
-  font-size: clamp(2rem, min(4.2vw, 7dvh), 3.2rem);
+  font-size: clamp(2rem, 3.5vw, 3.1rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
   margin: clamp(8px, 1.8dvh, 16px) 0 clamp(8px, 1.8dvh, 16px);
 }
