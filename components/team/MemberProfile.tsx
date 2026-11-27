@@ -54,13 +54,13 @@ export function MemberProfile({ member }: { member: TeamMember }) {
           <Reveal variant="scale">
             <MemberPhoto member={member} />
           </Reveal>
-          <Reveal delay={320}>
+          {member.stats.length > 0 && <Reveal delay={320}>
             <div className="member-stats">
               {member.stats.map((s, i) => (
                 <StatCounter stat={s} index={i} key={s.label} />
               ))}
             </div>
-          </Reveal>
+          </Reveal>}
         </div>
 
         <div className="member-info">
@@ -69,13 +69,15 @@ export function MemberProfile({ member }: { member: TeamMember }) {
             <h3 className="member-name" id={`member-${member.id}`}>
               {member.name}
             </h3>
-            <p className="member-role">{member.role}</p>
+            {member.role && <p className="member-role">{member.role}</p>}
           </Reveal>
           <Reveal delay={220}>
-            <blockquote className="member-quote">
-              <p>{member.quote}</p>
-            </blockquote>
-            <div className="member-bio">
+            {member.quote && (
+              <blockquote className="member-quote">
+                <p>{member.quote}</p>
+              </blockquote>
+            )}
+            {member.bio.length > 0 && <div className="member-bio">
               {(more ? member.bio : member.bio.slice(0, 1)).map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
@@ -84,13 +86,13 @@ export function MemberProfile({ member }: { member: TeamMember }) {
                   {more ? "Leer menos" : "Leer más"}
                 </button>
               )}
-            </div>
-            <ul className="member-specs" aria-label="Especialidades">
+            </div>}
+            {member.specialties.length > 0 && <ul className="member-specs" aria-label="Especialidades">
               {member.specialties.map((s) => (
                 <SpecialtyRow specialty={s} key={s.id} />
               ))}
-            </ul>
-            <p className="member-skills-line">También: {member.skills.join(" · ")}</p>
+            </ul>}
+            {member.skills.length > 0 && <p className="member-skills-line">También: {member.skills.join(" · ")}</p>}
           </Reveal>
         </div>
       </div>

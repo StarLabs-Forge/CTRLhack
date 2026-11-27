@@ -163,11 +163,11 @@ export function CredentialGallery({ member }: { member: TeamMember }) {
         ))}
       </ul>
 
-      <div className="creds-more">
+      {hidden > 0 && <div className="creds-more">
         <button type="button" className="btn-ghost" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}>
           {showAll ? "Ver solo las destacadas" : `Ver todas las credenciales (+${hidden})`}
         </button>
-      </div>
+      </div>}
 
       {open !== null && list[open] && (
         <CredentialViewer list={list} index={open} onIndex={setOpen} onClose={() => setOpen(null)} />

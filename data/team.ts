@@ -112,6 +112,26 @@ const ROGER_CREDENTIALS: Credential[] = [
   { id: "asistencia-administrativa", title: "Fundamentos Profesionales de Asistencia Administrativa", issuer: "Microsoft y LinkedIn", org: "microsoft", category: "desarrollo", date: "2024-12-15", featured: false, code: "3cbf5dd50b24ba4170cc362a52b47b57070a42fc2c0c53aaf1c9046ea645db39", image: img("asistencia-administrativa", "linkedin") },
 ];
 
+// Credenciales de Geraldine Lavadenz Tapia (certificados recibidos). Tamaños reales de cada documento.
+const fit = (id: string, width: number, height: number) => ({
+  src: `/team/credentials/${id}.webp`,
+  thumb: `/team/credentials/${id}-520.webp`,
+  width,
+  height,
+});
+const PLATZI_DASH = { url: "https://platzi.com/@dash.aprende/", label: "Perfil en Platzi" };
+
+const GERALDINE_CREDENTIALS: Credential[] = [
+  { id: "gl-claude-code-101", title: "Claude Code 101", issuer: "Claude Academy · Anthropic", org: "anthropic", category: "ia", date: "2026-10-01", featured: true, verify: academy("95f459c70759ef9eac03849743e8d287"), image: fit("gl-claude-code-101", 1600, 1088) },
+  { id: "gl-claude-platform-101", title: "Claude Platform 101", issuer: "Claude Academy · Anthropic", org: "anthropic", category: "ia", date: "2026-10-01", featured: true, verify: academy("aea947da08c43b64438548b3ee27663d"), image: fit("gl-claude-platform-101", 1600, 1088) },
+  { id: "gl-claude-code", title: "Claude Code", issuer: "Platzi", org: "platzi", category: "ia", date: "2026-04-07", featured: true, code: "ad292ad2-f820-4f65-970e-6aeed83b55f5", verify: PLATZI_DASH, image: fit("gl-claude-code", 1600, 1222) },
+  { id: "gl-prompt-engineering", title: "Prompt Engineering", issuer: "Platzi", org: "platzi", category: "ia", date: "2026-08-21", featured: true, code: "b1038cca-47f8-456b-85b5-6264bff38686", verify: PLATZI_DASH, image: fit("gl-prompt-engineering", 1600, 1222) },
+  { id: "gl-flutter", title: "Curso de Flutter", issuer: "Platzi", org: "platzi", category: "desarrollo", date: "2025-12-22", featured: true, code: "d784a271-bd26-4a15-b1f1-562ed1e0918e", verify: PLATZI_DASH, image: fit("gl-flutter", 1600, 1204) },
+  { id: "gl-v0", title: "Creación de páginas web con v0", issuer: "Platzi", org: "platzi", category: "desarrollo", date: "2026-04-08", featured: true, code: "d40cd3c8-d49e-4091-96c6-8e4cc63b5495", verify: PLATZI_DASH, image: fit("gl-v0", 1600, 1222) },
+  { id: "gl-gamificacion-componentes", title: "Gamificación con Octalysis: componentes y framework", issuer: "Platzi", org: "platzi", category: "desarrollo", date: "2026-02-03", featured: true, code: "01c752a1-dea1-45f7-81c5-28dcc069f396", verify: PLATZI_DASH, image: fit("gl-gamificacion-componentes", 1600, 1236) },
+  { id: "gl-gamificacion-estrategias", title: "Gamificación con Octalysis: estrategias y fases de experiencia", issuer: "Platzi", org: "platzi", category: "desarrollo", date: "2026-02-26", featured: true, code: "96897cc3-5b79-4f63-b5b5-de854b531b35", verify: PLATZI_DASH, image: fit("gl-gamificacion-estrategias", 1600, 1236) },
+];
+
 export const team: TeamMember[] = [
   {
     id: "roger",
@@ -156,6 +176,25 @@ export const team: TeamMember[] = [
     skills: ["Data Science", "Gestión de proyectos", "Análisis empresarial", "Análisis de datos", "Innovación tecnológica"],
     orgs: [ORGANIZATIONS.anthropic, ORGANIZATIONS.microsoft, ORGANIZATIONS.linkedin, ORGANIZATIONS.platzi],
     credentials: ROGER_CREDENTIALS,
+  },
+  {
+    id: "geraldine",
+    name: "Geraldine Lavadenz Tapia",
+    role: "",
+    quote: "",
+    bio: [],
+    photo: {
+      src: "/team/geraldine.webp",
+      srcSm: "/team/geraldine-600.webp",
+      width: 865,
+      height: 868,
+      alt: "Geraldine Lavadenz Tapia, integrante del equipo CtrlHack",
+    },
+    stats: [],
+    specialties: [],
+    skills: [],
+    orgs: [ORGANIZATIONS.anthropic, ORGANIZATIONS.platzi],
+    credentials: GERALDINE_CREDENTIALS,
   },
 ];
 
