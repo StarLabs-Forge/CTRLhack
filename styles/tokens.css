@@ -77,8 +77,9 @@
 
   --ok: #7ea888;
 
-  --display: "Space Grotesk", "Arial Narrow", sans-serif;
-  --body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Poppins en todo el sitio (la familia de Sobre); mono solo para etiquetas */
+  --display: "Poppins", "Arial", sans-serif;
+  --body: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: "JetBrains Mono", "Courier New", monospace;
 
   --radius: 3px;

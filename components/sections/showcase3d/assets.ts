@@ -45,9 +45,9 @@ let fontsPromise: Promise<void> | null = null;
 export function loadBrandFonts(): Promise<void> {
   if (!fontsPromise) {
     const loads = Promise.all([
-      document.fonts.load('600 40px "Space Grotesk"'),
+      document.fonts.load('600 40px "Poppins"'),
       document.fonts.load('500 20px "JetBrains Mono"'),
-      document.fonts.load('500 20px "Inter"'),
+      document.fonts.load('500 20px "Poppins"'),
     ]).then(() => undefined);
     const timeout = new Promise<void>((resolve) => setTimeout(resolve, 2500));
     fontsPromise = Promise.race([loads, timeout]).catch(() => undefined);

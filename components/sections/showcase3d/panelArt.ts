@@ -37,9 +37,9 @@ export function readTokens(): Tokens {
     copper: get("--copper", "#b87333"),
     ivory: get("--ivory", "#ffdab9"),
     ok: get("--ok", "#7ea888"),
-    display: get("--display", '"Space Grotesk", sans-serif'),
+    display: get("--display", '"Poppins", sans-serif'),
     mono: get("--mono", '"JetBrains Mono", monospace'),
-    body: get("--body", "Inter, sans-serif"),
+    body: get("--body", "Poppins, sans-serif"),
   };
 }
 
