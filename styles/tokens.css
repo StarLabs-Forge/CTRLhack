@@ -155,13 +155,12 @@
   }
 
   /* sin motion no hay parallax, tilt 3D ni fondo "vivo" — solo el contenido,
-     ya visible por defecto (Reveal/HeroScrollFx/ProductShowcase se
-     desactivan solos vía matchMedia). Esto cubre el hover 3D puramente CSS. */
+     ya visible por defecto (Reveal/HeroScrollFx se desactivan solos vía
+     matchMedia; ProductShowcase cae al monitor estático en vez de la escena 3D).
+     Esto cubre el hover 3D puramente CSS. */
   .hero .wrap > div:first-child,
   .showcase,
   .showcase-glow,
-  .laptop,
-  .phone,
   .service-block:hover,
   .project-teaser:hover,
   .project-teaser-visual,
