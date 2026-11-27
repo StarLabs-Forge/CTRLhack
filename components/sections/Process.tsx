@@ -4,7 +4,10 @@ import { EnergyPulse, type TimelineGeo } from "./process/EnergyPulse";
 import { useProcessController } from "./process/ProcessAnimationController";
 import { ProcessStep } from "./process/ProcessStep";
 import { PROCESS_STEPS, STEP_COUNT } from "./process/processConfig";
+import { useScrollProcess } from "./process/useScrollProcess";
 import "./Process.css";
+
+const MOBILE_QUERY = "(max-width: 860px)";
 
 // "Cómo trabajamos": cinco etapas con una escena animada cada una, unidas por
 // una línea de energía. Un único controlador (ProcessAnimationController) manda
@@ -16,26 +19,41 @@ export function Process() {
   const [reduced] = useState(() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [entered, setEntered] = useState(reduced);
   const [geo, setGeo] = useState<TimelineGeo>({ axis: "h", x0: 0, y0: 0, len: 0 });
-  const { view, api } = useProcessController(reduced);
+  // Mismo punto de corte que el layout vertical de Process.css.
+  const [mobile, setMobile] = useState(() => typeof window !== "undefined" && window.matchMedia(MOBILE_QUERY).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const on = () => setMobile(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  // Escritorio: recorrido automático. Móvil: guiado por el scroll (sin temporizador de recorrido).
+  const scrollDriven = mobile && !reduced;
+  const auto = useProcessController(reduced);
+  const scroll = useScrollProcess(scrollDriven, ref, nodes);
+  const { view, api } = scrollDriven ? scroll : auto;
 
-  // Visible ≥35 % → arranca/reanuda; fuera por completo → pausa (sin reiniciar).
+  // Visible ≥35 % → revela; en escritorio además arranca/reanuda el recorrido y
+  // fuera por completo lo pausa (sin reiniciar). En móvil el scroll lo gobierna todo.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (reduced) return;
+    if (scrollDriven) auto.api.setVisible(false); // el controlador automático no debe seguir vivo
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[entries.length - 1];
         if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
           setEntered(true);
-          api.setVisible(true);
-        } else if (entryOutOfView(entry)) api.setVisible(false);
+          if (!scrollDriven) auto.api.setVisible(true);
+        } else if (entryOutOfView(entry) && !scrollDriven) auto.api.setVisible(false);
       },
       { threshold: [0, 0.35] }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [api, reduced]);
+  }, [auto.api, reduced, scrollDriven]);
 
   // Centros de los nodos por layout (offset*, inmune a transform): la energía
   // sigue a la distribución real, horizontal o vertical.
@@ -67,7 +85,8 @@ export function Process() {
     "--x0": `${geo.x0}px`,
     "--y0": `${geo.y0}px`,
     "--len": `${geo.len}px`,
-    "--pos": view.pulse / (STEP_COUNT - 1),
+    // en móvil --pos lo escribe useScrollProcess directo en el DOM (continuo, sin re-render)
+    ...(scrollDriven ? null : { "--pos": view.pulse / (STEP_COUNT - 1) }),
     "--travel": `${view.travelMs}ms`,
   } as CSSProperties;
 

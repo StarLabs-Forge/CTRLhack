@@ -1,22 +1,15 @@
-import { Logo } from "../components/ui/Logo";
+import { LoaderStage } from "../components/ui/loader/LoaderStage";
 import "./styles/Loading.css";
 
-// Fallback de <Suspense> en App.tsx mientras carga el chunk de una vista.
-// En Next este archivo (app/loading.tsx) lo montaba el framework solo; aquí se
-// pasa a mano, que es la única diferencia real.
+// Fallback de <Suspense> en App.tsx mientras carga el chunk de una vista (las
+// navegaciones tras la primera visita). Misma escena que la intro de marca, en
+// modo sin progreso real: las piezas laten hacia el centro y la barra desliza.
+// La secuencia completa (encaje + < >) vive en <BrandLoader />, que sí conoce
+// el progreso real de la primera carga.
 export function Loading() {
   return (
-    <div className="loading-screen" role="status" aria-live="polite">
-      <span className="loading-mark">
-        <Logo className="loading-svg" assemble />
-      </span>
-      <span className="loading-word">
-        <span className="wm-ctrl">Ctrl</span>
-        <span className="grad">Hack</span>
-        <span className="dim">.dev</span>
-      </span>
-      <span className="loading-bar" aria-hidden="true" />
-      <span className="loading-hint">Cargando…</span>
+    <div className="loading-screen" role="status" aria-live="polite" aria-label="Cargando">
+      <LoaderStage phase="loading" indeterminate />
     </div>
   );
 }
