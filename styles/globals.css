@@ -195,7 +195,8 @@ h2 {
 /* Modo oscuro: sombra suave bajo todo el texto para que no se pierda entre
    los cubos del fondo. Los títulos con degradado no la usan (ya llevan la suya). */
 :root:not([data-theme="light"]) body { text-shadow: 0 1px 10px rgb(0 0 0 / 0.75), 0 0 2px rgb(0 0 0 / 0.6); }
-h1, h2, .btn, .service-cta { text-shadow: none; }
+/* sin sombra: títulos, botones y letras con degradado (la sombra ensucia el degradado) */
+h1, h2, .btn, .service-cta, .logo .wordmark, .loading-word { text-shadow: none; }
 
 /* ============================================
    SCROLL REVEAL (class added by JS only —
