@@ -6,3 +6,20 @@
   grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
   gap: 24px;
 }
+
+/* /productos: contenedor con alto mínimo (filtrar no encoge la página de golpe)
+   y estado sin resultados con el mismo lenguaje que el carrusel del Home. */
+.pgrid-wrap { min-height: 430px; }
+.pgrid-empty {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-500);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--brush);
+}
+.pgrid-empty p { max-width: 42ch; font-size: 14px; line-height: 1.55; }

@@ -1,0 +1,26 @@
+{
+  "aura-tumbler": {
+    "src": "/screenshots/aura-tumbler.webp",
+    "srcSm": "/screenshots/aura-tumbler-960.webp",
+    "width": 1920,
+    "height": 1080,
+    "updatedAt": "2026-11-27T01:11:34.522Z",
+    "embeddable": true
+  },
+  "check": {
+    "src": "/screenshots/check.webp",
+    "srcSm": "/screenshots/check-960.webp",
+    "width": 1920,
+    "height": 1080,
+    "updatedAt": "2026-11-27T01:10:55.891Z",
+    "embeddable": true
+  },
+  "kolla": {
+    "src": "/screenshots/kolla.webp",
+    "srcSm": "/screenshots/kolla-960.webp",
+    "width": 1920,
+    "height": 1080,
+    "updatedAt": "2026-11-27T01:11:19.853Z",
+    "embeddable": true
+  }
+}

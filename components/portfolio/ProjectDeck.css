@@ -18,6 +18,7 @@
   cursor: grab;
   outline: none;
 }
+.deck-shell[hidden] { display: none; }
 .deck-shell:active { cursor: grabbing; }
 .deck-shell:focus-visible { box-shadow: 0 0 0 2px var(--glow); border-radius: var(--radius-lg); }
 
@@ -117,13 +118,40 @@
 .deck-tick:hover { background: var(--text-600); }
 .deck-tick.active { background: var(--tick-color, var(--glow)); width: 34px; }
 
+/* ---------- filtros: tarjetas que entran, estado vacío, controles en reposo ---------- */
+/* solo opacidad: el transform lo siguen controlando los estilos en línea del carrusel */
+.deck-shell[data-swapped] .deck-card { animation: deck-card-in var(--dur-moderate) var(--ease) backwards; }
+@keyframes deck-card-in { from { opacity: 0; } }
+
+/* sin resultados: ocupa el mismo alto que el carrusel para que la página no salte */
+.deck-empty {
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-500);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--brush);
+}
+.deck-empty svg { color: var(--accent-strong); }
+.deck-empty p { max-width: 40ch; font-size: 14px; line-height: 1.55; }
+/* con 0 o 1 proyecto no hay a dónde navegar: se conserva el alto, se ocultan */
+.deck-controls.is-idle { visibility: hidden; }
+
 @media (max-width: 560px) {
   .deck-shell { min-height: 396px; padding: 18px 0; }
   .deck-card { width: min(240px, 100%); min-height: 360px; }
+  .deck-empty { min-height: 396px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .deck-card, .deck-card::before, .deck-tick, .deck-arrow, .deck-cta { transition-duration: 0.001ms !important; }
+  .deck-shell[data-swapped] .deck-card { animation: none; }
 }
 
 /* fit-to-viewport (desktop): el carrusel escala con el alto de la pantalla
@@ -131,5 +159,6 @@
 @media (min-width: 861px) {
   .deck-shell { min-height: clamp(250px, 43dvh, 440px); padding: clamp(2px, 1dvh, 16px) 0; }
   .deck-card { min-height: clamp(250px, 41dvh, 408px); }
+  .deck-empty { min-height: clamp(250px, 43dvh, 440px); }
   .deck-controls { margin-top: clamp(12px, 2.8dvh, 28px); }
 }

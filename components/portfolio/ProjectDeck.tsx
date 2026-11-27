@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
-import { ProjectThumb } from "./ProjectThumb";
+import { ProjectPreview } from "./ProjectPreview";
+import { ProjectFilters } from "./ProjectFilters";
 import { Tag } from "../ui/Tag";
 import { CaseModal } from "./CaseModal";
-import { portfolioProjects } from "../../data/portfolioProjects";
+import { projects } from "../../data/projectCatalog";
+import { DECK_FILTERS, EMPTY_MESSAGES, filterOptions, filterProjects, type ProjectFilterId } from "../../data/projectFilters";
 import { caseStudies } from "../../data/caseStudies";
 import { clientCases } from "../../data/clientCases";
 import "./ProjectCard.css";
@@ -19,6 +21,11 @@ import "./ProjectDeck.css";
 // "Portafolio" acá (sección, no ruta) porque el sitio se presenta como
 // landing de una sola página; /portafolio queda para quien pide
 // explícitamente profundizar.
+// Filtros (Todos / Activos / En proceso / Planificados / De clientes): viven
+// encima del carrusel y recalculan la lista en el cliente, sin recargar. La
+// lista filtrada nunca se rellena con tarjetas repetidas: con 1 o 2 resultados
+// el carrusel muestra solo esas (con 1 no hay flechas ni indicadores). El
+// índice activo se conserva si el proyecto sigue en la lista, o vuelve al primero.
 // Pendiente a futuro (no implementado): cuando CTRLHACK tenga video propio
 // (canal YouTube/TikTok) explicando qué es CHECK, la tarjeta activa podría
 // llevar un botón "Ver video" tipo trailer sobre el thumb — dejar espacio
@@ -27,10 +34,13 @@ const DRAG_THRESHOLD = 40;
 const CARD_STEP = 198; // separación horizontal entre tarjetas (px)
 
 export function ProjectDeck() {
-  const count = portfolioProjects.length;
+  const [filter, setFilter] = useState<ProjectFilterId>("all");
+  const [swapped, setSwapped] = useState(false); // ya se filtró alguna vez: las tarjetas nuevas entran con fade
+  const visible = filterProjects(projects, filter);
+  const count = visible.length;
   const [active, setActive] = useState(0);
   const [openSlug, setOpenSlug] = useState<string | null>(null);
-  const openProject = portfolioProjects.find((p) => p.slug === openSlug);
+  const openProject = projects.find((p) => p.slug === openSlug);
   const openCaseStudy = openProject?.caseStudySlug
     ? caseStudies.find((c) => c.slug === openProject.caseStudySlug)
     : undefined;
@@ -47,25 +57,40 @@ export function ProjectDeck() {
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
-  const goTo = (i: number) => setActive(((i % count) + count) % count);
+  const goTo = (i: number) => {
+    if (count > 0) setActive(((i % count) + count) % count);
+  };
+
+  // Al filtrar se conserva el proyecto enfocado si sigue en la lista nueva; si
+  // no, se vuelve al primero. El índice nunca queda fuera de rango.
+  const changeFilter = (next: ProjectFilterId) => {
+    if (next === filter) return;
+    const focusedSlug = visible[active]?.slug;
+    const nextList = filterProjects(projects, next);
+    const keep = nextList.findIndex((p) => p.slug === focusedSlug);
+    setFilter(next);
+    setSwapped(true);
+    setActive(keep >= 0 ? keep : 0);
+  };
 
   useEffect(() => {
     const shell = shellRef.current;
     if (!shell) return;
     const onKeyDown = (e: KeyboardEvent) => {
+      if (count < 2) return;
       if (e.key === "ArrowLeft") { e.preventDefault(); goTo(active - 1); }
       if (e.key === "ArrowRight") { e.preventDefault(); goTo(active + 1); }
     };
     shell.addEventListener("keydown", onKeyDown);
     return () => shell.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, [active, count]);
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     // Si el press empieza sobre un link/botón (p.ej. "Ver más"), no capturamos
     // el puntero: setPointerCapture en el shell retarga también el click de
     // compatibilidad, y el botón nunca responde.
-    if ((e.target as HTMLElement).closest("a, button")) return;
+    if (count < 2 || (e.target as HTMLElement).closest("a, button")) return;
     drag.current = { dragging: true, startX: e.clientX, delta: 0, lastX: e.clientX, lastT: e.timeStamp, velocity: 0, moved: false };
     e.currentTarget.setPointerCapture(e.pointerId);
   };
@@ -117,9 +142,24 @@ export function ProjectDeck() {
     ["--tx", "--ty", "--gx", "--gy"].forEach((v) => el.style.removeProperty(v));
   };
 
+  const options = filterOptions(projects, DECK_FILTERS);
+  const status = count === 0 ? EMPTY_MESSAGES[filter] : `${count} ${count === 1 ? "proyecto" : "proyectos"}`;
+
   return (
     <div className="deck">
+      <ProjectFilters items={options} value={filter} onChange={changeFilter} label="Filtrar proyectos" status={status} />
+      {count === 0 && (
+        <div className="deck-empty" role="note">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M4 7.5l8 4.5 8-4.5M12 12v9" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" opacity=".5" />
+          </svg>
+          <p>{EMPTY_MESSAGES[filter]}</p>
+        </div>
+      )}
       <div
+        hidden={count === 0}
+        data-swapped={swapped || undefined}
         className="deck-shell"
         ref={shellRef}
         tabIndex={0}
@@ -133,11 +173,11 @@ export function ProjectDeck() {
       >
         <div
           className="deck-glow"
-          style={{ background: `radial-gradient(circle, var(--${portfolioProjects[active].accent}), transparent 65%)` }}
+          style={{ background: `radial-gradient(circle, var(--${visible[active]?.accent ?? "glow"}), transparent 65%)` }}
           aria-hidden="true"
         />
 
-        {portfolioProjects.map((project, i) => {
+        {visible.map((project, i) => {
           let offset = i - active;
           if (offset > count / 2) offset -= count;
           if (offset < -count / 2) offset += count;
@@ -178,7 +218,7 @@ export function ProjectDeck() {
               onPointerLeave={isActive ? resetTilt : undefined}
             >
               <div className="pcard-thumb-wrap">
-                <ProjectThumb accent={project.accent} name={project.name} />
+                <ProjectPreview project={project} priority={isActive} />
                 {isSoon && (
                   <div className="pcard-lock">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -236,18 +276,19 @@ export function ProjectDeck() {
         })}
       </div>
 
-      <div className="deck-controls">
-        <button type="button" className="deck-arrow" aria-label="Proyecto anterior" onClick={() => goTo(active - 1)}>
+      <div className={`deck-controls${count < 2 ? " is-idle" : ""}`} aria-hidden={count < 2}>
+        <button type="button" className="deck-arrow" aria-label="Proyecto anterior" tabIndex={count < 2 ? -1 : 0} onClick={() => goTo(active - 1)}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
 
         <div className="deck-ticks">
-          {portfolioProjects.map((project, i) => (
+          {visible.map((project, i) => (
             <button
               key={project.slug}
               type="button"
+              tabIndex={count < 2 ? -1 : 0}
               className={`deck-tick${i === active ? " active" : ""}`}
               style={{ "--tick-color": `var(--${project.accent})` } as CSSProperties}
               aria-label={`Ir a ${project.name}`}
@@ -256,7 +297,7 @@ export function ProjectDeck() {
           ))}
         </div>
 
-        <button type="button" className="deck-arrow" aria-label="Siguiente proyecto" onClick={() => goTo(active + 1)}>
+        <button type="button" className="deck-arrow" aria-label="Siguiente proyecto" tabIndex={count < 2 ? -1 : 0} onClick={() => goTo(active + 1)}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M9 6l6 6-6 6" />
           </svg>
@@ -264,7 +305,7 @@ export function ProjectDeck() {
       </div>
 
       {(openCaseStudy || openClientCase) && (
-        <CaseModal caseStudy={openCaseStudy} clientCase={openClientCase} onClose={() => setOpenSlug(null)} />
+        <CaseModal project={openProject} caseStudy={openCaseStudy} clientCase={openClientCase} onClose={() => setOpenSlug(null)} />
       )}
     </div>
   );

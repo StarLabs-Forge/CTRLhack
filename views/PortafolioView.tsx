@@ -5,7 +5,7 @@ import { Reveal } from "../components/ui/Reveal";
 import { Eyebrow } from "../components/ui/Eyebrow";
 import { ProjectCard } from "../components/portfolio/ProjectCard";
 import { CaseModal } from "../components/portfolio/CaseModal";
-import { portfolioProjects } from "../data/portfolioProjects";
+import { projects } from "../data/projectCatalog";
 import { caseStudies } from "../data/caseStudies";
 import { clientCases } from "../data/clientCases";
 import "./styles/PortafolioView.css";
@@ -20,10 +20,10 @@ import "./styles/PortafolioView.css";
 export default function PortafolioView() {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
-  const ownProducts = portfolioProjects.filter((p) => p.kind === "product");
-  const clientWork = portfolioProjects.filter((p) => p.kind === "client");
+  const ownProducts = projects.filter((p) => p.kind === "product");
+  const clientWork = projects.filter((p) => p.kind === "client");
 
-  const openProject = portfolioProjects.find((p) => p.slug === openSlug);
+  const openProject = projects.find((p) => p.slug === openSlug);
   const openCaseStudy = openProject?.caseStudySlug
     ? caseStudies.find((c) => c.slug === openProject.caseStudySlug)
     : undefined;
@@ -51,7 +51,7 @@ export default function PortafolioView() {
             <div className="pgrid">
               {ownProducts.map((project, index) => (
                 <Reveal key={project.slug} index={index}>
-                  <ProjectCard project={project} onOpenDetail={setOpenSlug} />
+                  <ProjectCard project={project} onOpenDetail={setOpenSlug} priority={index === 0} />
                 </Reveal>
               ))}
             </div>
@@ -81,7 +81,7 @@ export default function PortafolioView() {
       </div>
 
       {(openCaseStudy || openClientCase) && (
-        <CaseModal caseStudy={openCaseStudy} clientCase={openClientCase} onClose={() => setOpenSlug(null)} />
+        <CaseModal project={openProject} caseStudy={openCaseStudy} clientCase={openClientCase} onClose={() => setOpenSlug(null)} />
       )}
     </>
   );

@@ -101,6 +101,27 @@ npm run preview
 
 Previsualiza la build de producción localmente.
 
+## 🖼️ Capturas del portafolio
+
+Las tarjetas de proyecto muestran **capturas reales** de cada sitio. Se generan en
+desarrollo y se versionan en el repo (el sitio solo sirve archivos estáticos).
+
+```bash
+npm run shots                  # todos los proyectos públicos
+npm run shots -- check kolla   # solo esos (actualización individual)
+npm run shots -- --list        # qué se capturaría, sin tocar nada
+```
+
+- **Fuente única:** las URLs salen de `data/portfolioProjects.ts` (`appUrl`). Solo se
+  capturan proyectos con `isPublic: true`; los demás no se tocan nunca.
+- **Salida:** `public/screenshots/<slug>.webp` (1920×1080) y `<slug>-960.webp`
+  (tarjetas), más `data/screenshots.json` (ruta, fecha y si la app admite iframe).
+- **Si una página falla** se conserva la última captura válida y su registro.
+- Requiere Chrome o Edge instalado (o `CHROME_PATH`). Nuevo proyecto público: añadirlo
+  a `portfolioProjects.ts` con `isPublic: true` + `appUrl` y correr `npm run shots -- <slug>`.
+- **Estado de filtrado:** cada proyecto declara `stage` (`active` / `building` / `planned`)
+  y `kind` (`product` / `client`). `building` no se asigna sin respaldo en los datos.
+
 ## 📋 Verificación de Tipos
 
 El proyecto está configurado con `strict: true` en TypeScript. Antes de hacer commit, asegúrate de que no hay errores de tipo:

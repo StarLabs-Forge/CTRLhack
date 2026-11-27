@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { CaseStudy } from "../cases/CaseStudy";
 import { ClientCase } from "../cases/ClientCase";
+import { ProjectPreview } from "./ProjectPreview";
+import { ProjectViewer } from "./ProjectViewer";
+import type { Project } from "../../data/projectCatalog";
 import type { CaseStudy as CaseStudyData } from "../../data/caseStudies";
 import type { ClientCase as ClientCaseData } from "../../data/clientCases";
 import "./CaseModal.css";
@@ -15,13 +18,20 @@ import "./CaseModal.css";
 // de cliente, formato liviano qué-pidió/qué-construimos/alcance/tiempo) — lo
 // decide quién llama según si el proyecto abierto tiene caseStudySlug o
 // clientCaseSlug (ver PortafolioView.tsx).
+// `project` (opcional) trae la captura real y el visor: si el proyecto es público
+// y tiene captura, el detalle abre con su vista previa y, debajo, la opción de
+// vista interactiva ampliada (iframe, o captura ampliada si la app no se deja
+// incrustar). Sin `project` el modal se ve igual que antes.
 interface CaseModalProps {
+  project?: Project;
   caseStudy?: CaseStudyData;
   clientCase?: ClientCaseData;
   onClose: () => void;
 }
 
-export function CaseModal({ caseStudy, clientCase, onClose }: CaseModalProps) {
+export function CaseModal({ project, caseStudy, clientCase, onClose }: CaseModalProps) {
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const showPreview = Boolean(project && project.shot);
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") onClose();
@@ -37,7 +47,9 @@ export function CaseModal({ caseStudy, clientCase, onClose }: CaseModalProps) {
     };
   }, [onClose]);
 
-  return createPortal(
+  return (
+    <>
+      {createPortal(
     <div className="case-modal-overlay" onClick={onClose}>
       <div
         className="case-modal"
@@ -52,11 +64,31 @@ export function CaseModal({ caseStudy, clientCase, onClose }: CaseModalProps) {
           </svg>
         </button>
         <div className="case-modal-scroll">
+          {project && showPreview && (
+            <div className="case-preview">
+              <ProjectPreview project={project} variant="detail" priority />
+              <div className="case-preview-actions">
+                {project.viewer && (
+                  <button type="button" className="btn" onClick={() => setViewerOpen(true)}>
+                    {project.viewer === "iframe" ? "Vista interactiva" : "Ver captura ampliada"}
+                  </button>
+                )}
+                {project.appUrl && (
+                  <a className="btn-ghost" href={project.appUrl} target="_blank" rel="noopener noreferrer">
+                    Ir a la app<span aria-hidden="true"> ↗</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
           {caseStudy && <CaseStudy caseStudy={caseStudy} />}
           {clientCase && <ClientCase clientCase={clientCase} />}
         </div>
       </div>
     </div>,
     document.body
+      )}
+      {viewerOpen && project && <ProjectViewer project={project} onClose={() => setViewerOpen(false)} />}
+    </>
   );
 }

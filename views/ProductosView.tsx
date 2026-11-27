@@ -6,7 +6,9 @@ import { Eyebrow } from "../components/ui/Eyebrow";
 import { Meta } from "../components/seo/Meta";
 import { ProjectCard } from "../components/portfolio/ProjectCard";
 import { CaseModal } from "../components/portfolio/CaseModal";
-import { portfolioProjects } from "../data/portfolioProjects";
+import { ProjectFilters } from "../components/portfolio/ProjectFilters";
+import { projects } from "../data/projectCatalog";
+import { EMPTY_MESSAGES, PRODUCT_FILTERS, filterOptions, filterProjects, type ProjectFilterId } from "../data/projectFilters";
 import { caseStudies } from "../data/caseStudies";
 import "../components/sections/ServiceDetail.css";
 import "./styles/PortafolioView.css";
@@ -18,12 +20,16 @@ import "./styles/PortafolioView.css";
 // entrada en data/portfolioProjects.ts, no rediseñar esta página.
 export default function ProductosView() {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const [filter, setFilter] = useState<ProjectFilterId>("all");
 
   // Solo kind:"product" — esta página es explícitamente "no es trabajo para
   // clientes" (ver comentario de arriba), así que no puede reusar la lista
   // completa de portfolioProjects sin filtrar, o mostraría encargos de
   // clientes (p. ej. Aura Tumbler) como si fueran ideas propias de CTRLHACK.
-  const ownProducts = portfolioProjects.filter((p) => p.kind === "product");
+  const ownProducts = projects.filter((p) => p.kind === "product");
+  // El filtro por estado se aplica DESPUÉS de separar los propios: aquí nunca
+  // aparece un proyecto de cliente, filtre lo que filtre.
+  const shown = filterProjects(ownProducts, filter);
 
   const openProject = ownProducts.find((p) => p.slug === openSlug);
   const openCaseStudy = openProject?.caseStudySlug
@@ -31,6 +37,7 @@ export default function ProductosView() {
     : undefined;
 
   const hasProducts = ownProducts.length > 0;
+  const status = shown.length === 0 ? EMPTY_MESSAGES[filter] : `${shown.length} ${shown.length === 1 ? "producto" : "productos"}`;
 
   return (
     <>
@@ -63,18 +70,36 @@ export default function ProductosView() {
               <h2>Lo que estamos construyendo</h2>
             </Reveal>
 
-            <div className="pgrid">
-              {ownProducts.map((project, index) => (
-                <Reveal key={project.slug} index={index}>
-                  <ProjectCard project={project} onOpenDetail={setOpenSlug} />
-                </Reveal>
-              ))}
+            <ProjectFilters
+              items={filterOptions(ownProducts, PRODUCT_FILTERS)}
+              value={filter}
+              onChange={setFilter}
+              label="Filtrar productos por estado"
+              status={status}
+              start
+            />
+
+            {/* alto mínimo: al filtrar, la página no se encoge de golpe ni salta el scroll */}
+            <div className="pgrid-wrap">
+              {shown.length > 0 ? (
+                <div className="pgrid">
+                  {shown.map((project, index) => (
+                    <Reveal key={project.slug} index={index}>
+                      <ProjectCard project={project} onOpenDetail={setOpenSlug} priority={index === 0} />
+                    </Reveal>
+                  ))}
+                </div>
+              ) : (
+                <div className="pgrid-empty" role="note">
+                  <p>{EMPTY_MESSAGES[filter]}</p>
+                </div>
+              )}
             </div>
           </div>
         </section>
       </div>
 
-      {openCaseStudy && <CaseModal caseStudy={openCaseStudy} onClose={() => setOpenSlug(null)} />}
+      {openCaseStudy && <CaseModal project={openProject} caseStudy={openCaseStudy} onClose={() => setOpenSlug(null)} />}
 
       <Reveal>
         <CTABand

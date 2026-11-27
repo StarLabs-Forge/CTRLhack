@@ -5,6 +5,15 @@
 // Nombres = tokens de paleta (--glow, --copper, --bronze, --white, --ivory) en styles/tokens.css.
 export type ProjectAccent = "glow" | "copper" | "bronze" | "white" | "ivory";
 
+// Fase del proyecto, SOLO para agrupar el filtrado. Es independiente de
+// `statusLabel` (que conserva la etiqueta específica: "En piloto", "Acceso
+// anticipado", "Muy pronto"…) y de `kind` (el origen: propio o cliente):
+//  - "active":   publicado, en producción, en piloto o con acceso anticipado.
+//  - "building": en desarrollo ahora mismo. Ningún proyecto actual lo declara:
+//                no se asigna por intuición, solo cuando el dato lo respalde.
+//  - "planned":  previsto, todavía sin versión disponible.
+export type ProjectStage = "active" | "building" | "planned";
+
 export interface PortfolioProject {
   slug: string;
   name: string;
@@ -19,6 +28,11 @@ export interface PortfolioProject {
   // Separa qué entra en /productos (solo "product") de la sección
   // "Trabajos para clientes" de /portafolio.
   kind: "product" | "client";
+  stage: ProjectStage;
+  // Visibilidad pública: solo un proyecto con `isPublic: true` puede tener
+  // captura real, vista interactiva o URL expuesta. Los demás conservan el
+  // efecto de contenido bloqueado y nunca muestran interfaz.
+  isPublic: boolean;
   // Si existe, "Ver más" abre el modal con el caso técnico completo de
   // caseStudies.ts (solo para kind:"product"). Mutuamente excluyente con
   // clientCaseSlug en la práctica: un proyecto usa uno u otro, nunca ambos.
@@ -28,6 +42,8 @@ export interface PortfolioProject {
   clientCaseSlug?: string;
   // Si no existe (todavía no hay sitio propio publicado), "Ir a la app" se
   // muestra deshabilitado en vez de asumir una URL que no existe.
+  // Fuente ÚNICA de la URL: el script de capturas (scripts/capture-screenshots.mjs)
+  // la lee de acá. Las capturas se registran en data/screenshots.json, no a mano.
   appUrl?: string;
 }
 
@@ -40,6 +56,8 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "live",
     accent: "glow",
     kind: "product",
+    stage: "active",
+    isPublic: true,
     caseStudySlug: "check",
     appUrl: "https://check-seven-alpha.vercel.app/",
   },
@@ -51,6 +69,8 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "soon",
     accent: "bronze",
     kind: "product",
+    stage: "planned",
+    isPublic: false,
   },
   {
     slug: "kolla",
@@ -60,6 +80,8 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "live",
     accent: "copper",
     kind: "product",
+    stage: "active",
+    isPublic: true,
     caseStudySlug: "kolla",
     appUrl: "https://kolla-beryl.vercel.app/",
   },
@@ -71,6 +93,8 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "soon",
     accent: "white",
     kind: "product",
+    stage: "planned",
+    isPublic: false,
   },
   {
     slug: "sor",
@@ -80,6 +104,8 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "soon",
     accent: "glow",
     kind: "product",
+    stage: "planned",
+    isPublic: false,
   },
   {
     slug: "aura-tumbler",
@@ -89,6 +115,8 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "live",
     accent: "ivory",
     kind: "client",
+    stage: "active",
+    isPublic: true,
     clientCaseSlug: "aura-tumbler",
     appUrl: "https://venta-producto.vercel.app/",
   },

@@ -14,9 +14,9 @@
 .pcard:not(.pcard-soon):hover { border-color: var(--glow-line); }
 
 .pcard-thumb-wrap { position: relative; overflow: hidden; }
-.pcard-thumb-wrap .pthumb { transition: transform var(--dur-slow) var(--ease); }
-.pcard:not(.pcard-soon):hover .pthumb,
-.deck-card.is-active:not(.pcard-soon):hover .pthumb { transform: scale(1.05); }
+/* zoom ligero SOLO de la captura (el marco de navegador no se mueve) */
+.pcard:not(.pcard-soon):hover .pthumb-img,
+.deck-card.is-active:not(.pcard-soon):hover .pthumb-img { transform: scale(1.04); }
 /* flecha ↗ de "Ir a la app": se desplaza en diagonal al hover */
 .pcard-actions .go-arrow { display: inline-block; margin-left: 6px; transition: transform var(--dur-fast) var(--ease-spring); }
 .pcard-actions a:hover .go-arrow { transform: translate(2px, -2px); }

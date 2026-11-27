@@ -1,0 +1,142 @@
+/* ============================================
+   PROJECT VIEWER — visor ampliado (iframe o captura) en marco de navegador
+   Va por encima del modal de detalle (z-index 200).
+   ============================================ */
+.pviewer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgb(var(--obsidian-rgb) / 0.88);
+  backdrop-filter: blur(4px);
+  animation: pviewer-fade var(--dur-base) var(--ease);
+}
+
+.pviewer {
+  width: min(1180px, 100%);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--glow-line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-900);
+  box-shadow: var(--shadow-lg), 0 0 40px -12px rgb(var(--glow-rgb) / 0.35);
+  overflow: hidden;
+  animation: pviewer-pop var(--dur-moderate) var(--ease-spring) both;
+  transition: width var(--dur-moderate) var(--ease);
+}
+.pviewer.is-large { width: min(1760px, 100%); }
+
+.pviewer-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-800);
+}
+.pviewer-dots { display: inline-flex; gap: 5px; }
+.pviewer-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+.pviewer-url {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: var(--bg-900);
+  color: var(--text-500);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pviewer-mode {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.pviewer-actions { display: flex; align-items: center; gap: 6px; }
+.pviewer-btn {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg-900);
+  color: var(--text-300);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-instant) var(--ease-out);
+}
+.pviewer-btn:hover { border-color: var(--accent-strong); color: var(--text-100); }
+.pviewer-btn:active { transform: scale(0.92); }
+.pviewer-btn:focus-visible { outline: 2px solid var(--glow); outline-offset: 2px; }
+.pviewer-btn[aria-pressed="true"] { border-color: var(--accent-strong); color: var(--accent); }
+
+.pviewer-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100dvh - 130px);
+  width: 100%;
+  background: var(--bg-950);
+}
+.pviewer-shot,
+.pviewer-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.pviewer-shot { object-fit: cover; object-position: top center; }
+/* transparente mientras carga (se ve la captura debajo); al terminar, fondo
+   blanco como una pestaña normal para páginas que no definen el suyo */
+.pviewer-frame { background: transparent; }
+.pviewer-frame.is-ready { background: #fff; }
+.pviewer-loading {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: rgb(var(--obsidian-rgb) / 0.8);
+  color: var(--text-300);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.pviewer-note {
+  padding: 10px 16px;
+  border-top: 1px solid var(--line-soft);
+  color: var(--text-500);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* pantalla completa: el escenario llena el monitor (la barra queda fuera) */
+.pviewer-stage:fullscreen { aspect-ratio: auto; max-height: none; width: 100vw; height: 100vh; }
+.pviewer-stage:fullscreen .pviewer-shot { object-fit: contain; }
+
+@keyframes pviewer-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pviewer-pop { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 640px) {
+  .pviewer-overlay { padding: 10px; }
+  .pviewer-mode,
+  .pviewer-btn--size { display: none; }
+  /* en móvil la proporción 16:9 sería minúscula: el visor usa casi toda la pantalla */
+  .pviewer-stage { aspect-ratio: auto; height: min(70dvh, 560px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pviewer-overlay,
+  .pviewer { animation: none; transition: none; }
+}

@@ -1,6 +1,6 @@
-import { ProjectThumb } from "./ProjectThumb";
+import { ProjectPreview } from "./ProjectPreview";
 import { Tag } from "../ui/Tag";
-import type { PortfolioProject } from "../../data/portfolioProjects";
+import type { Project } from "../../data/projectCatalog";
 import "./ProjectCard.css";
 
 // Unidad repetible del grid de /portafolio. Por defecto solo muestra imagen +
@@ -9,11 +9,13 @@ import "./ProjectCard.css";
 // en <CaseModal>, nunca suelto en la card. Los proyectos "soon" se ven
 // desaturados, con overlay de candado y ambos botones inactivos.
 interface ProjectCardProps {
-  project: PortfolioProject;
+  project: Project;
   onOpenDetail: (slug: string) => void;
+  // La captura de la primera tarjeta visible carga sin diferir.
+  priority?: boolean;
 }
 
-export function ProjectCard({ project, onOpenDetail }: ProjectCardProps) {
+export function ProjectCard({ project, onOpenDetail, priority = false }: ProjectCardProps) {
   const isSoon = project.status === "soon";
   const isClient = project.kind === "client";
   const canOpenDetail = !isSoon && Boolean(project.caseStudySlug || project.clientCaseSlug);
@@ -21,7 +23,7 @@ export function ProjectCard({ project, onOpenDetail }: ProjectCardProps) {
   return (
     <div className={`pcard${isSoon ? " pcard-soon" : ""}`}>
       <div className="pcard-thumb-wrap">
-        <ProjectThumb accent={project.accent} name={project.name} />
+        <ProjectPreview project={project} priority={priority} />
         {isSoon && (
           <div className="pcard-lock">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">

@@ -1,0 +1,84 @@
+/* ============================================
+   PROJECT FILTERS — selector discreto del portafolio
+   Esquinas biseladas (lenguaje del isotipo), mono en mayúsculas y el cobre/
+   naranja de marca solo en el filtro activo. Envuelve en varias líneas en
+   pantallas estrechas: nunca desborda ni scrollea en horizontal.
+   ============================================ */
+.pfilters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 clamp(14px, 2.6dvh, 28px);
+}
+/* variante alineada a la izquierda (encabezado de /productos) */
+.pfilters--start { justify-content: flex-start; }
+
+.pfilter {
+  --cut: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-500);
+  /* el borde vive en el fondo (clip-path recortaría un border real) */
+  background:
+    linear-gradient(var(--bg-900), var(--bg-900)) padding-box,
+    linear-gradient(135deg, var(--line), var(--line)) border-box;
+  border: 1px solid transparent;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-base) var(--ease-out), transform var(--dur-instant) var(--ease-out);
+}
+.pfilter:hover { color: var(--text-100); }
+.pfilter:active { transform: scale(0.97); }
+.pfilter:focus-visible { outline: 2px solid var(--glow); outline-offset: 2px; }
+
+.pfilter.is-selected {
+  color: var(--accent);
+  /* tinte cobre sobre una base OPACA: sin ella el degradado del borde se
+     transparenta y el botón se ve como un bloque naranja ilegible */
+  background:
+    linear-gradient(rgb(var(--glow-rgb) / 0.16), rgb(var(--glow-rgb) / 0.16)) padding-box,
+    linear-gradient(var(--bg-900), var(--bg-900)) padding-box,
+    linear-gradient(135deg, var(--accent-strong), var(--accent)) border-box;
+}
+
+.pfilter-count {
+  min-width: 16px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  background: rgb(var(--white-rgb) / 0.06);
+  font-size: 10px;
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--text-600);
+}
+.pfilter.is-selected .pfilter-count { background: rgb(var(--glow-rgb) / 0.22); color: var(--accent); }
+
+/* texto solo para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  .pfilters { gap: 6px; }
+  .pfilter { padding: 7px 10px; font-size: 10.5px; letter-spacing: 0.05em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pfilter { transition: none; }
+}
