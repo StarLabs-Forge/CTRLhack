@@ -30,4 +30,4 @@ export const STEP_COUNT = PROCESS_STEPS.length;
 
 /** Factor de lentitud de cada escena en bucle (todas a la vez), por paso.
  *  Hablamos, Construimos y Lanzamos van más lentas porque tienen movimientos cortos. */
-export const LOOP_SLOWDOWN = [7, 4, 7, 4, 7] as const;
+export const LOOP_SLOWDOWN = [8, 6, 8, 6, 8] as const;
